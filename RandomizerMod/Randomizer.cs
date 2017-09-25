@@ -24,6 +24,10 @@ namespace RandomizerMod
         // Token: 0x06003119 RID: 12569 RVA: 0x00125C70 File Offset: 0x00123E70
         public static bool GetPlayerDataBool(string name)
         {
+	    if (!Randomizer.randomizer)
+	    {
+	        return PlayerData.instance.GetBoolInternal(name);
+	    }
             if (string.IsNullOrEmpty(name))
             {
                 return false;
@@ -60,6 +64,10 @@ namespace RandomizerMod
         // Token: 0x0600311A RID: 12570 RVA: 0x00125D48 File Offset: 0x00123F48
         public static void SetPlayerDataBool(string name, bool val)
         {
+	    if (!Randomizer.randomizer)
+	    {
+	        PlayerData.instance.SetBoolInternal(name, val);
+	    }
             if (string.IsNullOrEmpty(name))
             {
                 return;
@@ -1104,7 +1112,7 @@ namespace RandomizerMod
         public static bool hardMode;
 
         // Token: 0x040038E3 RID: 14563
-        public static bool debug = true;
+        public static bool debug = false;
 
         // Token: 0x040038E4 RID: 14564
         public static StreamWriter debugWriter = null;
