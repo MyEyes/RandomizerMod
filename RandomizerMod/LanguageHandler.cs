@@ -12,7 +12,9 @@ namespace RandomizerMod
                 return Language.Language.GetInternal(key, sheet);
             }
 
-            if (!new StackTrace().ToString().Contains("at HutongGames.PlayMaker.Fsm.DoTransition(HutongGames.PlayMaker.FsmTransition transition, Boolean isGlobal)"))
+            string stack = new StackTrace().ToString();
+
+            if (!stack.Contains("at HutongGames.PlayMaker.Fsm.DoTransition(HutongGames.PlayMaker.FsmTransition transition, Boolean isGlobal)") && (!stack.Contains("at HutongGames.PlayMaker.Fsm.UpdateState(HutongGames.PlayMaker.FsmState state)") || key.Contains("CHARM_NAME_") || key.Contains("INV_NAME_TRINKET")))
             {
                 string pickupName;
                 if (Randomizer.reverseLookup.TryGetValue(sheet + "." + key, out pickupName))
@@ -27,6 +29,11 @@ namespace RandomizerMod
                             return Language.Language.GetInternal(switchedLocale[1], switchedLocale[0]);
                         }
                     }
+                }
+
+                if (key.Contains("INV_NAME_TRINKET") && !Randomizer.InInventory())
+                {
+                    return Language.Language.GetInternal("INV_NAME_TRINKET" + Randomizer.GetTrinketForScene(), sheet);
                 }
             }
 

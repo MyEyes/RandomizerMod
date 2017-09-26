@@ -60,6 +60,7 @@ namespace RandomizerMod
                 {
                     GUI.color = new Color(color.r, color.g, color.b, UIManager.instance.mainMenuScreen.alpha);
                     GUI.DrawTexture(new Rect(1515f, 1020f, 409f, 66f), this.textures["logo"], ScaleMode.ScaleToFit);
+                    Randomizer.loadedSave = false;
                 }
                 if (UIManager.instance.playModeMenuScreen.isActiveAndEnabled)
                 {
@@ -86,7 +87,7 @@ namespace RandomizerMod
                         int.TryParse(this.seedString, out Randomizer.seed);
                     }
                 }
-                if (UIManager.instance.menuState == GlobalEnums.MainMenuState.SAVE_PROFILES)
+                if (UIManager.instance.menuState == GlobalEnums.MainMenuState.SAVE_PROFILES && !Randomizer.loadedSave)
                 {
                     Randomizer.randomizer = false;
                     Randomizer.hardMode = false;

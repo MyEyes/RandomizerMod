@@ -5,6 +5,7 @@ using System.IO;
 using System.Xml;
 using System.Linq;
 using UnityEngine;
+using HutongGames.PlayMaker;
 
 namespace RandomizerMod
 {
@@ -19,17 +20,89 @@ namespace RandomizerMod
         public static bool hardMode;
         public static int seed = -1;
 
+        public static bool loadedSave = false;
+
         public static StreamWriter debugWriter = null;
         public static bool debug = false;
 
-        //Int function placeholders, currently unused
-        public static int GetPlayerDataInt(GameManager man, string name)
+        //GetInt placeholder, currently unused
+        public static int GetPlayerDataInt(string name)
         {
-            return 0;
+            return PlayerData.instance.GetIntInternal(name);
         }
 
-        public static void SetPlayerDataInt(GameManager man, string name, int value)
+        //Used only for relics currently
+        public static void SetPlayerDataInt(string name, int value)
         {
+            if (!Randomizer.randomizer)
+            {
+                PlayerData.instance.SetIntInternal(name, value);
+                return;
+            }
+
+            if (string.IsNullOrEmpty(name))
+            {
+                return;
+            }
+
+            if (name == "trinket1" || name == "trinket2" || name == "trinket3" || name == "trinket4")
+            {
+                PlayerData.instance.SetBoolInternal("foundTrinket1", true);
+                PlayerData.instance.SetBoolInternal("foundTrinket2", true);
+                PlayerData.instance.SetBoolInternal("foundTrinket3", true);
+                PlayerData.instance.SetBoolInternal("foundTrinket4", true);
+                PlayerData.instance.SetBoolInternal("noTrinket1", false);
+                PlayerData.instance.SetBoolInternal("noTrinket2", false);
+                PlayerData.instance.SetBoolInternal("noTrinket3", false);
+                PlayerData.instance.SetBoolInternal("noTrinket4", false);
+
+                int change = value - PlayerData.instance.GetIntInternal(name);
+
+                if (change != 1)
+                {
+                    PlayerData.instance.SetIntInternal(name, value);
+                    return;
+                }
+
+                int trinketNum = Randomizer.GetTrinketForScene();
+
+                PlayerData.instance.SetIntInternal("trinket" + trinketNum, PlayerData.instance.GetIntInternal("trinket" + trinketNum) + 1);
+                return;
+            }
+
+            PlayerData.instance.SetIntInternal(name, value);
+        }
+
+        public static int GetTrinketForScene()
+        {
+            char[] sceneCharArray = GameManager.instance.GetSceneNameString().ToCharArray();
+            int[] sceneNumbers = sceneCharArray.Select(c => Convert.ToInt32(c)).ToArray();
+
+            int modifiedSeed = Randomizer.seed;
+
+            for (int i = 0; i < sceneNumbers.Length; i++)
+            {
+                modifiedSeed += sceneNumbers[i];
+            }
+
+            int trinketNum = new System.Random(modifiedSeed).Next(1, 42);
+
+            if (trinketNum <= 14)
+            {
+                return 1;
+            }
+            else if (trinketNum <= (14 + 16))
+            {
+                return 2;
+            }
+            else if (trinketNum <= (14 + 16 + 7))
+            {
+                return 3;
+            }
+            else
+            {
+                return 4;
+            }
         }
 
         //Override for PlayerData.GetBool
@@ -89,6 +162,7 @@ namespace RandomizerMod
 	        if (!Randomizer.randomizer)
 	        {
 	            pd.SetBoolInternal(name, val);
+                return;
 	        }
 
             if (string.IsNullOrEmpty(name))
@@ -114,6 +188,8 @@ namespace RandomizerMod
                 for (int i = 0; i < Randomizer.entries[text].entries.Length; i++)
                 {
                     pd.SetBoolInternal(Randomizer.entries[text].entries[i], val);
+
+                    if (Randomizer.entries[text].entries[i].Contains("gotCharm_")) pd.hasCharm = true;
                 }
                 return;
             }
@@ -126,7 +202,6 @@ namespace RandomizerMod
         {
             if (!permadeath || Convert.ToBoolean(node.SelectSingleNode("permadeath").InnerText))
             {
-
                 RandomizerEntry entry = new RandomizerEntry(node);
 
                 if (!Randomizer.entries.ContainsKey(entry.name))
@@ -261,6 +336,7 @@ namespace RandomizerMod
         {
             Randomizer.randomizer = false;
             Randomizer.hardMode = false;
+            Randomizer.loadedSave = true;
 
             if (File.Exists(Application.persistentDataPath + @"\user" + profileId + ".rnd"))
             {
@@ -287,6 +363,15 @@ namespace RandomizerMod
         //Set up randomization if applicable
         public static void NewGame()
         {
+            /*PlayerData.instance.hasWalljump = true;
+            PlayerData.instance.canWallJump = true;
+            PlayerData.instance.hasDash = true;
+            PlayerData.instance.canDash = true;
+            PlayerData.instance.hasDoubleJump = true;
+            PlayerData.instance.hasSuperDash = true;
+            PlayerData.instance.canSuperDash = true;
+            PlayerData.instance.hasShadowDash = true;
+            PlayerData.instance.canShadowDash = true;*/
             if (Randomizer.randomizer)
             {
                 if (Randomizer.seed == -1)
@@ -374,6 +459,11 @@ namespace RandomizerMod
                 Randomizer.debugWriter.WriteLine(message);
                 Randomizer.debugWriter.Flush();
             }
+        }
+
+        public static bool InInventory()
+        {
+            return GameObject.FindGameObjectWithTag("Inventory Top").GetComponent<PlayMakerFSM>().FsmVariables.GetFsmBool("Open").Value;
         }
     }
 }
