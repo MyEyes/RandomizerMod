@@ -11,6 +11,11 @@ namespace RandomizerMod
         // Token: 0x0600312E RID: 12590 RVA: 0x00127658 File Offset: 0x00125858
         public static void CheckForChanges(string destScene)
         {
+            if (!Randomizer.randomizer)
+            {
+                return;
+            }
+
             if (destScene == "Ruins1_32" && !PlayerData.instance.hasWalljump)
             {
                 List<GameObject> objectsFromScene = SceneHandler.GetObjectsFromScene("Ruins1_32");

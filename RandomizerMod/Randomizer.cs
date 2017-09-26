@@ -2,121 +2,178 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Xml;
 using System.Linq;
 using UnityEngine;
 
 namespace RandomizerMod
 {
-    // Token: 0x0200091E RID: 2334
     public static class Randomizer
     {
-        // Token: 0x06003117 RID: 12567 RVA: 0x0000269C File Offset: 0x0000089C
+        public static Dictionary<string, RandomizerEntry> entries = new Dictionary<string, RandomizerEntry>();
+        public static Dictionary<string, string> reverseLookup = new Dictionary<string, string>();
+        public static Dictionary<string, string> permutation = new Dictionary<string, string>();
+
+        public static bool swappedCloak;
+        public static bool randomizer;
+        public static bool hardMode;
+        public static int seed = -1;
+
+        public static StreamWriter debugWriter = null;
+        public static bool debug = false;
+
+        //Int function placeholders, currently unused
         public static int GetPlayerDataInt(GameManager man, string name)
         {
             return 0;
         }
 
-        // Token: 0x06003118 RID: 12568 RVA: 0x0000269A File Offset: 0x0000089A
         public static void SetPlayerDataInt(GameManager man, string name, int value)
         {
         }
 
-        // Token: 0x06003119 RID: 12569 RVA: 0x00125C70 File Offset: 0x00123E70
+        //Override for PlayerData.GetBool
         public static bool GetPlayerDataBool(string name)
         {
-	    if (!Randomizer.randomizer)
-	    {
-	        return PlayerData.instance.GetBoolInternal(name);
-	    }
+            PlayerData pd = PlayerData.instance;
+
+            //Don't run randomizer code in non-randomizer saves
+	        if (!Randomizer.randomizer)
+	        {
+	            return pd.GetBoolInternal(name);
+	        }
+
             if (string.IsNullOrEmpty(name))
             {
                 return false;
             }
-            PlayerData instance = PlayerData.instance;
+
+            //Check stack trace to see if player is in a menu
             string text = new StackTrace().ToString();
             if (text.Contains("at HutongGames.PlayMaker.Fsm.Start()") || (name.Contains("gotCharm_") && text.Contains("at HutongGames.PlayMaker.Fsm.DoTransition(HutongGames.PlayMaker.FsmTransition transition, Boolean isGlobal)")))
             {
-                return instance.GetBoolInternal(name);
+                return pd.GetBoolInternal(name);
             }
+
             string key;
             string key2;
-            bool boolRandomizer;
+
+            //Don't run randomizer if bool is not in the loaded data
             if (!Randomizer.reverseLookup.TryGetValue(name, out key) || !Randomizer.permutation.TryGetValue(key, out key2))
             {
-                boolRandomizer = instance.GetBoolInternal(name);
+                return pd.GetBoolInternal(name);
             }
             else
             {
                 int index = Randomizer.entries[key].GetIndex(name);
                 RandomizerEntry randomizerEntry = Randomizer.entries[key2];
+
+                //Return the matching bool or the first one if there is no matching index
                 if (randomizerEntry.entries.Length > index)
                 {
-                    boolRandomizer = instance.GetBoolInternal(randomizerEntry.entries[index]);
+                    return pd.GetBoolInternal(randomizerEntry.entries[index]);
                 }
                 else
                 {
-                    boolRandomizer = instance.GetBoolInternal(randomizerEntry.entries[0]);
+                    return pd.GetBoolInternal(randomizerEntry.entries[0]);
                 }
             }
-            return boolRandomizer;
         }
 
-        // Token: 0x0600311A RID: 12570 RVA: 0x00125D48 File Offset: 0x00123F48
+        //Override for PlayerData.SetBool
         public static void SetPlayerDataBool(string name, bool val)
         {
-	    if (!Randomizer.randomizer)
-	    {
-	        PlayerData.instance.SetBoolInternal(name, val);
-	    }
+            PlayerData pd = PlayerData.instance;
+
+            //Don't run randomizer code in non-randomizer saves
+	        if (!Randomizer.randomizer)
+	        {
+	            pd.SetBoolInternal(name, val);
+	        }
+
             if (string.IsNullOrEmpty(name))
             {
                 return;
             }
-            PlayerData instance = PlayerData.instance;
+            
             string key;
             string text;
+
+            //Check if bool is in data before running randomizer code
             if (Randomizer.reverseLookup.TryGetValue(name, out key) && Randomizer.permutation.TryGetValue(key, out text))
             {
-                if (text == "Shade Cloak" && !instance.hasDash && !instance.canDash)
+                //Randomizer breaks progression, so we need to ensure the player never gets shade cloak before mothwing cloak
+                if (text == "Shade Cloak" && !pd.hasDash && !pd.canDash)
                 {
                     Randomizer.Swap("Shade Cloak", "Mothwing Cloak");
                     text = "Mothwing Cloak";
                     Randomizer.swappedCloak = true;
                 }
+
+                //Set all bools relating to the given entry
                 for (int i = 0; i < Randomizer.entries[text].entries.Length; i++)
                 {
-                    instance.SetBoolInternal(Randomizer.entries[text].entries[i], val);
+                    pd.SetBoolInternal(Randomizer.entries[text].entries[i], val);
                 }
                 return;
             }
-            instance.SetBoolInternal(name, val);
+
+            pd.SetBoolInternal(name, val);
         }
 
-        // Token: 0x0600311B RID: 12571 RVA: 0x00125DFC File Offset: 0x00123FFC
-        public static void AddEntry(string name, string[] entries, string[][] requirements)
+        //Adds data to the randomizer dictionaries
+        public static void AddEntry(XmlNode node, bool permadeath)
         {
-            Randomizer.entries.Add(name, new RandomizerEntry(name, entries, requirements));
-            for (int i = 0; i < entries.Length; i++)
+            if (!permadeath || Convert.ToBoolean(node.SelectSingleNode("permadeath").InnerText))
             {
-                Randomizer.reverseLookup.Add(entries[i], name);
+
+                RandomizerEntry entry = new RandomizerEntry(node);
+
+                if (!Randomizer.entries.ContainsKey(entry.name))
+                {
+                    Randomizer.entries.Add(entry.name, entry);
+
+                    //Build reverse lookup list for quickly finding pickup name from attributes
+                    for (int i = 0; i < entry.entries.Length; i++)
+                    {
+                        Randomizer.reverseLookup.Add(entry.entries[i], entry.name);
+                    }
+
+                    for (int i = 0; i < entry.localeNames.Length; i++)
+                    {
+                        //TODO: Parse duplicate entries properly
+                        if (i != 1 && i != 2)
+                        {
+                            Randomizer.reverseLookup.Add(entry.localeNames[i], entry.name);
+                        }
+                    }
+                }
             }
         }
 
-        // Token: 0x0600311C RID: 12572 RVA: 0x00125E38 File Offset: 0x00124038
+        //Randomization algorithm
         public static void Randomize(System.Random random)
         {
             bool flag = false;
+
+            //Loop until a permutation with all items reachable is found
             while (!flag)
             {
+                Randomizer.permutation.Clear();
+
                 List<string> list = new List<string>();
                 List<string> list2 = new List<string>();
                 List<string> list3 = new List<string>();
+
                 list.AddRange(Randomizer.entries.Keys);
                 list2.AddRange(Randomizer.entries.Keys);
-                Randomizer.permutation.Clear();
+
+                //Loop until all items have been added to randomizer
                 while (list.Count > 0)
                 {
                     flag = false;
+
+                    //Check for reachable pickups and assign them a random item
                     for (int i = 0; i < list.Count; i++)
                     {
                         if (Randomizer.IsReachable(list3, Randomizer.entries[list[i]]))
@@ -130,6 +187,8 @@ namespace RandomizerMod
                             list2.RemoveAt(index);
                         }
                     }
+
+                    //Break loop and try again if no items are reachable
                     if (!flag)
                     {
                         break;
@@ -138,12 +197,15 @@ namespace RandomizerMod
             }
         }
 
-        // Token: 0x0600311D RID: 12573 RVA: 0x00125F24 File Offset: 0x00124124
+        //Checks requirements to see if an entry is reachable
         public static bool IsReachable(List<string> reachable, RandomizerEntry entry)
         {
+            //Loop through requirement sets
             for (int i = 0; i < entry.requires.Length; i++)
             {
                 bool flag = true;
+
+                //Loop through requirements in sets
                 for (int j = 0; j < entry.requires[i].Length; j++)
                 {
                     if (!reachable.Contains(entry.requires[i][j]))
@@ -152,15 +214,19 @@ namespace RandomizerMod
                         break;
                     }
                 }
+
+                //Return true if all requirements in set are met
                 if (flag)
                 {
                     return true;
                 }
             }
+
+            //Check for pickups with no requirements
             return entry.requires.Length == 0;
         }
 
-        // Token: 0x0600311E RID: 12574 RVA: 0x00125F80 File Offset: 0x00124180
+        //Swap two given entries
         public static void Swap(string entry1, string entry2)
         {
             try
@@ -172,21 +238,16 @@ namespace RandomizerMod
             }
             catch (Exception)
             {
+                Randomizer.DebugLog("Could not swap entries " + entry1 + " and " + entry2);
             }
         }
 
-        // Token: 0x0600311F RID: 12575 RVA: 0x00126018 File Offset: 0x00124218
+        //Write randomizer save to file if applicable
         public static void SaveGame(int profileId)
         {
             if (Randomizer.randomizer)
             {
-                using (StreamWriter streamWriter = new StreamWriter(string.Concat(new object[]
-				{
-					Application.persistentDataPath,
-					"\\user",
-					profileId,
-					".rnd"
-				})))
+                using (StreamWriter streamWriter = new StreamWriter(Application.persistentDataPath + @"\user" + profileId + ".rnd"))
                 {
                     streamWriter.WriteLine(Randomizer.seed);
                     streamWriter.WriteLine(Randomizer.swappedCloak);
@@ -195,884 +256,108 @@ namespace RandomizerMod
             }
         }
 
-        // Token: 0x06003120 RID: 12576 RVA: 0x0012609C File Offset: 0x0012429C
+        //Load randomizer save from file if applicable
         public static void LoadGame(int profileId)
         {
             Randomizer.randomizer = false;
             Randomizer.hardMode = false;
-            if (File.Exists(string.Concat(new object[]
-			{
-				Application.persistentDataPath,
-				"\\user",
-				profileId,
-				".rnd"
-			})))
+
+            if (File.Exists(Application.persistentDataPath + @"\user" + profileId + ".rnd"))
             {
-                using (StreamReader streamReader = new StreamReader(string.Concat(new object[]
-				{
-					Application.persistentDataPath,
-					"\\user",
-					profileId,
-					".rnd"
-				})))
+                using (StreamReader streamReader = new StreamReader(Application.persistentDataPath + @"\user" + profileId + ".rnd"))
                 {
                     Randomizer.seed = Convert.ToInt32(streamReader.ReadLine());
                     Randomizer.swappedCloak = Convert.ToBoolean(streamReader.ReadLine());
                     Randomizer.hardMode = Convert.ToBoolean(streamReader.ReadLine());
                 }
+
                 Randomizer.SetHardMode(Randomizer.hardMode);
                 Randomizer.Randomize(new System.Random(Randomizer.seed));
+
+                //Swap cloaks if player picked up shade cloak first
                 if (Randomizer.swappedCloak)
                 {
                     Randomizer.Swap("Mothwing Cloak", "Shade Cloak");
                 }
+
                 Randomizer.randomizer = true;
             }
         }
 
-        // Token: 0x06003121 RID: 12577 RVA: 0x0002463E File Offset: 0x0002283E
+        //Set up randomization if applicable
         public static void NewGame()
         {
             if (Randomizer.randomizer)
             {
-                Randomizer.SetHardMode(Randomizer.hardMode);
                 if (Randomizer.seed == -1)
                 {
                     Randomizer.seed = new System.Random().Next();
                 }
+
                 Randomizer.swappedCloak = false;
+
+                Randomizer.SetHardMode(Randomizer.hardMode);
                 Randomizer.Randomize(new System.Random(Randomizer.seed));
             }
         }
 
-        // Token: 0x06003122 RID: 12578 RVA: 0x001261A0 File Offset: 0x001243A0
+        //Delete randomizer save if applicable
         public static void DeleteGame(int profileId)
         {
-            if (File.Exists(string.Concat(new object[]
-			{
-				Application.persistentDataPath,
-				"\\user",
-				profileId,
-				".rnd"
-			})))
+            if (File.Exists(Application.persistentDataPath + @"\user" + profileId + ".rnd"))
             {
-                File.Delete(string.Concat(new object[]
-				{
-					Application.persistentDataPath,
-					"\\user",
-					profileId,
-					".rnd"
-				}));
+                File.Delete(Application.persistentDataPath + @"\user" + profileId + ".rnd");
             }
         }
 
-        // Token: 0x06003123 RID: 12579 RVA: 0x00126214 File Offset: 0x00124414
+        //Load entries for the given mode
         public static void SetHardMode(bool hard)
         {
             Randomizer.hardMode = hard;
-            Randomizer.entries.Clear();
+            Randomizer.permutation.Clear();
             Randomizer.reverseLookup.Clear();
-            if (!hard)
+            Randomizer.entries.Clear();
+
+            //Log any errors that occur
+            try
             {
-                Randomizer.AddEntry("Mothwing Cloak", new string[]
-				{
-					"hasDash",
-					"canDash"
-				}, new string[0][]);
-                Randomizer.AddEntry("Mantis Claw", new string[]
-				{
-					"hasWalljump",
-					"canWallJump"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mothwing Cloak"
-					},
-					new string[]
-					{
-						"Shade Cloak"
-					},
-					new string[]
-					{
-						"Monarch Wings"
-					},
-					new string[]
-					{
-						"Mantis Claw"
-					},
-					new string[]
-					{
-						"Crystal Heart"
-					}
-				});
-                Randomizer.AddEntry("Crystal Heart", new string[]
-				{
-					"hasSuperDash",
-					"canSuperDash"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mantis Claw",
-						"Mothwing Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Shade Cloak"
-					}
-				});
-                Randomizer.AddEntry("Monarch Wings", new string[]
-				{
-					"hasDoubleJump"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Crystal Heart",
-						"Mantis Claw"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Monarch Wings"
-					}
-				});
-                Randomizer.AddEntry("Shade Cloak", new string[]
-				{
-					"hasShadowDash",
-					"canShadowDash"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mantis Claw",
-						"Monarch Wings"
-					}
-				});
-                Randomizer.AddEntry("Soul Catcher", new string[]
-				{
-					"gotCharm_20"
-				}, new string[0][]);
-                Randomizer.AddEntry("Soul Eater", new string[]
-				{
-					"gotCharm_21"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mantis Claw",
-						"Mothwing Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Crystal Heart"
-					},
-					new string[]
-					{
-						"Monarch Wings",
-						"Crystal Heart"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Shade Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Monarch Wings"
-					}
-				});
-                Randomizer.AddEntry("Dashmaster", new string[]
-				{
-					"gotCharm_31"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mothwing Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw"
-					},
-					new string[]
-					{
-						"Monarch Wings"
-					},
-					new string[]
-					{
-						"Crystal Heart"
-					},
-					new string[]
-					{
-						"Shade Cloak"
-					}
-				});
-                Randomizer.AddEntry("Thorns of Agony", new string[]
-				{
-					"gotCharm_12"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mothwing Cloak"
-					},
-					new string[]
-					{
-						"Shade Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Crystal Heart"
-					}
-				});
-                Randomizer.AddEntry("Fury of the Fallen", new string[]
-				{
-					"gotCharm_6"
-				}, new string[0][]);
-                Randomizer.AddEntry("Spell Twister", new string[]
-				{
-					"gotCharm_33"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mantis Claw",
-						"Mothwing Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Crystal Heart"
-					},
-					new string[]
-					{
-						"Monarch Wings",
-						"Crystal Heart"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Shade Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Monarch Wings"
-					}
-				});
-                Randomizer.AddEntry("Quick Slash", new string[]
-				{
-					"gotCharm_32"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mothwing Cloak",
-						"Mantis Claw"
-					},
-					new string[]
-					{
-						"Mothwing Cloak",
-						"Monarch Wings"
-					},
-					new string[]
-					{
-						"Shade Cloak",
-						"Mantis Claw"
-					},
-					new string[]
-					{
-						"Shade Cloak",
-						"Monarch Wings"
-					}
-				});
-                Randomizer.AddEntry("Mark of Pride", new string[]
-				{
-					"gotCharm_13"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mantis Claw"
-					}
-				});
-                Randomizer.AddEntry("Baldur Shell", new string[]
-				{
-					"gotCharm_5"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mantis Claw"
-					},
-					new string[]
-					{
-						"Mothwing Cloak"
-					},
-					new string[]
-					{
-						"Shade Cloak"
-					},
-					new string[]
-					{
-						"Monarch Wings"
-					},
-					new string[]
-					{
-						"Crystal Heart"
-					}
-				});
-                Randomizer.AddEntry("Flukenest", new string[]
-				{
-					"gotCharm_11"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Crystal Heart"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Mothwing Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Shade Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Monarch Wings"
-					}
-				});
-                Randomizer.AddEntry("Glowing Womb", new string[]
-				{
-					"gotCharm_22"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mantis Claw",
-						"Crystal Heart"
-					},
-					new string[]
-					{
-						"Monarch Wings",
-						"Crystal Heart"
-					}
-				});
-                Randomizer.AddEntry("Deep Focus", new string[]
-				{
-					"gotCharm_34"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Crystal Heart",
-						"Mantis Claw"
-					}
-				});
-                Randomizer.AddEntry("Grubsong", new string[]
-				{
-					"gotCharm_3"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mothwing Cloak",
-						"Mantis Claw",
-						"Monarch Wings",
-						"Crystal Heart",
-						"Shade Cloak"
-					}
-				});
-                Randomizer.AddEntry("Hiveblood", new string[]
-				{
-					"gotCharm_29"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mantis Claw",
-						"Monarch Wings"
-					}
-				});
-                Randomizer.AddEntry("Spore Shroom", new string[]
-				{
-					"gotCharm_17"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mantis Claw",
-						"Mothwing Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Shade Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Monarch Wings"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Crystal Heart"
-					}
-				});
-                Randomizer.AddEntry("Defender's Crest", new string[]
-				{
-					"gotCharm_10"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mantis Claw",
-						"Crystal Heart"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Mothwing Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Shade Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Monarch Wings"
-					}
-				});
-                return;
+                Randomizer.LoadEntriesFromXML(hard, PlayerData.instance.permadeathMode > 0);
             }
-            Randomizer.AddEntry("Mothwing Cloak", new string[]
-			{
-				"hasDash",
-				"canDash"
-			}, new string[0][]);
-            Randomizer.AddEntry("Mantis Claw", new string[]
-			{
-				"hasWalljump",
-				"canWallJump"
-			}, new string[0][]);
-            Randomizer.AddEntry("Crystal Heart", new string[]
-			{
-				"hasSuperDash",
-				"canSuperDash"
-			}, new string[][]
-			{
-				new string[]
-				{
-					"Mantis Claw"
-				}
-			});
-            Randomizer.AddEntry("Monarch Wings", new string[]
-			{
-				"hasDoubleJump"
-			}, new string[][]
-			{
-				new string[]
-				{
-					"Crystal Heart",
-					"Mantis Claw"
-				},
-				new string[]
-				{
-					"Monarch Wings"
-				}
-			});
-            Randomizer.AddEntry("Shade Cloak", new string[]
-			{
-				"hasShadowDash",
-				"canShadowDash"
-			}, new string[][]
-			{
-				new string[]
-				{
-					"Mantis Claw",
-					"Monarch Wings"
-				},
-				new string[]
-				{
-					"Mantis Claw",
-					"Mothwing Cloak"
-				},
-				new string[]
-				{
-					"Mantis Claw",
-					"Shade Cloak"
-				},
-				new string[]
-				{
-					"Mantis Claw",
-					"Crystal Heart"
-				}
-			});
-            Randomizer.AddEntry("Soul Catcher", new string[]
-			{
-				"gotCharm_20"
-			}, new string[0][]);
-            if (PlayerData.instance.permadeathMode > 0)
+            catch (Exception e)
             {
-                Randomizer.AddEntry("Soul Eater", new string[]
-				{
-					"gotCharm_21"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mantis Claw",
-						"Mothwing Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Crystal Heart"
-					},
-					new string[]
-					{
-						"Monarch Wings",
-						"Crystal Heart"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Shade Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Monarch Wings"
-					}
-				});
+                Randomizer.DebugLog(e.ToString());
             }
-            else
-            {
-                Randomizer.AddEntry("Soul Eater", new string[]
-				{
-					"gotCharm_21"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mantis Claw"
-					},
-					new string[]
-					{
-						"Monarch Wings"
-					}
-				});
-            }
-            Randomizer.AddEntry("Dashmaster", new string[]
-			{
-				"gotCharm_31"
-			}, new string[0][]);
-            Randomizer.AddEntry("Thorns of Agony", new string[]
-			{
-				"gotCharm_12"
-			}, new string[][]
-			{
-				new string[]
-				{
-					"Mothwing Cloak"
-				},
-				new string[]
-				{
-					"Shade Cloak"
-				},
-				new string[]
-				{
-					"Mantis Claw",
-					"Crystal Heart"
-				}
-			});
-            Randomizer.AddEntry("Fury of the Fallen", new string[]
-			{
-				"gotCharm_6"
-			}, new string[0][]);
-            if (PlayerData.instance.permadeathMode > 0)
-            {
-                Randomizer.AddEntry("Spell Twister", new string[]
-				{
-					"gotCharm_33"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mantis Claw",
-						"Mothwing Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Crystal Heart"
-					},
-					new string[]
-					{
-						"Monarch Wings",
-						"Crystal Heart"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Shade Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Monarch Wings"
-					}
-				});
-            }
-            else
-            {
-                Randomizer.AddEntry("Spell Twister", new string[]
-				{
-					"gotCharm_33"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mantis Claw"
-					},
-					new string[]
-					{
-						"Monarch Wings"
-					}
-				});
-            }
-            Randomizer.AddEntry("Quick Slash", new string[]
-			{
-				"gotCharm_32"
-			}, new string[][]
-			{
-				new string[]
-				{
-					"Mothwing Cloak",
-					"Mantis Claw"
-				},
-				new string[]
-				{
-					"Mothwing Cloak",
-					"Monarch Wings"
-				},
-				new string[]
-				{
-					"Shade Cloak",
-					"Mantis Claw"
-				},
-				new string[]
-				{
-					"Shade Cloak",
-					"Monarch Wings"
-				}
-			});
-            Randomizer.AddEntry("Mark of Pride", new string[]
-			{
-				"gotCharm_13"
-			}, new string[][]
-			{
-				new string[]
-				{
-					"Mantis Claw"
-				}
-			});
-            Randomizer.AddEntry("Baldur Shell", new string[]
-			{
-				"gotCharm_5"
-			}, new string[][]
-			{
-				new string[]
-				{
-					"Mantis Claw"
-				},
-				new string[]
-				{
-					"Mothwing Cloak"
-				},
-				new string[]
-				{
-					"Shade Cloak"
-				},
-				new string[]
-				{
-					"Monarch Wings"
-				},
-				new string[]
-				{
-					"Crystal Heart"
-				}
-			});
-            if (PlayerData.instance.permadeathMode > 0)
-            {
-                Randomizer.AddEntry("Flukenest", new string[]
-				{
-					"gotCharm_11"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mantis Claw",
-						"Crystal Heart"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Mothwing Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Shade Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Monarch Wings"
-					}
-				});
-            }
-            else
-            {
-                Randomizer.AddEntry("Flukenest", new string[]
-				{
-					"gotCharm_11"
-				}, new string[0][]);
-            }
-            Randomizer.AddEntry("Glowing Womb", new string[]
-			{
-				"gotCharm_22"
-			}, new string[][]
-			{
-				new string[]
-				{
-					"Mantis Claw",
-					"Crystal Heart"
-				},
-				new string[]
-				{
-					"Monarch Wings",
-					"Crystal Heart"
-				}
-			});
-            Randomizer.AddEntry("Deep Focus", new string[]
-			{
-				"gotCharm_34"
-			}, new string[][]
-			{
-				new string[]
-				{
-					"Crystal Heart",
-					"Mantis Claw"
-				}
-			});
-            Randomizer.AddEntry("Grubsong", new string[]
-			{
-				"gotCharm_3"
-			}, new string[][]
-			{
-				new string[]
-				{
-					"Mothwing Cloak",
-					"Mantis Claw",
-					"Monarch Wings",
-					"Crystal Heart",
-					"Shade Cloak"
-				}
-			});
-            Randomizer.AddEntry("Hiveblood", new string[]
-			{
-				"gotCharm_29"
-			}, new string[][]
-			{
-				new string[]
-				{
-					"Mantis Claw"
-				}
-			});
-            Randomizer.AddEntry("Spore Shroom", new string[]
-			{
-				"gotCharm_17"
-			}, new string[][]
-			{
-				new string[]
-				{
-					"Mantis Claw",
-					"Mothwing Cloak"
-				},
-				new string[]
-				{
-					"Mantis Claw",
-					"Shade Cloak"
-				},
-				new string[]
-				{
-					"Mantis Claw",
-					"Monarch Wings"
-				},
-				new string[]
-				{
-					"Mantis Claw",
-					"Crystal Heart"
-				}
-			});
-            if (PlayerData.instance.permadeathMode > 0)
-            {
-                Randomizer.AddEntry("Defender's Crest", new string[]
-				{
-					"gotCharm_10"
-				}, new string[][]
-				{
-					new string[]
-					{
-						"Mantis Claw",
-						"Crystal Heart"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Mothwing Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Shade Cloak"
-					},
-					new string[]
-					{
-						"Mantis Claw",
-						"Monarch Wings"
-					}
-				});
-                return;
-            }
-            Randomizer.AddEntry("Defender's Crest", new string[]
-			{
-				"gotCharm_10"
-			}, new string[][]
-			{
-				new string[]
-				{
-					"Mantis Claw"
-				}
-			});
         }
 
-        // Token: 0x06003124 RID: 12580 RVA: 0x001271B8 File Offset: 0x001253B8
+        public static void LoadEntriesFromXML(bool hard, bool permadeath)
+        {
+            if (!File.Exists(@"Randomizer\randomizer.xml"))
+            {
+                return;
+            }
+
+            XmlDocument rnd = new XmlDocument();
+            rnd.Load(@"Randomizer\randomizer.xml");
+
+            //Load hard mode first because duplicate entries are ignored
+            if (hard)
+            {
+                Randomizer.LoadEntries(rnd.SelectSingleNode("randomizer/hard"), permadeath);
+            }
+
+            Randomizer.LoadEntries(rnd.SelectSingleNode("randomizer/easy"), permadeath);
+        }
+
+        //Add entry for each node
+        public static void LoadEntries(XmlNode nodes, bool permadeath)
+        {
+            foreach (XmlNode node in nodes.SelectNodes("entry"))
+            {
+                Randomizer.AddEntry(node, permadeath);
+            }
+        }
+
+        //Log to file
         public static void DebugLog(string message)
         {
             if (!Randomizer.debug)
@@ -1087,34 +372,8 @@ namespace RandomizerMod
             if (Randomizer.debugWriter != null)
             {
                 Randomizer.debugWriter.WriteLine(message);
+                Randomizer.debugWriter.Flush();
             }
         }
-
-        // Token: 0x040038DC RID: 14556
-        private static Dictionary<string, RandomizerEntry> entries = new Dictionary<string, RandomizerEntry>();
-
-        // Token: 0x040038DD RID: 14557
-        private static Dictionary<string, string> reverseLookup = new Dictionary<string, string>();
-
-        // Token: 0x040038DE RID: 14558
-        private static Dictionary<string, string> permutation = new Dictionary<string, string>();
-
-        // Token: 0x040038DF RID: 14559
-        public static int seed = -1;
-
-        // Token: 0x040038E0 RID: 14560
-        public static bool swappedCloak;
-
-        // Token: 0x040038E1 RID: 14561
-        public static bool randomizer;
-
-        // Token: 0x040038E2 RID: 14562
-        public static bool hardMode;
-
-        // Token: 0x040038E3 RID: 14563
-        public static bool debug = false;
-
-        // Token: 0x040038E4 RID: 14564
-        public static StreamWriter debugWriter = null;
     }
 }

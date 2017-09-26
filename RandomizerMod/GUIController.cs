@@ -86,6 +86,11 @@ namespace RandomizerMod
                         int.TryParse(this.seedString, out Randomizer.seed);
                     }
                 }
+                if (UIManager.instance.menuState == GlobalEnums.MainMenuState.SAVE_PROFILES)
+                {
+                    Randomizer.randomizer = false;
+                    Randomizer.hardMode = false;
+                }
             }
             GUI.depth = depth;
             GUI.matrix = matrix;
