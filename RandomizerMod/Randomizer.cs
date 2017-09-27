@@ -127,10 +127,28 @@ namespace RandomizerMod
             }
 
             //Check stack trace to see if player is in a menu
-            string text = new StackTrace().ToString();
-            if (text.Contains("at HutongGames.PlayMaker.Fsm.Start()") || (name.Contains("gotCharm_") && text.Contains("at HutongGames.PlayMaker.Fsm.DoTransition(HutongGames.PlayMaker.FsmTransition transition, Boolean isGlobal)")))
+            string stack = new StackTrace().ToString();
+
+            //Split into multiple ifs because this looks horrible otherwise
+            //TODO: Cleaner way of checking than stack trace
+            if (!stack.Contains("at ShopMenuStock.BuildItemList()"))
             {
-                return pd.GetBoolInternal(name);
+                if (stack.Contains("at HutongGames.PlayMaker.Fsm.Start()"))
+                {
+                    return pd.GetBoolInternal(name);
+                }
+
+                /*GlobalEnums.HeroTransitionState heroState = HeroController.instance.transitionState;
+
+                if (heroState != GlobalEnums.HeroTransitionState.WAITING_TO_ENTER_LEVEL)
+                {
+                    return pd.GetBoolInternal(name);
+                }*/
+
+                if (name.Contains("gotCharm_") && stack.Contains("at HutongGames.PlayMaker.Fsm.DoTransition(HutongGames.PlayMaker.FsmTransition transition, Boolean isGlobal)"))
+                {
+                    return pd.GetBoolInternal(name);
+                }
             }
 
             string key;
@@ -260,7 +278,22 @@ namespace RandomizerMod
                         if (Randomizer.IsReachable(list3, Randomizer.entries[list[i]]))
                         {
                             flag = true;
-                            int index = random.Next(list2.Count);
+
+                            bool itemPicked = false;
+                            int index = -1;
+
+                            //Terrible way to make abilities show up less frequently
+                            while (!itemPicked)
+                            {
+                                itemPicked = true;
+                                index = random.Next(list2.Count);
+
+                                if (Randomizer.entries[list2[index]].type == RandomizerType.ABILITY && random.Next(1, 4) != 1)
+                                {
+                                    itemPicked = false;
+                                }
+                            }
+
                             Randomizer.permutation.Add(list[i], list2[index]);
                             list3.Add(list2[index]);
                             list.RemoveAt(i);

@@ -712,5 +712,185 @@
 				<locale>UI.CHARM_NAME_10</locale>
 			</locales>
 		</entry>
+		<entry>
+			<name>Lifeblood Heart</name>
+			<type>Charm</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>gotCharm_8</bool>
+			</bools>
+			<requirements>
+				<requirementSet>
+					<requirement>Mantis Claw</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Mothwing Cloak</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Shade Cloak</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Monarch Wings</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Crystal Heart</requirement>
+				</requirementSet>
+			</requirements>
+			<locales>
+				<locale>UI.CHARM_NAME_8</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Longnail</name>
+			<type>Charm</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>gotCharm_18</bool>
+			</bools>
+			<requirements>
+				<requirementSet>
+					<requirement>Mantis Claw</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Mothwing Cloak</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Shade Cloak</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Monarch Wings</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Crystal Heart</requirement>
+				</requirementSet>
+			</requirements>
+			<locales>
+				<locale>UI.CHARM_NAME_18</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Steady Body</name>
+			<type>Charm</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>gotCharm_14</bool>
+			</bools>
+			<requirements>
+				<requirementSet>
+					<requirement>Mantis Claw</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Mothwing Cloak</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Shade Cloak</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Monarch Wings</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Crystal Heart</requirement>
+				</requirementSet>
+			</requirements>
+			<locales>
+				<locale>UI.CHARM_NAME_14</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Shaman Stone</name>
+			<type>Charm</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>gotCharm_19</bool>
+			</bools>
+			<requirements>
+				<requirementSet>
+					<requirement>Mantis Claw</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Mothwing Cloak</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Shade Cloak</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Monarch Wings</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Crystal Heart</requirement>
+				</requirementSet>
+			</requirements>
+			<locales>
+				<locale>UI.CHARM_NAME_19</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Quick Focus</name>
+			<type>Charm</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>gotCharm_7</bool>
+			</bools>
+			<requirements>
+				<requirementSet>
+					<requirement>Mantis Claw</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Mothwing Cloak</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Shade Cloak</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Monarch Wings</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Crystal Heart</requirement>
+				</requirementSet>
+			</requirements>
+			<locales>
+				<locale>UI.CHARM_NAME_7</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Gathering Swarm</name>
+			<type>Charm</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>gotCharm_1</bool>
+			</bools>
+			<requirements></requirements>
+			<locales>
+				<locale>UI.CHARM_NAME_1</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Stalwart Shell</name>
+			<type>Charm</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>gotCharm_4</bool>
+			</bools>
+			<requirements></requirements>
+			<locales>
+				<locale>UI.CHARM_NAME_4</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Heavy Blow</name>
+			<type>Charm</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>gotCharm_15</bool>
+			</bools>
+			<requirements>
+				<requirementSet>
+					<requirement>Mantis Claw</requirement>
+				</requirementSet>
+			</requirements>
+			<locales>
+				<locale>UI.CHARM_NAME_15</locale>
+			</locales>
+		</entry>
 	</easy>
 </randomizer>

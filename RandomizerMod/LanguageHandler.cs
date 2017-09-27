@@ -23,8 +23,15 @@ namespace RandomizerMod
                 if (Randomizer.reverseLookup.TryGetValue(sheet + "." + key, out pickupName))
                 {
                     string switchedPickup;
+
                     if (Randomizer.permutation.TryGetValue(pickupName, out switchedPickup))
                     {
+                        //Check to make sure we're not showing the player shade cloak when we don't intend to give it to them
+                        if (switchedPickup == "Shade Cloak" && !PlayerData.instance.hasDash)
+                        {
+                            switchedPickup = "Mothwing Cloak";
+                        }
+
                         RandomizerEntry switchedEntry;
                         if (Randomizer.entries.TryGetValue(switchedPickup, out switchedEntry))
                         {
