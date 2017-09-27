@@ -8,6 +8,7 @@ namespace RandomizerMod
 {
     public class RandomizerMod : Mod
     {
+        //Attach to the modded dll
         public override void Initialize()
         {
             ModHooks.ModLog("Randomizer Mod initializing!");

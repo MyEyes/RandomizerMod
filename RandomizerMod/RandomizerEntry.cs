@@ -4,6 +4,8 @@ using System.Xml;
 
 namespace RandomizerMod
 {
+    //Type of pickup
+    //Not currently used much but it is in the XML and loaded, mostly for future proofing
     public enum RandomizerType
     {
         ABILITY,
@@ -13,10 +15,15 @@ namespace RandomizerMod
         INVALID
     };
 
-    // Token: 0x02000920 RID: 2336
     public struct RandomizerEntry
     {
-        // Token: 0x06003128 RID: 12584 RVA: 0x0012720C File Offset: 0x0012540C
+        public string name;
+        public string[] entries;
+        public string[][] requires;
+        public RandomizerType type;
+        public string[] localeNames;
+
+        //Get index of entry so we can change the matching index on the swapped item
         public int GetIndex(string s)
         {
             for (int i = 0; i < this.entries.Length; i++)
@@ -29,7 +36,8 @@ namespace RandomizerMod
             return -1;
         }
 
-        // Token: 0x06003129 RID: 12585 RVA: 0x000246A5 File Offset: 0x000228A5
+        //Load entry from XML
+        //TODO: Add error checking for malformatted XML
         public RandomizerEntry(XmlNode xml)
         {
             this.name = xml.SelectSingleNode("name").InnerText;
@@ -62,6 +70,7 @@ namespace RandomizerMod
             }
         }
 
+        //Helper function for loading XML
         public static RandomizerType GetTypeFromString(string type)
         {
             if (string.IsNullOrEmpty(type))
@@ -88,18 +97,5 @@ namespace RandomizerMod
 
             return RandomizerType.INVALID;
         }
-
-        // Token: 0x040038E7 RID: 14567
-        public string name;
-
-        // Token: 0x040038E8 RID: 14568
-        public string[] entries;
-
-        // Token: 0x040038E9 RID: 14569
-        public string[][] requires;
-
-        public RandomizerType type;
-
-        public string[] localeNames;
     }
 }

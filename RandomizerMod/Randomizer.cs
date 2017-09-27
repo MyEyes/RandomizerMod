@@ -47,6 +47,7 @@ namespace RandomizerMod
 
             if (name == "trinket1" || name == "trinket2" || name == "trinket3" || name == "trinket4")
             {
+                //It would be cleaner to override this in SetPlayerDataBool, but this works just as well
                 PlayerData.instance.SetBoolInternal("foundTrinket1", true);
                 PlayerData.instance.SetBoolInternal("foundTrinket2", true);
                 PlayerData.instance.SetBoolInternal("foundTrinket3", true);
@@ -56,6 +57,7 @@ namespace RandomizerMod
                 PlayerData.instance.SetBoolInternal("noTrinket3", false);
                 PlayerData.instance.SetBoolInternal("noTrinket4", false);
 
+                //Make sure the change is +1 so we don't randomize selling trinkets to Lemm
                 int change = value - PlayerData.instance.GetIntInternal(name);
 
                 if (change != 1)
@@ -73,8 +75,10 @@ namespace RandomizerMod
             PlayerData.instance.SetIntInternal(name, value);
         }
 
+        //Randomize trinkets based on scene name and seed
         public static int GetTrinketForScene()
         {
+            //Adding all chars from scene name to seed works well enough because there's only two places with multiple trinkets in a scene
             char[] sceneCharArray = GameManager.instance.GetSceneNameString().ToCharArray();
             int[] sceneNumbers = sceneCharArray.Select(c => Convert.ToInt32(c)).ToArray();
 
@@ -85,6 +89,7 @@ namespace RandomizerMod
                 modifiedSeed += sceneNumbers[i];
             }
 
+            //Total trinket count: 14 / 16 / 7 / 4, using those values to get mostly accurate randomization, rather than truely moving them around
             int trinketNum = new System.Random(modifiedSeed).Next(1, 42);
 
             if (trinketNum <= 14)
@@ -189,7 +194,8 @@ namespace RandomizerMod
                 {
                     pd.SetBoolInternal(Randomizer.entries[text].entries[i], val);
 
-                    if (Randomizer.entries[text].entries[i].Contains("gotCharm_")) pd.hasCharm = true;
+                    //Need to make the charms page accessible if the player gets their first charm from a non-charm pickup
+                    if (Randomizer.entries[text].type == RandomizerType.CHARM && Randomizer.entries[key].type != RandomizerType.CHARM) pd.hasCharm = true;
                 }
                 return;
             }
@@ -318,6 +324,7 @@ namespace RandomizerMod
         }
 
         //Write randomizer save to file if applicable
+        //TODO: Hook GameManager.SaveGame to write save to the same file as everything else
         public static void SaveGame(int profileId)
         {
             if (Randomizer.randomizer)
@@ -398,6 +405,7 @@ namespace RandomizerMod
         //Load entries for the given mode
         public static void SetHardMode(bool hard)
         {
+            //Clear everything beforehand just in case
             Randomizer.hardMode = hard;
             Randomizer.permutation.Clear();
             Randomizer.reverseLookup.Clear();
@@ -406,6 +414,7 @@ namespace RandomizerMod
             //Log any errors that occur
             try
             {
+                //TODO: Cleaner implementation than reloading entries every new game/load
                 Randomizer.LoadEntriesFromXML(hard, PlayerData.instance.permadeathMode > 0);
             }
             catch (Exception e)
@@ -414,6 +423,8 @@ namespace RandomizerMod
             }
         }
 
+        //Loads all entries from XML
+        //Entries are assumed to be formatted properly, malformatted XML will likely cause a crash
         public static void LoadEntriesFromXML(bool hard, bool permadeath)
         {
             if (!File.Exists(@"Randomizer\randomizer.xml"))
@@ -461,9 +472,27 @@ namespace RandomizerMod
             }
         }
 
+        //Checks if player is in inventory
+        //None of this should ever be null, but checking just in case
         public static bool InInventory()
         {
-            return GameObject.FindGameObjectWithTag("Inventory Top").GetComponent<PlayMakerFSM>().FsmVariables.GetFsmBool("Open").Value;
+            GameObject invTop = GameObject.FindGameObjectWithTag("Inventory Top");
+
+            if (invTop != null)
+            {
+                PlayMakerFSM invFSM = invTop.GetComponent<PlayMakerFSM>();
+
+                if (invFSM != null)
+                {
+                    FsmBool invOpen = invFSM.FsmVariables.GetFsmBool("Open");
+
+                    if (invOpen != null)
+                    {
+                        return invOpen.Value;
+                    }
+                }
+            }
+            return false;
         }
     }
 }

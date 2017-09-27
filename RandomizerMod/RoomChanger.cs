@@ -7,6 +7,7 @@ namespace RandomizerMod
 {
     public static class RoomChanger
     {
+        //Not really useful for anything but testing
         public static string ChangeRoom(string sceneName)
         {
             return sceneName;
