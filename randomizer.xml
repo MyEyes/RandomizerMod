@@ -219,6 +219,18 @@
 				<locale>UI.CHARM_NAME_10</locale>
 			</locales>
 		</entry>
+		<entry>
+			<name>Dream Nail</name>
+			<type>Ability</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>hasDreamNail</bool>
+			</bools>
+			<requirements></requirements>
+			<locales>
+				<locale>UI.INV_NAME_DREAMNAIL_A</locale>
+			</locales>
+		</entry>
 	</hard>
 	<easy>
 		<entry>
@@ -890,6 +902,124 @@
 			</requirements>
 			<locales>
 				<locale>UI.CHARM_NAME_15</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Dream Nail</name>
+			<type>Ability</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>hasDreamNail</bool>
+			</bools>
+			<requirements>
+				<requirementSet>
+					<requirement>Mantis Claw</requirement>
+				</requirementSet>
+			</requirements>
+			<locales>
+				<locale>UI.INV_NAME_DREAMNAIL_A</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Dream Gate</name>
+			<type>Ability</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>hasDreamGate</bool>
+			</bools>
+			<requirements>
+				<requirementSet>
+					<requirement>Dream Nail</requirement>
+					<requirement>Mantis Claw</requirement>
+					<requirement>Mothwing Cloak</requirement>
+					<requirement>Monarch Wings</requirement>
+					<requirement>Crystal Heart</requirement>
+					<requirement>Shade Cloak</requirement>
+				</requirementSet>
+			</requirements>
+			<locales>
+				<locale>UI.INV_NAME_DREAMGATE</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Awoken Dream Nail</name>
+			<type>Ability</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>dreamNailUpgraded</bool>
+			</bools>
+			<requirements>
+				<requirementSet>
+					<requirement>Dream Nail</requirement>
+					<requirement>Mantis Claw</requirement>
+					<requirement>Mothwing Cloak</requirement>
+					<requirement>Monarch Wings</requirement>
+					<requirement>Crystal Heart</requirement>
+					<requirement>Shade Cloak</requirement>
+				</requirementSet>
+			</requirements>
+			<locales>
+				<locale>UI.INV_NAME_DREAMNAIL_B</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Sharp Shadow</name>
+			<type>Charm</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>gotCharm_16</bool>
+			</bools>
+			<requirements>
+				<requirementSet>
+					<requirement>Mantis Claw</requirement>
+					<requirement>Mothwing Cloak</requirement>
+					<requirement>Shade Cloak</requirement>
+				</requirementSet>
+			</requirements>
+			<locales>
+				<locale>UI.CHARM_NAME_16</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Dream Wielder</name>
+			<type>Charm</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>gotCharm_30</bool>
+			</bools>
+			<requirements>
+				<requirementSet>
+					<requirement>Dream Nail</requirement>
+					<requirement>Mantis Claw</requirement>
+					<requirement>Mothwing Cloak</requirement>
+					<requirement>Monarch Wings</requirement>
+					<requirement>Crystal Heart</requirement>
+					<requirement>Shade Cloak</requirement>
+				</requirementSet>
+			</requirements>
+			<locales>
+				<locale>UI.CHARM_NAME_30</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Grubberfly's Elegy</name>
+			<type>Charm</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>gotCharm_35</bool>
+			</bools>
+			<requirements>
+				<requirementSet>
+					<requirement>Dream Nail</requirement>
+					<requirement>Mantis Claw</requirement>
+					<requirement>Mothwing Cloak</requirement>
+					<requirement>Monarch Wings</requirement>
+					<requirement>Crystal Heart</requirement>
+					<requirement>Shade Cloak</requirement>
+				</requirementSet>
+			</requirements>
+			<locales>
+				<locale>UI.CHARM_NAME_35</locale>
 			</locales>
 		</entry>
 	</easy>

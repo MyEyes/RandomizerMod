@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using HutongGames.PlayMaker;
 
 namespace RandomizerMod
 {
@@ -11,6 +12,25 @@ namespace RandomizerMod
         // Token: 0x0600312E RID: 12590 RVA: 0x00127658 File Offset: 0x00125858
         public static void CheckForChanges(string destScene)
         {
+            /*List<PlayMakerFSM> acidList = new List<PlayMakerFSM>();
+
+            foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Acid"))
+            {
+                foreach (PlayMakerFSM acidFSM in obj.GetComponents<PlayMakerFSM>())
+                {
+                    foreach (FsmInt acidInt in acidFSM.FsmVariables.IntVariables)
+                    {
+                        if (acidInt.Name == "hazardType") acidList.Add(acidFSM);
+                    }
+                }
+            }
+
+            for (int i = 0; i < acidList.Count; i++)
+            {
+                acidList[i] = new PlayMakerFSM();
+                acidList[i].name = "Surface Water Region";
+            }*/
+
             if (!Randomizer.randomizer)
             {
                 return;
@@ -31,6 +51,7 @@ namespace RandomizerMod
                     }
                 }
             }
+
             if (destScene == "Fungus2_21" && PlayerData.instance.hasCityKey)
             {
                 foreach (GameObject gameObject2 in SceneHandler.GetObjectsFromScene("Fungus2_21"))
@@ -41,6 +62,7 @@ namespace RandomizerMod
                     }
                 }
             }
+
             if (destScene == "Abyss_18" && !PlayerData.instance.hasWalljump)
             {
                 foreach (GameObject gameObject3 in SceneHandler.GetObjectsFromScene("Abyss_18"))

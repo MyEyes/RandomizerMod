@@ -32,6 +32,17 @@ namespace RandomizerMod
                             switchedPickup = "Mothwing Cloak";
                         }
 
+                        //Similar checks for dream nail
+                        if (switchedPickup == "Dream Gate" && !PlayerData.instance.hasDreamNail)
+                        {
+                            switchedPickup = "Dream Nail";
+                        }
+
+                        if (switchedPickup == "Awoken Dream Nail" && !PlayerData.instance.hasDreamNail)
+                        {
+                            switchedPickup = "Dream Nail";
+                        }
+
                         RandomizerEntry switchedEntry;
                         if (Randomizer.entries.TryGetValue(switchedPickup, out switchedEntry))
                         {

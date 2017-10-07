@@ -16,6 +16,8 @@ namespace RandomizerMod
         public static Dictionary<string, string> permutation = new Dictionary<string, string>();
 
         public static bool swappedCloak;
+        public static bool swappedGate;
+        public static bool swappedAwoken;
         public static bool randomizer;
         public static bool hardMode;
         public static int seed = -1;
@@ -138,13 +140,6 @@ namespace RandomizerMod
                     return pd.GetBoolInternal(name);
                 }
 
-                /*GlobalEnums.HeroTransitionState heroState = HeroController.instance.transitionState;
-
-                if (heroState != GlobalEnums.HeroTransitionState.WAITING_TO_ENTER_LEVEL)
-                {
-                    return pd.GetBoolInternal(name);
-                }*/
-
                 if (name.Contains("gotCharm_") && stack.Contains("at HutongGames.PlayMaker.Fsm.DoTransition(HutongGames.PlayMaker.FsmTransition transition, Boolean isGlobal)"))
                 {
                     return pd.GetBoolInternal(name);
@@ -205,6 +200,21 @@ namespace RandomizerMod
                     Randomizer.Swap("Shade Cloak", "Mothwing Cloak");
                     text = "Mothwing Cloak";
                     Randomizer.swappedCloak = true;
+                }
+
+                //Similar checks for dream nail
+                if (text == "Dream Gate" && !pd.hasDreamNail)
+                {
+                    Randomizer.Swap("Dream Nail", "Dream Gate");
+                    text = "Dream Nail";
+                    Randomizer.swappedGate = true;
+                }
+
+                if (text == "Awoken Dream Nail" && !pd.hasDreamNail)
+                {
+                    Randomizer.Swap("Dream Nail", "Awoken Dream Nail");
+                    text = "Dream Nail";
+                    Randomizer.swappedAwoken = true;
                 }
 
                 //Set all bools relating to the given entry
@@ -367,6 +377,8 @@ namespace RandomizerMod
                     streamWriter.WriteLine(Randomizer.seed);
                     streamWriter.WriteLine(Randomizer.swappedCloak);
                     streamWriter.WriteLine(Randomizer.hardMode);
+                    streamWriter.WriteLine(Randomizer.swappedGate);
+                    streamWriter.WriteLine(Randomizer.swappedAwoken);
                 }
             }
         }
@@ -385,6 +397,8 @@ namespace RandomizerMod
                     Randomizer.seed = Convert.ToInt32(streamReader.ReadLine());
                     Randomizer.swappedCloak = Convert.ToBoolean(streamReader.ReadLine());
                     Randomizer.hardMode = Convert.ToBoolean(streamReader.ReadLine());
+                    Randomizer.swappedGate = Convert.ToBoolean(streamReader.ReadLine());
+                    Randomizer.swappedAwoken = Convert.ToBoolean(streamReader.ReadLine());
                 }
 
                 Randomizer.SetHardMode(Randomizer.hardMode);
@@ -394,6 +408,17 @@ namespace RandomizerMod
                 if (Randomizer.swappedCloak)
                 {
                     Randomizer.Swap("Mothwing Cloak", "Shade Cloak");
+                }
+
+                //Similar checks for dream nail
+                if (Randomizer.swappedGate)
+                {
+                    Randomizer.Swap("Dream Nail", "Dream Gate");
+                }
+
+                if (Randomizer.swappedAwoken)
+                {
+                    Randomizer.Swap("Dream Nail", "Awoken Dream Nail");
                 }
 
                 Randomizer.randomizer = true;
@@ -411,7 +436,11 @@ namespace RandomizerMod
             PlayerData.instance.hasSuperDash = true;
             PlayerData.instance.canSuperDash = true;
             PlayerData.instance.hasShadowDash = true;
-            PlayerData.instance.canShadowDash = true;*/
+            PlayerData.instance.canShadowDash = true;
+            PlayerData.instance.fireballLevel = 2;
+            PlayerData.instance.screamLevel = 2;
+            PlayerData.instance.quakeLevel = 2;*/
+
             if (Randomizer.randomizer)
             {
                 if (Randomizer.seed == -1)
@@ -423,6 +452,9 @@ namespace RandomizerMod
 
                 Randomizer.SetHardMode(Randomizer.hardMode);
                 Randomizer.Randomize(new System.Random(Randomizer.seed));
+
+                //Randomizer.permutation.Add("Isma's Tear", "Fury of the Fallen");
+                //Randomizer.permutation.Add("Fury of the Fallen", "Isma's Tear");
             }
         }
 
