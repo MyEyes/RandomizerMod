@@ -231,6 +231,42 @@
 				<locale>UI.INV_NAME_DREAMNAIL_A</locale>
 			</locales>
 		</entry>
+		<entry>
+			<name>Fragile Heart</name>
+			<type>Charm</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>gotCharm_23</bool>
+			</bools>
+			<requirements></requirements>
+			<locales>
+				<locale>UI.CHARM_NAME_23</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Fragile Greed</name>
+			<type>Charm</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>gotCharm_24</bool>
+			</bools>
+			<requirements></requirements>
+			<locales>
+				<locale>UI.CHARM_NAME_24</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Fragile Strength</name>
+			<type>Charm</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>gotCharm_25</bool>
+			</bools>
+			<requirements></requirements>
+			<locales>
+				<locale>UI.CHARM_NAME_25</locale>
+			</locales>
+		</entry>
 	</hard>
 	<easy>
 		<entry>
@@ -1020,6 +1056,90 @@
 			</requirements>
 			<locales>
 				<locale>UI.CHARM_NAME_35</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Fragile Heart</name>
+			<type>Charm</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>gotCharm_23</bool>
+			</bools>
+			<requirements>
+				<requirementSet>
+					<requirement>Mantis Claw</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Mothwing Cloak</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Monarch Wings</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Crystal Heart</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Shade Cloak</requirement>
+				</requirementSet>
+			</requirements>
+			<locales>
+				<locale>UI.CHARM_NAME_23</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Fragile Greed</name>
+			<type>Charm</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>gotCharm_24</bool>
+			</bools>
+			<requirements>
+				<requirementSet>
+					<requirement>Mantis Claw</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Mothwing Cloak</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Monarch Wings</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Crystal Heart</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Shade Cloak</requirement>
+				</requirementSet>
+			</requirements>
+			<locales>
+				<locale>UI.CHARM_NAME_24</locale>
+			</locales>
+		</entry>
+		<entry>
+			<name>Fragile Strength</name>
+			<type>Charm</type>
+			<permadeath>true</permadeath>
+			<bools>
+				<bool>gotCharm_25</bool>
+			</bools>
+			<requirements>
+				<requirementSet>
+					<requirement>Mantis Claw</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Mothwing Cloak</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Monarch Wings</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Crystal Heart</requirement>
+				</requirementSet>
+				<requirementSet>
+					<requirement>Shade Cloak</requirement>
+				</requirementSet>
+			</requirements>
+			<locales>
+				<locale>UI.CHARM_NAME_25</locale>
 			</locales>
 		</entry>
 	</easy>
