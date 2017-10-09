@@ -319,6 +319,11 @@ namespace RandomizerMod
                     }
                 }
             }
+
+            foreach (KeyValuePair<string, string> perm in permutation)
+            {
+                Modding.ModHooks.ModLog("[RANDOMIZER] " + perm.Key + " = " + perm.Value);
+            }
         }
 
         //Checks requirements to see if an entry is reachable

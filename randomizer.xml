@@ -674,6 +674,7 @@
 			</bools>
 			<requirements>
 				<requirementSet>
+					<requirement>Dream Nail</requirement>
 					<requirement>Mothwing Cloak</requirement>
 					<requirement>Mantis Claw</requirement>
 					<requirement>Monarch Wings</requirement>
