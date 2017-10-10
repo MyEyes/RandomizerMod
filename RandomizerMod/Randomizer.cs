@@ -123,6 +123,17 @@ namespace RandomizerMod
 	            return pd.GetBoolInternal(name);
 	        }
 
+            if (GameManager.instance.GetSceneNameString() != "RestingGrounds_07" && GameManager.instance.GetSceneNameString() != "RestingGrounds_04")
+            {
+                if (name == "hasDreamGate" || name == "dreamNailUpgraded" || name == "hasDreamNail")
+                {
+                    return pd.GetBoolInternal(name);
+                }
+            }
+
+            //RestingGrounds_07
+            //RestingGrounds_04
+
             if (string.IsNullOrEmpty(name))
             {
                 return false;
@@ -217,10 +228,22 @@ namespace RandomizerMod
                     Randomizer.swappedAwoken = true;
                 }
 
+                //FSM variable is probably tracked separately, need to make sure it's accurate
+                if (name == "hasDreamGate" && !PlayerData.instance.hasDreamGate)
+                {
+                    FSMUtility.LocateFSM(HeroController.instance.gameObject, "Dream Nail").FsmVariables.GetFsmBool("Dream Warp Allowed").Value = false;
+                }
+
                 //Set all bools relating to the given entry
                 for (int i = 0; i < Randomizer.entries[text].entries.Length; i++)
                 {
                     pd.SetBoolInternal(Randomizer.entries[text].entries[i], val);
+
+                    //FSM variable is probably tracked separately, need to make sure it's accurate
+                    if (Randomizer.entries[text].entries[i] == "hasDreamGate")
+                    {
+                        FSMUtility.LocateFSM(HeroController.instance.gameObject, "Dream Nail").FsmVariables.GetFsmBool("Dream Warp Allowed").Value = true;
+                    }
 
                     //Need to make the charms page accessible if the player gets their first charm from a non-charm pickup
                     if (Randomizer.entries[text].type == RandomizerType.CHARM && Randomizer.entries[key].type != RandomizerType.CHARM) pd.hasCharm = true;

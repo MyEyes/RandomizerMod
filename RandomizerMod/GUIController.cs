@@ -12,10 +12,11 @@ namespace RandomizerMod
         public GUIStyle style;
 
         private string seedString;
+        private System.Random rnd = new System.Random();
 
         public GUIController()
         {
-            this.seedString = new System.Random().Next().ToString();
+            this.seedString = rnd.Next().ToString();
         }
 
         private void Awake()
@@ -109,6 +110,10 @@ namespace RandomizerMod
                         this.seedString = Regex.Replace(this.seedString, "[^0-9]", "");
                         int.TryParse(this.seedString, out Randomizer.seed);
                     }
+                }
+                else
+                {
+                    this.seedString = rnd.Next().ToString();
                 }
 
                 //Disable randomizer while looking at saves so that the variables don't carry over to places they shouldn't

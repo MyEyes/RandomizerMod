@@ -336,6 +336,10 @@
 					<requirement>Mantis Claw</requirement>
 					<requirement>Shade Cloak</requirement>
 				</requirementSet>
+				<requirementSet>
+					<requirement>Mantis Claw</requirement>
+					<requirement>Monarch Wings</requirement>
+				</requirementSet>
 			</requirements>
 			<locales>
 				<locale>UI.INV_NAME_SUPERDASH</locale>
