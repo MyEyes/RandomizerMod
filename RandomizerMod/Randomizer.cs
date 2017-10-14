@@ -193,21 +193,21 @@ namespace RandomizerMod
                 }
 
                 //Similar checks for spells
-                if (text == "Shade Soul" && pd.fireballLevel == 0)
+                if (text == "Shade Soul" && (_fireball1 + _fireball2) == 0)
                 {
                     Swap("Vengeful Spirit", "Shade Soul");
                     text = "Vengeful Spirit";
                     swappedFireball = true;
                 }
 
-                if (text == "Descending Dark" && pd.quakeLevel == 0)
+                if (text == "Descending Dark" && (_quake1 + _quake2) == 0)
                 {
                     Swap("Desolate Dive", "Descending Dark");
                     text = "Desolate Dive";
                     swappedQuake = true;
                 }
 
-                if (text == "Abyss Shriek" && pd.screamLevel == 0)
+                if (text == "Abyss Shriek" && (_scream1 + _scream2) == 0)
                 {
                     Swap("Howling Wraiths", "Abyss Shriek");
                     text = "Howling Wraiths";
@@ -420,21 +420,21 @@ namespace RandomizerMod
                 }
 
                 //Similar checks for spells
-                if (text == "Shade Soul" && pd.fireballLevel == 0)
+                if (text == "Shade Soul" && (_fireball1 + _fireball2) == 0)
                 {
                     Swap("Vengeful Spirit", "Shade Soul");
                     text = "Vengeful Spirit";
                     swappedFireball = true;
                 }
 
-                if (text == "Descending Dark" && pd.quakeLevel == 0)
+                if (text == "Descending Dark" && (_quake1 + _quake2) == 0)
                 {
                     Swap("Desolate Dive", "Descending Dark");
                     text = "Desolate Dive";
                     swappedQuake = true;
                 }
 
-                if (text == "Abyss Shriek" && pd.screamLevel == 0)
+                if (text == "Abyss Shriek" && (_scream1 + _scream2) == 0)
                 {
                     Swap("Howling Wraiths", "Abyss Shriek");
                     text = "Howling Wraiths";

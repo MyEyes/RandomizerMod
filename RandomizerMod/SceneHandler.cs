@@ -55,6 +55,10 @@ namespace RandomizerMod
                                         {
                                             val.Add("_screamLevel");
                                         }
+                                        else
+                                        {
+                                            val.Add(str);
+                                        }
 
                                         if (val.Count > 0)
                                         {
@@ -156,6 +160,59 @@ namespace RandomizerMod
 
                         break;
                     }
+                }
+            }
+
+            if ((destScene == "Crossroads_11_alt" || destScene == "Fungus1_28") && (Randomizer._fireball1 > 0 || Randomizer._fireball2 > 0))
+            {
+                try
+                {
+                    Modding.ModHooks.ModLog("Attempting to fix baldurs in scene");
+                    foreach (GameObject obj in SceneHandler.GetObjectsFromScene(destScene))
+                    {
+                        if (obj.name == "Blocker")
+                        {
+                            PlayMakerFSM fsm = FSMUtility.LocateFSM(obj, "Blocker Control");
+
+                            for (int i = 0; i < fsm.FsmStates.Length; i++)
+                            {
+                                if (fsm.FsmStates[i].Name == "Can Roller?")
+                                {
+                                    FieldInfo[] fieldInfo = typeof(HutongGames.PlayMaker.ActionData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                    for (int j = 0; j < fieldInfo.Length; j++)
+                                    {
+                                        if (fieldInfo[j].Name == "fsmStringParams")
+                                        {
+                                            foreach (FsmString str in (List<FsmString>)fieldInfo[j].GetValue(fsm.FsmStates[i].ActionData))
+                                            {
+                                                List<FsmString> val = new List<FsmString>();
+
+                                                if (str.Value.Contains("fireball"))
+                                                {
+                                                    val.Add("_fireballLevel");
+                                                }
+                                                else
+                                                {
+                                                    val.Add(str);
+                                                }
+
+                                                if (val.Count > 0)
+                                                {
+                                                    fieldInfo[j].SetValue(fsm.FsmStates[i].ActionData, val);
+                                                }
+                                            }
+
+                                            fsm.FsmStates[i].LoadActions();
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    Modding.ModHooks.ModLog(e.ToString());
                 }
             }
         }
