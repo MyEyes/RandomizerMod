@@ -244,6 +244,7 @@
 			<locale>UI.INV_NAME_DREAMNAIL_B</locale>
 		</locales>
 	</entry>
+	<!--TODO: Fix spell requirements-->
 	<entry>
 		<name>Vengeful Spirit</name>
 		<type>Spell</type>
@@ -261,7 +262,13 @@
 		<vars>
 			<int value="2">fireballLevel</int>
 		</vars>
-		<requirements></requirements>
+		<requirements>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Dream Nail</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_SPELL_FIREBALL2</locale>
 		</locales>
@@ -272,7 +279,13 @@
 		<vars>
 			<int value="1">quakeLevel</int>
 		</vars>
-		<requirements></requirements>
+		<requirements>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Dream Nail</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_SPELL_QUAKE1</locale>
 		</locales>
@@ -283,7 +296,14 @@
 		<vars>
 			<int value="2">quakeLevel</int>
 		</vars>
-		<requirements></requirements>
+		<requirements>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Dream Nail</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_SPELL_QUAKE2</locale>
 		</locales>
@@ -305,7 +325,13 @@
 		<vars>
 			<int value="2">screamLevel</int>
 		</vars>
-		<requirements></requirements>
+		<requirements>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Dream Nail</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_SPELL_SCREAM2</locale>
 		</locales>
@@ -380,16 +406,75 @@
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
+				<requirement>Desolate Dive</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Descending Dark</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
 				<requirement>Grubberfly's Elegy</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Desolate Dive</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Descending Dark</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Grubberfly's Elegy</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Shade Cloak</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Shade Cloak</requirement>
+				<requirement>Desolate Dive</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Shade Cloak</requirement>
+				<requirement>Descending Dark</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Shade Cloak</requirement>
+				<requirement>Grubberfly's Elegy</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Desolate Dive</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Descending Dark</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Grubberfly's Elegy</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
@@ -401,7 +486,35 @@
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
+				<requirement>Desolate Dive</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Descending Dark</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
 				<requirement>Grubberfly's Elegy</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mark of Pride</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Mark of Pride</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Shade Cloak</requirement>
+				<requirement>Mark of Pride</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Mark of Pride</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Mark of Pride</requirement>
 			</requirementSet>
 		</requirements>
 		<locales>
@@ -442,6 +555,12 @@
 			<requirementSet easy="true" hard="false" hardpermadeath="false">
 				<requirement>Crystal Heart</requirement>
 			</requirementSet>
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
 		</requirements>
 		<locales>
 			<locale>UI.CHARM_NAME_7</locale>
@@ -468,6 +587,12 @@
 			</requirementSet>
 			<requirementSet easy="true" hard="false" hardpermadeath="false">
 				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
+				<requirement>Shade Soul</requirement>
 			</requirementSet>
 		</requirements>
 		<locales>
@@ -632,6 +757,12 @@
 			<requirementSet easy="true" hard="false" hardpermadeath="false">
 				<requirement>Crystal Heart</requirement>
 			</requirementSet>
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
 		</requirements>
 		<locales>
 			<locale>UI.CHARM_NAME_14</locale>
@@ -735,6 +866,12 @@
 			<requirementSet easy="true" hard="false" hardpermadeath="false">
 				<requirement>Crystal Heart</requirement>
 			</requirementSet>
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
 		</requirements>
 		<locales>
 			<locale>UI.CHARM_NAME_18</locale>
@@ -761,6 +898,12 @@
 			</requirementSet>
 			<requirementSet easy="true" hard="false" hardpermadeath="false">
 				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
+				<requirement>Shade Soul</requirement>
 			</requirementSet>
 		</requirements>
 		<locales>

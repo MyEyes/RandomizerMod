@@ -167,11 +167,12 @@ namespace RandomizerMod
             {
                 try
                 {
-                    Modding.ModHooks.ModLog("Attempting to fix baldurs in scene");
+                    Modding.ModHooks.ModLog("[RANDOMIZER] Attempting to fix baldurs in scene " + destScene);
                     foreach (GameObject obj in SceneHandler.GetObjectsFromScene(destScene))
                     {
-                        if (obj.name == "Blocker")
+                        if (obj.name == "Blocker" || obj.name == "Blocker 1" || obj.name == "Blocker 2")
                         {
+                            Modding.ModHooks.ModLog("[RANDOMIZER] Found baldur with name \"" + obj.name + "\"");
                             PlayMakerFSM fsm = FSMUtility.LocateFSM(obj, "Blocker Control");
 
                             for (int i = 0; i < fsm.FsmStates.Length; i++)
@@ -190,6 +191,7 @@ namespace RandomizerMod
                                                 if (str.Value.Contains("fireball"))
                                                 {
                                                     val.Add("_fireballLevel");
+                                                    Modding.ModHooks.ModLog("[RANDOMIZER] Found FsmString on \"" + obj.name +  "\" with value \"" + str.Value + "\", changing to \"_fireballLevel\"");
                                                 }
                                                 else
                                                 {
