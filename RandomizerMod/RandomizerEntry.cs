@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Xml;
+using System.Linq;
 
 namespace RandomizerMod
 {
@@ -18,8 +19,10 @@ namespace RandomizerMod
     public struct RandomizerEntry
     {
         public string name;
-        public string[] entries;
-        public string[][] requires;
+        public RandomizerVar[] entries;
+        public string[][] requiresEasy;
+        public string[][] requiresHard;
+        public string[][] requiresHardPermadeath;
         public RandomizerType type;
         public string[] localeNames;
 
@@ -28,7 +31,7 @@ namespace RandomizerMod
         {
             for (int i = 0; i < this.entries.Length; i++)
             {
-                if (s == this.entries[i])
+                if (s == this.entries[i].name)
                 {
                     return i;
                 }
@@ -36,32 +39,72 @@ namespace RandomizerMod
             return -1;
         }
 
+        public string[][] GetRequires()
+        {
+            if (Randomizer.hardMode)
+            {
+                if (PlayerData.instance.permadeathMode > 0)
+                {
+                    return this.requiresHardPermadeath;
+                }
+
+                return this.requiresHard;
+            }
+
+            return this.requiresEasy;
+        }
+
         //Load entry from XML
         //TODO: Add error checking for malformatted XML
         public RandomizerEntry(XmlNode xml)
         {
             this.name = xml.SelectSingleNode("name").InnerText;
-            XmlNodeList entriesXml = xml.SelectNodes("bools/bool");
+            XmlNodeList entriesXml = xml.SelectSingleNode("vars").ChildNodes;
             XmlNodeList requiresXml = xml.SelectNodes("requirements/requirementSet");
             this.type = RandomizerEntry.GetTypeFromString(xml.SelectSingleNode("type").InnerText);
             XmlNodeList localesXml = xml.SelectNodes("locales/locale");
 
-            this.entries = new string[entriesXml.Count];
+            this.entries = new RandomizerVar[entriesXml.Count];
             for (int i = 0; i < entriesXml.Count; i++)
             {
-                this.entries[i] = entriesXml[i].InnerText;
+                string value = entriesXml[i].Attributes["value"] == null ? "" : entriesXml[i].Attributes["value"].Value;
+
+                this.entries[i] = new RandomizerVar(entriesXml[i].InnerText, entriesXml[i].Name, value);
             }
 
-            this.requires = new string[requiresXml.Count][];
+            List<List<string>> easy = new List<List<string>>();
+            List<List<string>> hard = new List<List<string>>();
+            List<List<string>> hardPermaDeath = new List<List<string>>();
+
             for (int i = 0; i < requiresXml.Count; i++)
             {
                 XmlNodeList reqsSetXml = requiresXml[i].SelectNodes("requirement");
-                this.requires[i] = new string[reqsSetXml.Count];
+                List<string> reqSetList = new List<string>();
+
                 for (int j = 0; j < reqsSetXml.Count; j++)
                 {
-                    this.requires[i][j] = reqsSetXml[j].InnerText;
+                    reqSetList.Add(reqsSetXml[j].InnerText);
+                }
+
+                if (Convert.ToBoolean(requiresXml[i].Attributes["easy"].Value))
+                {
+                    easy.Add(reqSetList);
+                }
+
+                if (Convert.ToBoolean(requiresXml[i].Attributes["hard"].Value))
+                {
+                    hard.Add(reqSetList);
+                }
+
+                if (Convert.ToBoolean(requiresXml[i].Attributes["hardpermadeath"].Value))
+                {
+                    hardPermaDeath.Add(reqSetList);
                 }
             }
+
+            this.requiresEasy = easy.Select(l => l.ToArray()).ToArray();
+            this.requiresHard = hard.Select(l => l.ToArray()).ToArray();
+            this.requiresHardPermadeath = hardPermaDeath.Select(l => l.ToArray()).ToArray();
 
             this.localeNames = new string[localesXml.Count];
             for (int i = 0; i < localesXml.Count; i++)
@@ -96,6 +139,36 @@ namespace RandomizerMod
             }
 
             return RandomizerType.INVALID;
+        }
+    }
+
+    public struct RandomizerVar
+    {
+        public string name;
+        public Type type;
+        public object value;
+
+        public RandomizerVar(string n, string t, string v = "")
+        {
+            this.name = n;
+
+            if (t == "int")
+            {
+                this.type = typeof(int);
+            }
+            else
+            {
+                this.type = typeof(bool);
+            }
+
+            if (this.type == typeof(int))
+            {
+                value = Convert.ToInt32(v);
+            }
+            else
+            {
+                value = null;
+            }
         }
     }
 }

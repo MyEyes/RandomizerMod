@@ -43,6 +43,22 @@ namespace RandomizerMod
                             switchedPickup = "Dream Nail";
                         }
 
+                        //Similar checks for spells
+                        if (switchedPickup == "Shade Soul" && PlayerData.instance.fireballLevel == 0)
+                        {
+                            switchedPickup = "Vengeful Spirit";
+                        }
+
+                        if (switchedPickup == "Descending Dark" && PlayerData.instance.quakeLevel == 0)
+                        {
+                            switchedPickup = "Desolate Dive";
+                        }
+
+                        if (switchedPickup == "Abyss Shriek" && PlayerData.instance.screamLevel == 0)
+                        {
+                            switchedPickup = "Howling Wraiths";
+                        }
+
                         RandomizerEntry switchedEntry;
                         if (Randomizer.entries.TryGetValue(switchedPickup, out switchedEntry))
                         {

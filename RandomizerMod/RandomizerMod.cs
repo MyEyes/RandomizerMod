@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Modding;
+using UnityEngine.SceneManagement;
 
 namespace RandomizerMod
 {
@@ -20,7 +21,10 @@ namespace RandomizerMod
             ModHooks.Instance.SavegameSaveHook += Randomizer.SaveGame;
             ModHooks.Instance.SavegameClearHook += Randomizer.DeleteGame;
             ModHooks.Instance.NewGameHook += Randomizer.NewGame;
-            ModHooks.Instance.SceneChanged += SceneHandler.CheckForChanges;
+
+            //ModHooks.Instance.SceneChanged += SceneHandler.CheckForChanges;
+            UnityEngine.SceneManagement.SceneManager.activeSceneChanged += SceneHandler.CheckForChanges;
+
             ModHooks.Instance.LanguageGetHook += LanguageHandler.Get;
             ModHooks.Instance.BeforeSceneLoadHook += RoomChanger.ChangeRoom;
             UnityEngine.GameObject UIObj = new UnityEngine.GameObject();

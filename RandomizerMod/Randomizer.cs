@@ -4,8 +4,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Xml;
 using System.Linq;
+using System.Reflection;
 using UnityEngine;
 using HutongGames.PlayMaker;
+using GlobalEnums;
 
 namespace RandomizerMod
 {
@@ -18,25 +20,108 @@ namespace RandomizerMod
         public static bool swappedCloak;
         public static bool swappedGate;
         public static bool swappedAwoken;
+        public static bool swappedFireball;
+        public static bool swappedQuake;
+        public static bool swappedScream;
         public static bool randomizer;
         public static bool hardMode;
         public static int seed = -1;
+
+        public static int _fireball1 = 0;
+        public static int _quake1 = 0;
+        public static int _scream1 = 0;
+        public static int _fireball2 = 0;
+        public static int _quake2 = 0;
+        public static int _scream2 = 0;
 
         public static bool loadedSave = false;
 
         public static StreamWriter debugWriter = null;
         public static bool debug = false;
 
-        //GetInt placeholder, currently unused
+        public static bool xmlLoaded = false;
+
         public static int GetPlayerDataInt(string name)
         {
-            return PlayerData.instance.GetIntInternal(name);
+            PlayerData pd = PlayerData.instance;
+
+            //Don't run randomizer code in non-randomizer saves
+            if (!randomizer)
+            {
+                if (name.StartsWith("_"))
+                {
+                    name = name.Substring(1);
+                }
+                return pd.GetIntInternal(name);
+            }
+
+            if (string.IsNullOrEmpty(name))
+            {
+                return 0;
+            }
+
+            if (name == "_fireballLevel")
+            {
+                return _fireball1 + _fireball2;
+            }
+            else if (name == "_quakeLevel")
+            {
+                return _quake1 + _quake2;
+            }
+            else if (name == "_screamLevel")
+            {
+                return _scream1 + _scream2;
+            }
+
+            string key;
+            string key2;
+
+            //Don't run randomizer if int is not in the loaded data
+            if (!reverseLookup.TryGetValue(name, out key) || !permutation.TryGetValue(key, out key2))
+            {
+                return pd.GetIntInternal(name);
+            }
+            else
+            {
+                int index = entries[key].GetIndex(name);
+                RandomizerEntry randomizerEntry = entries[key2];
+
+                RandomizerVar var;
+
+                //Return the matching var or the first one if there is no matching index
+                if (randomizerEntry.entries.Length > index)
+                {
+                    var = randomizerEntry.entries[index];
+                }
+                else
+                {
+                    var = randomizerEntry.entries[0];
+                }
+
+                if (var.type == typeof(bool))
+                {
+                    return pd.GetBoolInternal(var.name) ? 2 : 0;
+                }
+                else
+                {
+                    if (key2 == "Vengeful Spirit") return _fireball1 * 2;
+                    else if (key2 == "Shade Soul") return _fireball2 * 2;
+                    else if (key2 == "Desolate Dive") return _quake1 * 2;
+                    else if (key2 == "Descending Dark") return _quake2 * 2;
+                    else if (key2 == "Howling Wraiths") return _scream1 * 2;
+                    else if (key2 == "Abyss Shriek") return _scream2 * 2;
+
+                    return pd.GetIntInternal(var.name) >= (int)var.value ? 2 : 0;
+                }
+            }
         }
 
         //Used only for relics currently
         public static void SetPlayerDataInt(string name, int value)
         {
-            if (!Randomizer.randomizer)
+            PlayerData pd = PlayerData.instance;
+
+            if (!randomizer)
             {
                 PlayerData.instance.SetIntInternal(name, value);
                 return;
@@ -46,6 +131,8 @@ namespace RandomizerMod
             {
                 return;
             }
+
+            string nameVal = name + value;
 
             if (name == "trinket1" || name == "trinket2" || name == "trinket3" || name == "trinket4")
             {
@@ -68,9 +155,99 @@ namespace RandomizerMod
                     return;
                 }
 
-                int trinketNum = Randomizer.GetTrinketForScene();
+                int trinketNum = GetTrinketForScene();
 
                 PlayerData.instance.SetIntInternal("trinket" + trinketNum, PlayerData.instance.GetIntInternal("trinket" + trinketNum) + 1);
+                return;
+            }
+
+
+            //Begin copy/pasted code from set bool
+            string key;
+            string text;
+
+            //Check if var is in data before running randomizer code
+            if (reverseLookup.TryGetValue(nameVal, out key) && permutation.TryGetValue(key, out text))
+            {
+                //Randomizer breaks progression, so we need to ensure the player never gets shade cloak before mothwing cloak
+                if (text == "Shade Cloak" && !pd.hasDash && !pd.canDash)
+                {
+                    Swap("Shade Cloak", "Mothwing Cloak");
+                    text = "Mothwing Cloak";
+                    swappedCloak = true;
+                }
+
+                //Similar checks for dream nail
+                if (text == "Dream Gate" && !pd.hasDreamNail)
+                {
+                    Swap("Dream Nail", "Dream Gate");
+                    text = "Dream Nail";
+                    swappedGate = true;
+                }
+
+                if (text == "Awoken Dream Nail" && !pd.hasDreamNail)
+                {
+                    Swap("Dream Nail", "Awoken Dream Nail");
+                    text = "Dream Nail";
+                    swappedAwoken = true;
+                }
+
+                //Similar checks for spells
+                if (text == "Shade Soul" && pd.fireballLevel == 0)
+                {
+                    Swap("Vengeful Spirit", "Shade Soul");
+                    text = "Vengeful Spirit";
+                    swappedFireball = true;
+                }
+
+                if (text == "Descending Dark" && pd.quakeLevel == 0)
+                {
+                    Swap("Desolate Dive", "Descending Dark");
+                    text = "Desolate Dive";
+                    swappedQuake = true;
+                }
+
+                if (text == "Abyss Shriek" && pd.screamLevel == 0)
+                {
+                    Swap("Howling Wraiths", "Abyss Shriek");
+                    text = "Howling Wraiths";
+                    swappedScream = true;
+                }
+
+                //FSM variable is probably tracked separately, need to make sure it's accurate
+                if (name == "hasDreamGate" && !PlayerData.instance.hasDreamGate)
+                {
+                    FSMUtility.LocateFSM(HeroController.instance.gameObject, "Dream Nail").FsmVariables.GetFsmBool("Dream Warp Allowed").Value = false;
+                }
+
+                //Set all bools relating to the given entry
+                for (int i = 0; i < entries[text].entries.Length; i++)
+                {
+                    RandomizerVar var = entries[text].entries[i];
+
+                    if (var.type == typeof(bool))
+                    {
+                        pd.SetBoolInternal(var.name, value > 0);
+                    }
+                    else
+                    {
+                        if (text == "Vengeful Spirit") _fireball1 = value > 0 ? 1 : 0;
+                        else if (text == "Shade Soul") _fireball2 = value > 0 ? 1 : 0;
+                        else if (text == "Desolate Dive") _quake1 = value > 0 ? 1 : 0;
+                        else if (text == "Descending Dark") _quake2 = value > 0 ? 1 : 0;
+                        else if (text == "Howling Wraiths") _scream1 = value > 0 ? 1 : 0;
+                        else if (text == "Abyss Shriek") _scream2 = value > 0 ? 1 : 0;
+                    }
+
+                    //FSM variable is probably tracked separately, need to make sure it's accurate
+                    if (entries[text].entries[i].name == "hasDreamGate")
+                    {
+                        FSMUtility.LocateFSM(HeroController.instance.gameObject, "Dream Nail").FsmVariables.GetFsmBool("Dream Warp Allowed").Value = true;
+                    }
+
+                    //Need to make the charms page accessible if the player gets their first charm from a non-charm pickup
+                    if (entries[text].type == RandomizerType.CHARM && entries[key].type != RandomizerType.CHARM) pd.hasCharm = true;
+                }
                 return;
             }
 
@@ -84,7 +261,7 @@ namespace RandomizerMod
             char[] sceneCharArray = GameManager.instance.GetSceneNameString().ToCharArray();
             int[] sceneNumbers = sceneCharArray.Select(c => Convert.ToInt32(c)).ToArray();
 
-            int modifiedSeed = Randomizer.seed;
+            int modifiedSeed = seed;
 
             for (int i = 0; i < sceneNumbers.Length; i++)
             {
@@ -118,7 +295,7 @@ namespace RandomizerMod
             PlayerData pd = PlayerData.instance;
 
             //Don't run randomizer code in non-randomizer saves
-	        if (!Randomizer.randomizer)
+	        if (!randomizer)
 	        {
 	            return pd.GetBoolInternal(name);
 	        }
@@ -130,9 +307,6 @@ namespace RandomizerMod
                     return pd.GetBoolInternal(name);
                 }
             }
-
-            //RestingGrounds_07
-            //RestingGrounds_04
 
             if (string.IsNullOrEmpty(name))
             {
@@ -161,23 +335,40 @@ namespace RandomizerMod
             string key2;
 
             //Don't run randomizer if bool is not in the loaded data
-            if (!Randomizer.reverseLookup.TryGetValue(name, out key) || !Randomizer.permutation.TryGetValue(key, out key2))
+            if (!reverseLookup.TryGetValue(name, out key) || !permutation.TryGetValue(key, out key2))
             {
                 return pd.GetBoolInternal(name);
             }
             else
             {
-                int index = Randomizer.entries[key].GetIndex(name);
-                RandomizerEntry randomizerEntry = Randomizer.entries[key2];
+                int index = entries[key].GetIndex(name);
+                RandomizerEntry randomizerEntry = entries[key2];
+
+                RandomizerVar var;
 
                 //Return the matching bool or the first one if there is no matching index
                 if (randomizerEntry.entries.Length > index)
                 {
-                    return pd.GetBoolInternal(randomizerEntry.entries[index]);
+                    var = randomizerEntry.entries[index];
                 }
                 else
                 {
-                    return pd.GetBoolInternal(randomizerEntry.entries[0]);
+                    var = randomizerEntry.entries[0];
+                }
+
+                if (var.type == typeof(bool))
+                {
+                    return pd.GetBoolInternal(var.name);
+                }
+                else
+                {
+                    if (key2 == "Vengeful Spirit") return _fireball1 > 0;
+                    else if (key2 == "Shade Soul") return _fireball2 > 0;
+                    else if (key2 == "Desolate Dive") return _quake1 > 0;
+                    else if (key2 == "Descending Dark") return _quake2 > 0;
+                    else if (key2 == "Howling Wraiths") return _scream1 > 0;
+                    else if (key2 == "Abyss Shriek") return _scream2 > 0;
+                    return pd.GetIntInternal(var.name) >= (int)var.value;
                 }
             }
         }
@@ -188,7 +379,7 @@ namespace RandomizerMod
             PlayerData pd = PlayerData.instance;
 
             //Don't run randomizer code in non-randomizer saves
-	        if (!Randomizer.randomizer)
+	        if (!randomizer)
 	        {
 	            pd.SetBoolInternal(name, val);
                 return;
@@ -203,29 +394,51 @@ namespace RandomizerMod
             string text;
 
             //Check if bool is in data before running randomizer code
-            if (Randomizer.reverseLookup.TryGetValue(name, out key) && Randomizer.permutation.TryGetValue(key, out text))
+            if (reverseLookup.TryGetValue(name, out key) && permutation.TryGetValue(key, out text))
             {
                 //Randomizer breaks progression, so we need to ensure the player never gets shade cloak before mothwing cloak
                 if (text == "Shade Cloak" && !pd.hasDash && !pd.canDash)
                 {
-                    Randomizer.Swap("Shade Cloak", "Mothwing Cloak");
+                    Swap("Shade Cloak", "Mothwing Cloak");
                     text = "Mothwing Cloak";
-                    Randomizer.swappedCloak = true;
+                    swappedCloak = true;
                 }
 
                 //Similar checks for dream nail
                 if (text == "Dream Gate" && !pd.hasDreamNail)
                 {
-                    Randomizer.Swap("Dream Nail", "Dream Gate");
+                    Swap("Dream Nail", "Dream Gate");
                     text = "Dream Nail";
-                    Randomizer.swappedGate = true;
+                    swappedGate = true;
                 }
 
                 if (text == "Awoken Dream Nail" && !pd.hasDreamNail)
                 {
-                    Randomizer.Swap("Dream Nail", "Awoken Dream Nail");
+                    Swap("Dream Nail", "Awoken Dream Nail");
                     text = "Dream Nail";
-                    Randomizer.swappedAwoken = true;
+                    swappedAwoken = true;
+                }
+
+                //Similar checks for spells
+                if (text == "Shade Soul" && pd.fireballLevel == 0)
+                {
+                    Swap("Vengeful Spirit", "Shade Soul");
+                    text = "Vengeful Spirit";
+                    swappedFireball = true;
+                }
+
+                if (text == "Descending Dark" && pd.quakeLevel == 0)
+                {
+                    Swap("Desolate Dive", "Descending Dark");
+                    text = "Desolate Dive";
+                    swappedQuake = true;
+                }
+
+                if (text == "Abyss Shriek" && pd.screamLevel == 0)
+                {
+                    Swap("Howling Wraiths", "Abyss Shriek");
+                    text = "Howling Wraiths";
+                    swappedScream = true;
                 }
 
                 //FSM variable is probably tracked separately, need to make sure it's accurate
@@ -235,18 +448,32 @@ namespace RandomizerMod
                 }
 
                 //Set all bools relating to the given entry
-                for (int i = 0; i < Randomizer.entries[text].entries.Length; i++)
+                for (int i = 0; i < entries[text].entries.Length; i++)
                 {
-                    pd.SetBoolInternal(Randomizer.entries[text].entries[i], val);
+                    RandomizerVar var = entries[text].entries[i];
+
+                    if (var.type == typeof(bool))
+                    {
+                        pd.SetBoolInternal(var.name, val);
+                    }
+                    else
+                    {
+                        if (text == "Vengeful Spirit") _fireball1 = val ? 1 : 0;
+                        else if (text == "Shade Soul") _fireball2 = val ? 1 : 0;
+                        else if (text == "Desolate Dive") _quake1 = val ? 1 : 0;
+                        else if (text == "Descending Dark") _quake2 = val ? 1 : 0;
+                        else if (text == "Howling Wraiths") _scream1 = val ? 1 : 0;
+                        else if (text == "Abyss Shriek") _scream2 = val ? 1 : 0;
+                    }
 
                     //FSM variable is probably tracked separately, need to make sure it's accurate
-                    if (Randomizer.entries[text].entries[i] == "hasDreamGate")
+                    if (entries[text].entries[i].name == "hasDreamGate")
                     {
                         FSMUtility.LocateFSM(HeroController.instance.gameObject, "Dream Nail").FsmVariables.GetFsmBool("Dream Warp Allowed").Value = true;
                     }
 
                     //Need to make the charms page accessible if the player gets their first charm from a non-charm pickup
-                    if (Randomizer.entries[text].type == RandomizerType.CHARM && Randomizer.entries[key].type != RandomizerType.CHARM) pd.hasCharm = true;
+                    if (entries[text].type == RandomizerType.CHARM && entries[key].type != RandomizerType.CHARM) pd.hasCharm = true;
                 }
                 return;
             }
@@ -257,27 +484,25 @@ namespace RandomizerMod
         //Adds data to the randomizer dictionaries
         public static void AddEntry(XmlNode node, bool permadeath)
         {
-            if (!permadeath || Convert.ToBoolean(node.SelectSingleNode("permadeath").InnerText))
+            RandomizerEntry entry = new RandomizerEntry(node);
+
+            if (!entries.ContainsKey(entry.name))
             {
-                RandomizerEntry entry = new RandomizerEntry(node);
+                entries.Add(entry.name, entry);
 
-                if (!Randomizer.entries.ContainsKey(entry.name))
+                //Build reverse lookup list for quickly finding pickup name from attributes
+                for (int i = 0; i < entry.entries.Length; i++)
                 {
-                    Randomizer.entries.Add(entry.name, entry);
+                    string val = entry.entries[i].value == null ? "" : entry.entries[i].value.ToString();
 
-                    //Build reverse lookup list for quickly finding pickup name from attributes
-                    for (int i = 0; i < entry.entries.Length; i++)
-                    {
-                        Randomizer.reverseLookup.Add(entry.entries[i], entry.name);
-                    }
+                    reverseLookup.Add(entry.entries[i].name + val, entry.name);
+                }
 
-                    for (int i = 0; i < entry.localeNames.Length; i++)
+                for (int i = 0; i < entry.localeNames.Length; i++)
+                {
+                    if (i != 1 && i != 2)
                     {
-                        //TODO: Parse duplicate entries properly
-                        if (i != 1 && i != 2)
-                        {
-                            Randomizer.reverseLookup.Add(entry.localeNames[i], entry.name);
-                        }
+                        reverseLookup.Add(entry.localeNames[i], entry.name);
                     }
                 }
             }
@@ -291,14 +516,14 @@ namespace RandomizerMod
             //Loop until a permutation with all items reachable is found
             while (!flag)
             {
-                Randomizer.permutation.Clear();
+                permutation.Clear();
 
                 List<string> list = new List<string>();
                 List<string> list2 = new List<string>();
                 List<string> list3 = new List<string>();
 
-                list.AddRange(Randomizer.entries.Keys);
-                list2.AddRange(Randomizer.entries.Keys);
+                list.AddRange(entries.Keys);
+                list2.AddRange(entries.Keys);
 
                 //Loop until all items have been added to randomizer
                 while (list.Count > 0)
@@ -308,7 +533,7 @@ namespace RandomizerMod
                     //Check for reachable pickups and assign them a random item
                     for (int i = 0; i < list.Count; i++)
                     {
-                        if (Randomizer.IsReachable(list3, Randomizer.entries[list[i]]))
+                        if (IsReachable(list3, entries[list[i]]))
                         {
                             flag = true;
 
@@ -321,13 +546,13 @@ namespace RandomizerMod
                                 itemPicked = true;
                                 index = random.Next(list2.Count);
 
-                                if (Randomizer.entries[list2[index]].type == RandomizerType.ABILITY && random.Next(1, 4) != 1)
+                                if (entries[list2[index]].type == RandomizerType.ABILITY && random.Next(1, 4) != 1)
                                 {
                                     itemPicked = false;
                                 }
                             }
 
-                            Randomizer.permutation.Add(list[i], list2[index]);
+                            permutation.Add(list[i], list2[index]);
                             list3.Add(list2[index]);
                             list.RemoveAt(i);
                             i--;
@@ -353,14 +578,14 @@ namespace RandomizerMod
         public static bool IsReachable(List<string> reachable, RandomizerEntry entry)
         {
             //Loop through requirement sets
-            for (int i = 0; i < entry.requires.Length; i++)
+            for (int i = 0; i < entry.GetRequires().Length; i++)
             {
                 bool flag = true;
 
                 //Loop through requirements in sets
-                for (int j = 0; j < entry.requires[i].Length; j++)
+                for (int j = 0; j < entry.GetRequires()[i].Length; j++)
                 {
-                    if (!reachable.Contains(entry.requires[i][j]))
+                    if (!reachable.Contains(entry.GetRequires()[i][j]))
                     {
                         flag = false;
                         break;
@@ -375,7 +600,7 @@ namespace RandomizerMod
             }
 
             //Check for pickups with no requirements
-            return entry.requires.Length == 0;
+            return entry.GetRequires().Length == 0;
         }
 
         //Swap two given entries
@@ -383,14 +608,14 @@ namespace RandomizerMod
         {
             try
             {
-                string key = Randomizer.permutation.FirstOrDefault((KeyValuePair<string, string> x) => x.Value == entry1).Key;
-                string key2 = Randomizer.permutation.FirstOrDefault((KeyValuePair<string, string> x) => x.Value == entry2).Key;
-                Randomizer.permutation[key] = entry2;
-                Randomizer.permutation[key2] = entry1;
+                string key = permutation.FirstOrDefault((KeyValuePair<string, string> x) => x.Value == entry1).Key;
+                string key2 = permutation.FirstOrDefault((KeyValuePair<string, string> x) => x.Value == entry2).Key;
+                permutation[key] = entry2;
+                permutation[key2] = entry1;
             }
             catch (Exception)
             {
-                Randomizer.DebugLog("Could not swap entries " + entry1 + " and " + entry2);
+                Modding.ModHooks.ModLog("[RANDOMIZER] Could not swap entries " + entry1 + " and " + entry2);
             }
         }
 
@@ -398,15 +623,24 @@ namespace RandomizerMod
         //TODO: Hook GameManager.SaveGame to write save to the same file as everything else
         public static void SaveGame(int profileId)
         {
-            if (Randomizer.randomizer)
+            if (randomizer)
             {
                 using (StreamWriter streamWriter = new StreamWriter(Application.persistentDataPath + @"\user" + profileId + ".rnd"))
                 {
-                    streamWriter.WriteLine(Randomizer.seed);
-                    streamWriter.WriteLine(Randomizer.swappedCloak);
-                    streamWriter.WriteLine(Randomizer.hardMode);
-                    streamWriter.WriteLine(Randomizer.swappedGate);
-                    streamWriter.WriteLine(Randomizer.swappedAwoken);
+                    streamWriter.WriteLine(seed);
+                    streamWriter.WriteLine(swappedCloak);
+                    streamWriter.WriteLine(hardMode);
+                    streamWriter.WriteLine(swappedGate);
+                    streamWriter.WriteLine(swappedAwoken);
+                    streamWriter.WriteLine(swappedFireball);
+                    streamWriter.WriteLine(swappedQuake);
+                    streamWriter.WriteLine(swappedScream);
+                    streamWriter.WriteLine(_fireball1);
+                    streamWriter.WriteLine(_fireball2);
+                    streamWriter.WriteLine(_quake1);
+                    streamWriter.WriteLine(_quake2);
+                    streamWriter.WriteLine(_scream1);
+                    streamWriter.WriteLine(_scream2);
                 }
             }
         }
@@ -414,42 +648,67 @@ namespace RandomizerMod
         //Load randomizer save from file if applicable
         public static void LoadGame(int profileId)
         {
-            Randomizer.randomizer = false;
-            Randomizer.hardMode = false;
-            Randomizer.loadedSave = true;
+            randomizer = false;
+            hardMode = false;
+            loadedSave = true;
 
             if (File.Exists(Application.persistentDataPath + @"\user" + profileId + ".rnd"))
             {
                 using (StreamReader streamReader = new StreamReader(Application.persistentDataPath + @"\user" + profileId + ".rnd"))
                 {
-                    Randomizer.seed = Convert.ToInt32(streamReader.ReadLine());
-                    Randomizer.swappedCloak = Convert.ToBoolean(streamReader.ReadLine());
-                    Randomizer.hardMode = Convert.ToBoolean(streamReader.ReadLine());
-                    Randomizer.swappedGate = Convert.ToBoolean(streamReader.ReadLine());
-                    Randomizer.swappedAwoken = Convert.ToBoolean(streamReader.ReadLine());
+                    seed = Convert.ToInt32(streamReader.ReadLine());
+                    swappedCloak = Convert.ToBoolean(streamReader.ReadLine());
+                    hardMode = Convert.ToBoolean(streamReader.ReadLine());
+                    swappedGate = Convert.ToBoolean(streamReader.ReadLine());
+                    swappedAwoken = Convert.ToBoolean(streamReader.ReadLine());
+                    swappedFireball = Convert.ToBoolean(streamReader.ReadLine());
+                    swappedQuake = Convert.ToBoolean(streamReader.ReadLine());
+                    swappedScream = Convert.ToBoolean(streamReader.ReadLine());
+                    _fireball1 = Convert.ToInt32(streamReader.ReadLine());
+                    _fireball2 = Convert.ToInt32(streamReader.ReadLine());
+                    _quake1 = Convert.ToInt32(streamReader.ReadLine());
+                    _quake2 = Convert.ToInt32(streamReader.ReadLine());
+                    _scream1 = Convert.ToInt32(streamReader.ReadLine());
+                    _scream2 = Convert.ToInt32(streamReader.ReadLine());
                 }
 
-                Randomizer.SetHardMode(Randomizer.hardMode);
-                Randomizer.Randomize(new System.Random(Randomizer.seed));
+                SetHardMode(hardMode);
+                Randomize(new System.Random(seed));
 
                 //Swap cloaks if player picked up shade cloak first
-                if (Randomizer.swappedCloak)
+                if (swappedCloak)
                 {
-                    Randomizer.Swap("Mothwing Cloak", "Shade Cloak");
+                    Swap("Mothwing Cloak", "Shade Cloak");
                 }
 
                 //Similar checks for dream nail
-                if (Randomizer.swappedGate)
+                if (swappedGate)
                 {
-                    Randomizer.Swap("Dream Nail", "Dream Gate");
+                    Swap("Dream Nail", "Dream Gate");
                 }
 
-                if (Randomizer.swappedAwoken)
+                if (swappedAwoken)
                 {
-                    Randomizer.Swap("Dream Nail", "Awoken Dream Nail");
+                    Swap("Dream Nail", "Awoken Dream Nail");
                 }
 
-                Randomizer.randomizer = true;
+                //Similar checks for spells
+                if (swappedFireball)
+                {
+                    Swap("Vengeful Spirit", "Shade Soul");
+                }
+
+                if (swappedQuake)
+                {
+                    Swap("Desolate Dive", "Descending Dark");
+                }
+
+                if (swappedScream)
+                {
+                    Swap("Howling Wraiths", "Abyss Shriek");
+                }
+
+                randomizer = true;
             }
         }
 
@@ -469,20 +728,32 @@ namespace RandomizerMod
             PlayerData.instance.screamLevel = 2;
             PlayerData.instance.quakeLevel = 2;*/
 
-            if (Randomizer.randomizer)
+            if (randomizer)
             {
-                if (Randomizer.seed == -1)
+                if (seed == -1)
                 {
-                    Randomizer.seed = new System.Random().Next();
+                    seed = new System.Random().Next();
                 }
 
-                Randomizer.swappedCloak = false;
+                swappedCloak = false;
+                swappedAwoken = false;
+                swappedCloak = false;
+                swappedGate = false;
+                swappedFireball = false;
+                swappedQuake = false;
+                swappedScream = false;
+                _fireball1 = 0;
+                _fireball2 = 0;
+                _quake1 = 0;
+                _quake2 = 0;
+                _scream1 = 0;
+                _scream2 = 0;
 
-                Randomizer.SetHardMode(Randomizer.hardMode);
-                Randomizer.Randomize(new System.Random(Randomizer.seed));
+                SetHardMode(hardMode);
+                Randomize(new System.Random(seed));
 
-                //Randomizer.permutation.Add("Isma's Tear", "Fury of the Fallen");
-                //Randomizer.permutation.Add("Fury of the Fallen", "Isma's Tear");
+                //permutation.Add("Isma's Tear", "Fury of the Fallen");
+                //permutation.Add("Fury of the Fallen", "Isma's Tear");
             }
         }
 
@@ -498,21 +769,20 @@ namespace RandomizerMod
         //Load entries for the given mode
         public static void SetHardMode(bool hard)
         {
-            //Clear everything beforehand just in case
-            Randomizer.hardMode = hard;
-            Randomizer.permutation.Clear();
-            Randomizer.reverseLookup.Clear();
-            Randomizer.entries.Clear();
+            hardMode = hard;
 
             //Log any errors that occur
-            try
+            if (!xmlLoaded)
             {
-                //TODO: Cleaner implementation than reloading entries every new game/load
-                Randomizer.LoadEntriesFromXML(hard, PlayerData.instance.permadeathMode > 0);
-            }
-            catch (Exception e)
-            {
-                Randomizer.DebugLog(e.ToString());
+                try
+                {
+                    LoadEntriesFromXML(hard, PlayerData.instance.permadeathMode > 0);
+                    xmlLoaded = true;
+                }
+                catch (Exception e)
+                {
+                    Modding.ModHooks.ModLog("[RANDOMIZER] Failed to load XML:\n" + e.ToString());
+                }
             }
         }
 
@@ -528,13 +798,7 @@ namespace RandomizerMod
             XmlDocument rnd = new XmlDocument();
             rnd.Load(@"Randomizer\randomizer.xml");
 
-            //Load hard mode first because duplicate entries are ignored
-            if (hard)
-            {
-                Randomizer.LoadEntries(rnd.SelectSingleNode("randomizer/hard"), permadeath);
-            }
-
-            Randomizer.LoadEntries(rnd.SelectSingleNode("randomizer/easy"), permadeath);
+            LoadEntries(rnd.SelectSingleNode("randomizer"), permadeath);
         }
 
         //Add entry for each node
@@ -542,26 +806,26 @@ namespace RandomizerMod
         {
             foreach (XmlNode node in nodes.SelectNodes("entry"))
             {
-                Randomizer.AddEntry(node, permadeath);
+                AddEntry(node, permadeath);
             }
         }
 
         //Log to file
         public static void DebugLog(string message)
         {
-            if (!Randomizer.debug)
+            if (!debug)
             {
                 return;
             }
-            if (Randomizer.debugWriter == null)
+            if (debugWriter == null)
             {
-                Randomizer.debugWriter = new StreamWriter(Application.persistentDataPath + "\\randomizer.txt", true);
-                Randomizer.debugWriter.AutoFlush = true;
+                debugWriter = new StreamWriter(Application.persistentDataPath + "\\txt", true);
+                debugWriter.AutoFlush = true;
             }
-            if (Randomizer.debugWriter != null)
+            if (debugWriter != null)
             {
-                Randomizer.debugWriter.WriteLine(message);
-                Randomizer.debugWriter.Flush();
+                debugWriter.WriteLine(message);
+                debugWriter.Flush();
             }
         }
 
