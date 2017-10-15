@@ -101,6 +101,8 @@ namespace RandomizerMod
                         Randomizer.hardMode = false;
                     }
 
+                    if (GUI.Button(new Rect(0f, 0f, 400f, 100f), "Log Randomization")) Randomizer.LogRandomization();
+
                     //Create text field for seed if randomizer is not off
                     if (Randomizer.randomizer)
                     {

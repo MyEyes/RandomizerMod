@@ -511,6 +511,9 @@ namespace RandomizerMod
         //Randomization algorithm
         public static void Randomize(System.Random random)
         {
+            Modding.ModHooks.ModLog("[RANDOMIZER] ---------------------------------------------------------------");
+            Modding.ModHooks.ModLog("[RANDOMIZER] Beginning randomization with seed " + seed + " (Hard: " + hardMode + ")");
+
             bool flag = false;
 
             //Loop until a permutation with all items reachable is found
@@ -572,6 +575,8 @@ namespace RandomizerMod
             {
                 Modding.ModHooks.ModLog("[RANDOMIZER] " + perm.Key + " = " + perm.Value);
             }
+
+            Modding.ModHooks.ModLog("[RANDOMIZER] ---------------------------------------------------------------");
         }
 
         //Checks requirements to see if an entry is reachable
@@ -643,6 +648,13 @@ namespace RandomizerMod
                     streamWriter.WriteLine(_scream2);
                 }
             }
+        }
+
+        //Call randomization without starting the game
+        public static void LogRandomization()
+        {
+            SetHardMode(hardMode);
+            Randomize(new System.Random(seed));
         }
 
         //Load randomizer save from file if applicable

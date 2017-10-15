@@ -86,7 +86,7 @@ namespace RandomizerMod
                     if (objectsFromScene[i].name == "ruind_int_plat_float_02 (3)")
                     {
                         GameObject gameObject = UnityEngine.Object.Instantiate(objectsFromScene[i], objectsFromScene[i].transform.position, objectsFromScene[i].transform.rotation) as GameObject;
-                        gameObject.SetActiveRecursively(true);
+                        gameObject.SetActive(true);
                         gameObject.transform.position = new Vector3(40.5f, 72f, 0f);
                         gameObject.name = "CustomPlatform";
                         gameObject.tag = "Untagged";
@@ -163,58 +163,96 @@ namespace RandomizerMod
                 }
             }
 
+            if (destScene == "Waterways_02" && !PlayerData.instance.hasWalljump && !PlayerData.instance.hasDoubleJump)
+            {
+                foreach (GameObject obj in SceneHandler.GetObjectsFromScene("Waterways_02"))
+                {
+                    if (obj.name == "RestBench")
+                    {
+                        GameObject.Destroy(obj);
+                        break;
+                    }
+                }
+            }
+
             if ((destScene == "Crossroads_11_alt" || destScene == "Fungus1_28") && (Randomizer._fireball1 > 0 || Randomizer._fireball2 > 0))
             {
-                try
+                Modding.ModHooks.ModLog("[RANDOMIZER] Attempting to fix baldurs in scene " + destScene);
+                foreach (GameObject obj in SceneHandler.GetObjectsFromScene(destScene))
                 {
-                    Modding.ModHooks.ModLog("[RANDOMIZER] Attempting to fix baldurs in scene " + destScene);
-                    foreach (GameObject obj in SceneHandler.GetObjectsFromScene(destScene))
+                    if (obj.name == "Blocker" || obj.name == "Blocker 1" || obj.name == "Blocker 2")
                     {
-                        if (obj.name == "Blocker" || obj.name == "Blocker 1" || obj.name == "Blocker 2")
+                        Modding.ModHooks.ModLog("[RANDOMIZER] Found baldur with name \"" + obj.name + "\"");
+                        PlayMakerFSM fsm = FSMUtility.LocateFSM(obj, "Blocker Control");
+
+                        for (int i = 0; i < fsm.FsmStates.Length; i++)
                         {
-                            Modding.ModHooks.ModLog("[RANDOMIZER] Found baldur with name \"" + obj.name + "\"");
-                            PlayMakerFSM fsm = FSMUtility.LocateFSM(obj, "Blocker Control");
-
-                            for (int i = 0; i < fsm.FsmStates.Length; i++)
+                            if (fsm.FsmStates[i].Name == "Can Roller?")
                             {
-                                if (fsm.FsmStates[i].Name == "Can Roller?")
+                                FieldInfo[] fieldInfo = typeof(HutongGames.PlayMaker.ActionData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+                                for (int j = 0; j < fieldInfo.Length; j++)
                                 {
-                                    FieldInfo[] fieldInfo = typeof(HutongGames.PlayMaker.ActionData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                                    for (int j = 0; j < fieldInfo.Length; j++)
+                                    if (fieldInfo[j].Name == "fsmStringParams")
                                     {
-                                        if (fieldInfo[j].Name == "fsmStringParams")
+                                        foreach (FsmString str in (List<FsmString>)fieldInfo[j].GetValue(fsm.FsmStates[i].ActionData))
                                         {
-                                            foreach (FsmString str in (List<FsmString>)fieldInfo[j].GetValue(fsm.FsmStates[i].ActionData))
+                                            List<FsmString> val = new List<FsmString>();
+
+                                            if (str.Value.Contains("fireball"))
                                             {
-                                                List<FsmString> val = new List<FsmString>();
-
-                                                if (str.Value.Contains("fireball"))
-                                                {
-                                                    val.Add("_fireballLevel");
-                                                    Modding.ModHooks.ModLog("[RANDOMIZER] Found FsmString on \"" + obj.name +  "\" with value \"" + str.Value + "\", changing to \"_fireballLevel\"");
-                                                }
-                                                else
-                                                {
-                                                    val.Add(str);
-                                                }
-
-                                                if (val.Count > 0)
-                                                {
-                                                    fieldInfo[j].SetValue(fsm.FsmStates[i].ActionData, val);
-                                                }
+                                                val.Add("_fireballLevel");
+                                                Modding.ModHooks.ModLog("[RANDOMIZER] Found FsmString on \"" + obj.name +  "\" with value \"" + str.Value + "\", changing to \"_fireballLevel\"");
+                                            }
+                                            else
+                                            {
+                                                val.Add(str);
                                             }
 
-                                            fsm.FsmStates[i].LoadActions();
+                                            if (val.Count > 0)
+                                            {
+                                                fieldInfo[j].SetValue(fsm.FsmStates[i].ActionData, val);
+                                            }
                                         }
+
+                                        fsm.FsmStates[i].LoadActions();
                                     }
                                 }
                             }
                         }
                     }
                 }
-                catch (Exception e)
+            }
+
+            if (destScene == "Ruins1_01" && !PlayerData.instance.hasWalljump && !PlayerData.instance.hasDoubleJump)
+            {
+                foreach (GameObject obj in SceneHandler.GetObjectsFromScene("Ruins1_01"))
                 {
-                    Modding.ModHooks.ModLog(e.ToString());
+                    Modding.ModHooks.ModLog(obj.name);
+                    if (obj.name == "ruind_int_plat_float_01")
+                    {
+                        GameObject gameObject = UnityEngine.Object.Instantiate(obj, obj.transform.position, obj.transform.rotation) as GameObject;
+                        gameObject.SetActive(true);
+                        gameObject.transform.position = new Vector3(116f, 14f, 0f);
+                        gameObject.name = "CustomPlatform";
+                        gameObject.tag = "Untagged";
+                        break;
+                    }
+                }
+            }
+
+            if (destScene == "Ruins1_02" && !PlayerData.instance.hasWalljump && !PlayerData.instance.hasDoubleJump)
+            {
+                foreach (GameObject obj in SceneHandler.GetObjectsFromScene("Ruins1_02"))
+                {
+                    if (obj.name == "ruind_int_plat_float_01")
+                    {
+                        GameObject gameObject = UnityEngine.Object.Instantiate(obj, obj.transform.position, obj.transform.rotation) as GameObject;
+                        gameObject.SetActive(true);
+                        gameObject.transform.position = new Vector3(2f, 61.5f, 0f);
+                        gameObject.name = "CustomPlatform";
+                        gameObject.tag = "Untagged";
+                        break;
+                    }
                 }
             }
         }
