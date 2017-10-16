@@ -5,6 +5,7 @@ using System.IO;
 using System.Xml;
 using System.Linq;
 using System.Reflection;
+using System.Web.Extensions;
 using UnityEngine;
 using HutongGames.PlayMaker;
 using GlobalEnums;
@@ -571,9 +572,23 @@ namespace RandomizerMod
                 }
             }
 
-            foreach (KeyValuePair<string, string> perm in permutation)
+            using (StreamWriter writer = new StreamWriter(Application.persistentDataPath + "\\rnd.js"))
             {
-                Modding.ModHooks.ModLog("[RANDOMIZER] " + perm.Key + " = " + perm.Value);
+                writer.WriteLine("{");
+                writer.WriteLine("\t\"seed\" : \"" + seed + "\",");
+                writer.WriteLine("\t\"mode\" : \"" + (hardMode ? (PlayerData.instance.permadeathMode > 0 ? "hardpermadeath" : "hard") : "easy") + "\",");
+                int permCount = 0;
+                foreach (KeyValuePair<string, string> perm in permutation)
+                {
+                    string name1 = entries[perm.Key].entries[0].name + (entries[perm.Key].entries[0].value != null ? entries[perm.Key].entries[0].value : "");
+                    string name2 = entries[perm.Value].entries[0].name + (entries[perm.Value].entries[0].value != null ? entries[perm.Value].entries[0].value : "");
+
+                    if (++permCount != permutation.Count) writer.WriteLine("\t\"" + name1 + "\" : \"" + name2 + "\",");
+                    else writer.WriteLine("\t\"" + name1 + "\" : \"" + name2 + "\"");
+
+                    Modding.ModHooks.ModLog("[RANDOMIZER] " + perm.Key + " = " + perm.Value);
+                }
+                writer.WriteLine("}");
             }
 
             Modding.ModHooks.ModLog("[RANDOMIZER] ---------------------------------------------------------------");

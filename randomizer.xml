@@ -1,4 +1,4 @@
-<randomizer>
+<randomizer version="1.0.0">
 	<entry>
 		<name>Mothwing Cloak</name>
 		<type>Ability</type>
@@ -23,7 +23,13 @@
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Mark of Pride</requirement>
 			</requirementSet>
 		</requirements>
 		<locales>
@@ -264,9 +270,35 @@
 		</vars>
 		<requirements>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
-				<requirement>Dream Nail</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Monarch Wings</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Shade Cloak</requirement>
 			</requirementSet>
 		</requirements>
 		<locales>
@@ -281,9 +313,30 @@
 		</vars>
 		<requirements>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
-				<requirement>Dream Nail</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Monarch Wings</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
+				<requirement>Mantis Claw</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
+				<requirement>Monarch Wings</requirement>
 			</requirementSet>
 		</requirements>
 		<locales>
@@ -299,9 +352,32 @@
 		<requirements>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Desolate Dive</requirement>
-				<requirement>Dream Nail</requirement>
 				<requirement>Mantis Claw</requirement>
 				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Shade Soul</requirement>
 			</requirementSet>
 		</requirements>
 		<locales>
@@ -314,7 +390,11 @@
 		<vars>
 			<int value="1">screamLevel</int>
 		</vars>
-		<requirements></requirements>
+		<requirements>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+			</requirementSet>
+		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_SPELL_SCREAM1</locale>
 		</locales>
@@ -327,9 +407,17 @@
 		</vars>
 		<requirements>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
-				<requirement>Dream Nail</requirement>
 				<requirement>Mantis Claw</requirement>
-				<requirement>Crystal Heart</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Howling Wraiths</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Howling Wraiths</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Howling Wraiths</requirement>
 			</requirementSet>
 		</requirements>
 		<locales>
@@ -695,22 +783,6 @@
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Crystal Heart</requirement>
-				<requirement>Vengeful Spirit</requirement>
-			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true">
-				<requirement>Mantis Claw</requirement>
-				<requirement>Crystal Heart</requirement>
-				<requirement>Shade Soul</requirement>
-			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true">
-				<requirement>Mantis Claw</requirement>
-				<requirement>Crystal Heart</requirement>
-				<requirement>Grubberfly's Elegy</requirement>
-			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true">
-				<requirement>Mantis Claw</requirement>
-				<requirement>Crystal Heart</requirement>
-				<requirement>Monarch Wings</requirement>
 			</requirementSet>
 		</requirements>
 		<locales>
@@ -838,6 +910,14 @@
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Shade Cloak</requirement>
 			</requirementSet>
 		</requirements>
 		<locales>

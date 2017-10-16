@@ -91,11 +91,6 @@ namespace RandomizerMod
                         gameObject.name = "CustomPlatform";
                         gameObject.tag = "Untagged";
                     }
-
-                    if (objectsFromScene[i].name.Contains("Quake Floor"))
-                    {
-                        GameObject.Destroy(objectsFromScene[i]);
-                    }
                 }
             }
 

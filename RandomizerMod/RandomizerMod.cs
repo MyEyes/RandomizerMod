@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml;
+using System.IO;
 using Modding;
 using UnityEngine.SceneManagement;
 
@@ -9,6 +11,8 @@ namespace RandomizerMod
 {
     public class RandomizerMod : Mod
     {
+        private string xmlVer = "UNKNOWN";
+
         //Attach to the modded dll
         public override void Initialize()
         {
@@ -30,12 +34,22 @@ namespace RandomizerMod
             UnityEngine.GameObject UIObj = new UnityEngine.GameObject();
             UIObj.AddComponent<GUIController>();
             UnityEngine.GameObject.DontDestroyOnLoad(UIObj);
+
+            //Get version from XML
+            if (File.Exists(@"Randomizer\randomizer.xml"))
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(@"Randomizer\randomizer.xml");
+                XmlAttribute ver = doc.SelectSingleNode("randomizer").Attributes["version"];
+                if (ver != null) xmlVer = ver.Value;
+            }
+
             ModHooks.ModLog("Randomizer Mod initialized!");
         }
 
         public override string GetVersion()
         {
-            return "1.0.0";
+            return "1.0.1 (XML Version: " + xmlVer + ")";
         }
     }
 }
