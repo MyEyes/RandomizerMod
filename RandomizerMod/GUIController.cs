@@ -101,8 +101,6 @@ namespace RandomizerMod
                         Randomizer.hardMode = false;
                     }
 
-                    if (GUI.Button(new Rect(0f, 0f, 400f, 100f), "Log Randomization")) Randomizer.LogRandomization();
-
                     //Create text field for seed if randomizer is not off
                     if (Randomizer.randomizer)
                     {
@@ -111,6 +109,8 @@ namespace RandomizerMod
                         //Running Regex every frame is not efficient, but I figure the potential performance hit doesn't matter too much in the main menu
                         this.seedString = Regex.Replace(this.seedString, "[^0-9]", "");
                         int.TryParse(this.seedString, out Randomizer.seed);
+
+                        if (GUI.Button(new Rect(200f, 850f, 330f, 82f), "Log Randomization")) Randomizer.LogRandomization();
                     }
                 }
                 else

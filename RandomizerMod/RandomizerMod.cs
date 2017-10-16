@@ -32,5 +32,10 @@ namespace RandomizerMod
             UnityEngine.GameObject.DontDestroyOnLoad(UIObj);
             ModHooks.ModLog("Randomizer Mod initialized!");
         }
+
+        public override string GetVersion()
+        {
+            return "1.0.0";
+        }
     }
 }
