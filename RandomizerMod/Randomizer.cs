@@ -509,89 +509,163 @@ namespace RandomizerMod
             }
         }
 
-        //Randomization algorithm
-        public static void Randomize(System.Random random)
+        public static List<RandomizerEntry> GetRequirementSet(RandomizerEntry entry, List<RandomizerEntry> unobtained)
         {
-            Modding.ModHooks.ModLog("[RANDOMIZER] ---------------------------------------------------------------");
-            Modding.ModHooks.ModLog("[RANDOMIZER] Beginning randomization with seed " + seed + " (Hard: " + hardMode + ")");
+            string[][] sets = entry.GetRequires();
 
-            bool flag = false;
-
-            //Loop until a permutation with all items reachable is found
-            while (!flag)
+            if (sets.Length == 0)
             {
-                permutation.Clear();
+                return new List<RandomizerEntry>();
+            }
 
-                List<string> list = new List<string>();
-                List<string> list2 = new List<string>();
-                List<string> list3 = new List<string>();
+            int bestSet = -1;
+            int count = 0;
 
-                list.AddRange(entries.Keys);
-                list2.AddRange(entries.Keys);
+            for (int i = 0; i < sets.Length; i++)
+            {
+                sets[i] = (from item in unobtained.AsEnumerable() where sets[i].Contains(item.name) select item.name).ToArray();
 
-                //Loop until all items have been added to randomizer
-                while (list.Count > 0)
+                if (sets[i].Length < count || bestSet == -1)
                 {
-                    flag = false;
+                    bestSet = i;
+                    count = sets[i].Length;
+                }
+            }
 
-                    //Check for reachable pickups and assign them a random item
-                    for (int i = 0; i < list.Count; i++)
+            List<RandomizerEntry> retList = new List<RandomizerEntry>();
+            foreach (RandomizerEntry item in unobtained)
+            {
+                if (sets[bestSet].Contains(item.name))
+                {
+                    retList.Add(item);
+                }
+            }
+
+            return retList;
+        }
+
+        public static List<RandomizerEntry> GetNewReachableItems(List<RandomizerEntry> reachable, List<RandomizerEntry> replaced, List<RandomizerEntry> obtained)
+        {
+            List<RandomizerEntry> candidates = (from item in entries.Values.AsEnumerable() where !(reachable.Contains(item) || replaced.Contains(item)) select item).ToList();
+            List<RandomizerEntry> newEntries = new List<RandomizerEntry>();
+
+            foreach (RandomizerEntry candidate in candidates)
+            {
+                foreach (string[] reqSet in candidate.GetRequires())
+                {
+                    bool reqsMet = true;
+
+                    foreach (string req in reqSet)
                     {
-                        if (IsReachable(list3, entries[list[i]]))
+                        if (!obtained.Any(item => item.name == req))
                         {
-                            flag = true;
-
-                            bool itemPicked = false;
-                            int index = -1;
-
-                            //Terrible way to make abilities show up less frequently
-                            while (!itemPicked)
-                            {
-                                itemPicked = true;
-                                index = random.Next(list2.Count);
-
-                                if (entries[list2[index]].type == RandomizerType.ABILITY && random.Next(1, 4) != 1)
-                                {
-                                    itemPicked = false;
-                                }
-                            }
-
-                            permutation.Add(list[i], list2[index]);
-                            list3.Add(list2[index]);
-                            list.RemoveAt(i);
-                            i--;
-                            list2.RemoveAt(index);
+                            reqsMet = false;
+                            break;
                         }
                     }
 
-                    //Break loop and try again if no items are reachable
-                    if (!flag)
+                    if (reqsMet)
                     {
+                        newEntries.Add(candidate);
+                        Modding.ModHooks.ModLog("[RANDOMIZER] " + candidate.name + " is now reachable");
                         break;
                     }
                 }
             }
 
-            using (StreamWriter writer = new StreamWriter(Application.persistentDataPath + "\\rnd.js"))
+            return newEntries;
+        }
+
+        //Randomization algorithm
+        public static void Randomize(System.Random random)
+        {
+            Modding.ModHooks.ModLog("[RANDOMIZER] ----------------------------------------------------------");
+            Modding.ModHooks.ModLog("[RANDOMIZER] Beginning randomization with seed " + seed);
+            permutation.Clear();
+
+            List<RandomizerEntry> unsorted = new List<RandomizerEntry>();
+            List<RandomizerEntry> sorted = new List<RandomizerEntry>();
+            List<RandomizerEntry> reachable = (from entry in entries.Values.AsEnumerable() where (entry.GetRequires().Length == 0) select entry).ToList();
+            List<RandomizerEntry> replaced = new List<RandomizerEntry>();
+            unsorted.AddRange(entries.Values);
+
+            foreach (RandomizerEntry entry in reachable)
             {
-                writer.WriteLine("{");
-                writer.WriteLine("\t\"seed\" : \"" + seed + "\",");
-                writer.WriteLine("\t\"mode\" : \"" + (hardMode ? (PlayerData.instance.permadeathMode > 0 ? "hardpermadeath" : "hard") : "easy") + "\",");
-                int permCount = 0;
-                foreach (KeyValuePair<string, string> perm in permutation)
-                {
-                    string name1 = entries[perm.Key].entries[0].name + (entries[perm.Key].entries[0].value != null ? entries[perm.Key].entries[0].value : "");
-                    string name2 = entries[perm.Value].entries[0].name + (entries[perm.Value].entries[0].value != null ? entries[perm.Value].entries[0].value : "");
-
-                    if (++permCount != permutation.Count) writer.WriteLine("\t\"" + name1 + "\" : \"" + name2 + "\",");
-                    else writer.WriteLine("\t\"" + name1 + "\" : \"" + name2 + "\"");
-
-                    Modding.ModHooks.ModLog("[RANDOMIZER] " + perm.Key + " = " + perm.Value);
-                }
-                writer.WriteLine("}");
+                Modding.ModHooks.ModLog("[RANDOMIZER] " + entry.name + " is reachable");
             }
 
-            Modding.ModHooks.ModLog("[RANDOMIZER] ---------------------------------------------------------------");
+            //Loop until we've run out of places to put things at
+            while (reachable.Count > 0)
+            {
+                RandomizerEntry newItem;
+
+                //Need to select an item that isn't a dead end if we're almost out of options
+                if (reachable.Count == 1 && unsorted.Count > 1)
+                {
+                    List<RandomizerEntry> candidates = new List<RandomizerEntry>();
+                    foreach (RandomizerEntry entry in unsorted)
+                    {
+                        if (entry.LeadsTo(entries.Values.ToList(), sorted, reachable.Union(replaced).ToList()).Count > 0)
+                        {
+                            candidates.Add(entry);
+                        }
+                    }
+                    newItem = candidates.ElementAt(random.Next(candidates.Count));
+
+                    Modding.ModHooks.ModLog("[RANDOMIZER] Running out of options, " + newItem.name + " should prevent hard lock");
+                }
+                else
+                {
+                    newItem = unsorted.ElementAt(random.Next(unsorted.Count));
+                }
+
+                //Update list of items that need to be placed still
+                sorted.Add(newItem);
+                unsorted.Remove(newItem);
+
+                //Randomly place the chosen item among the reachable elements
+                //No need to check requirements, we can assume the new item isn't required for the replace location since it's already reachable
+                RandomizerEntry replaceAt = reachable.ElementAt(random.Next(reachable.Count));
+                replaced.Add(replaceAt);
+                reachable.Remove(replaceAt);
+
+                Modding.ModHooks.ModLog("[RANDOMIZER] Adding permutation: " + replaceAt.name + " = " + newItem.name);
+
+                permutation.Add(replaceAt.name, newItem.name);
+                reachable.AddRange(GetNewReachableItems(reachable, replaced, sorted));
+            }
+
+            //Restart if the algorithm fails
+            //Hopefully it never does
+            if (unsorted.Count != 0)
+            {
+                Modding.ModHooks.ModLog("[RANDOMIZER] Randomization has somehow failed");
+                foreach (RandomizerEntry entry in entries.Values.ToList().FindAll(item => !replaced.Contains(item)))
+                {
+                    Modding.ModHooks.ModLog(entry.name + " is unreachable");
+                }
+                Randomize(new System.Random(random.Next()));
+            }
+            else
+            {
+                //Write the json for the item tracker if the randomization succeeded
+                using (StreamWriter writer = new StreamWriter(Application.persistentDataPath + @"\rnd.js"))
+                {
+                    writer.WriteLine("{");
+                    writer.WriteLine("\t\"seed\" : \"" + seed + "\",");
+                    writer.WriteLine("\t\"mode\" : \"" + (hardMode ? (PlayerData.instance.permadeathMode > 0 ? "hardpermadeath" : "hard") : "easy") + "\",");
+                    int permCount = 0;
+                    foreach (KeyValuePair<string, string> perm in permutation)
+                    {
+                        string name1 = entries[perm.Key].entries[0].name + (entries[perm.Key].entries[0].value != null ? entries[perm.Key].entries[0].value : "");
+                        string name2 = entries[perm.Value].entries[0].name + (entries[perm.Value].entries[0].value != null ? entries[perm.Value].entries[0].value : "");
+
+                        if (++permCount != permutation.Count) writer.WriteLine("\t\"" + name1 + "\" : \"" + name2 + "\",");
+                        else writer.WriteLine("\t\"" + name1 + "\" : \"" + name2 + "\"");
+                    }
+                    writer.WriteLine("}");
+                }
+            }
         }
 
         //Checks requirements to see if an entry is reachable

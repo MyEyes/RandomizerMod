@@ -1,4 +1,4 @@
-<randomizer version="1.0.0">
+<randomizer version="1.0.1">
 	<entry>
 		<name>Mothwing Cloak</name>
 		<type>Ability</type>
@@ -27,6 +27,10 @@
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mark of Pride</requirement>
+				<requirement>Longnail</requirement>
 			</requirementSet>
 			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Mark of Pride</requirement>

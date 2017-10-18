@@ -113,6 +113,56 @@ namespace RandomizerMod
             }
         }
 
+        public List<RandomizerEntry> LeadsTo(List<RandomizerEntry> entries, List<RandomizerEntry> obtained, List<RandomizerEntry> reachable)
+        {
+            foreach (RandomizerEntry item in reachable)
+            {
+                entries.Remove(item);
+            }
+
+            List<RandomizerEntry> l = new List<RandomizerEntry>();
+            foreach (RandomizerEntry entry in entries)
+            {
+                foreach (string[] reqSet in entry.GetRequires())
+                {
+                    if (l.Contains(entry))
+                    {
+                        break;
+                    }
+
+                    bool flag = true;
+
+                    foreach (string req in reqSet)
+                    {
+                        if (req != this.name)
+                        {
+                            bool hasItem = false;
+
+                            foreach(RandomizerEntry item in obtained)
+                            {
+                                if (req == item.name)
+                                {
+                                    hasItem = true;
+                                }
+                            }
+
+                            if (!hasItem)
+                            {
+                                flag = false;
+                            }
+                        }
+                    }
+
+                    if (flag)
+                    {
+                        l.Add(entry);
+                    }
+                }
+            }
+
+            return l;
+        }
+
         //Helper function for loading XML
         public static RandomizerType GetTypeFromString(string type)
         {
