@@ -1,4 +1,4 @@
-<randomizer version="1.0.1">
+<randomizer version="1.0.2">
 	<entry>
 		<name>Mothwing Cloak</name>
 		<type>Ability</type>
@@ -29,8 +29,7 @@
 				<requirement>Monarch Wings</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
-				<requirement>Mark of Pride</requirement>
-				<requirement>Longnail</requirement>
+				<requirement>Glowing Womb</requirement>
 			</requirementSet>
 			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Mark of Pride</requirement>
@@ -509,6 +508,10 @@
 				<requirement>Grubberfly's Elegy</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Glowing Womb</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
@@ -529,6 +532,10 @@
 				<requirement>Grubberfly's Elegy</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Glowing Womb</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
@@ -549,6 +556,10 @@
 				<requirement>Grubberfly's Elegy</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Glowing Womb</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
@@ -569,6 +580,10 @@
 				<requirement>Grubberfly's Elegy</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Glowing Womb</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
@@ -587,6 +602,10 @@
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Grubberfly's Elegy</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Glowing Womb</requirement>
 			</requirementSet>
 			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
@@ -606,6 +625,10 @@
 			</requirementSet>
 			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
+				<requirement>Mark of Pride</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
 				<requirement>Mark of Pride</requirement>
 			</requirementSet>
 		</requirements>
@@ -1047,6 +1070,26 @@
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Shade Cloak</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Shade Cloak</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Shade Soul</requirement>
 			</requirementSet>
 		</requirements>
 		<locales>

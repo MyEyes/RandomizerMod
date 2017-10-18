@@ -610,13 +610,44 @@ namespace RandomizerMod
                             candidates.Add(entry);
                         }
                     }
-                    newItem = candidates.ElementAt(random.Next(candidates.Count));
 
-                    Modding.ModHooks.ModLog("[RANDOMIZER] Running out of options, " + newItem.name + " should prevent hard lock");
+                    if (candidates.Count > 0)
+                    {
+                        newItem = candidates.ElementAt(random.Next(candidates.Count));
+                        Modding.ModHooks.ModLog("[RANDOMIZER] Running out of options, " + newItem.name + " should prevent hard lock");
+                    }
+                    else
+                    {
+                        newItem = unsorted.ElementAt(random.Next(unsorted.Count));
+                        Modding.ModHooks.ModLog("[RANDOMIZER] Running out of options, " + newItem.name + " will probably not help anything");
+                    }
                 }
                 else
                 {
-                    newItem = unsorted.ElementAt(random.Next(unsorted.Count));
+                    if (hardMode)
+                    {
+                        List<RandomizerEntry> candidates = new List<RandomizerEntry>();
+                        foreach (RandomizerEntry entry in unsorted)
+                        {
+                            if (entry.LeadsTo(entries.Values.ToList(), sorted, reachable.Union(replaced).ToList()).Count == 0)
+                            {
+                                candidates.Add(entry);
+                            }
+                        }
+
+                        if (candidates.Count > 0)
+                        {
+                            newItem = candidates.ElementAt(random.Next(candidates.Count));
+                        }
+                        else
+                        {
+                            newItem = unsorted.ElementAt(random.Next(unsorted.Count));
+                        }
+                    }
+                    else
+                    {
+                        newItem = unsorted.ElementAt(random.Next(unsorted.Count));
+                    }
                 }
 
                 //Update list of items that need to be placed still
