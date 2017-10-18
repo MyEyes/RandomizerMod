@@ -1,4 +1,4 @@
-<randomizer version="1.0.2">
+<randomizer version="1.0.3">
 	<entry>
 		<name>Mothwing Cloak</name>
 		<type>Ability</type>
@@ -1396,12 +1396,10 @@
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
 			<requirementSet easy="false" hard="true" hardpermadeath="true">
-				<requirement>Crystal Heart</requirement>
 				<requirement>Monarch Wings</requirement>
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
 			<requirementSet easy="false" hard="true" hardpermadeath="true">
-				<requirement>Crystal Heart</requirement>
 				<requirement>Monarch Wings</requirement>
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
