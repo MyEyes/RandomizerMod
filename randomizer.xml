@@ -1,4 +1,4 @@
-<randomizer version="1.0.4">
+<randomizer version="1.0.5">
 	<entry>
 		<name>Mothwing Cloak</name>
 		<type>Ability</type>
@@ -1206,6 +1206,23 @@
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Grubberfly's Elegy</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Glowing Womb</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Desolate Dive</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Descending Dark</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
@@ -1239,6 +1256,23 @@
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Grubberfly's Elegy</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Glowing Womb</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Desolate Dive</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Descending Dark</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
@@ -1272,6 +1306,23 @@
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Grubberfly's Elegy</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Glowing Womb</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Desolate Dive</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Descending Dark</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
