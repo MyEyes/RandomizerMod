@@ -1,4 +1,4 @@
-<randomizer version="1.0.5">
+<randomizer version="1.1.0">
 	<entry>
 		<name>Mothwing Cloak</name>
 		<type>Ability</type>
@@ -220,6 +220,22 @@
 		</locales>
 	</entry>
 	<entry>
+		<name>Isma's Tear</name>
+		<type>Ability</type>
+		<vars>
+			<bool>hasAcidArmour</bool>
+		</vars>
+		<requirements>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Mantis Claw</requirement>
+			</requirementSet>
+		</requirements>
+		<locales>
+			<locale>UI.INV_NAME_ACIDARMOUR</locale>
+		</locales>
+	</entry>
+	<entry>
 		<name>Dream Nail</name>
 		<type>Ability</type>
 		<vars>
@@ -354,6 +370,10 @@
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Monarch Wings</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Isma's Tear</requirement>
+				<requirement>Mantis Claw</requirement>
 			</requirementSet>
 			<requirementSet easy="false" hard="true" hardpermadeath="false">
 				<requirement>Mantis Claw</requirement>
@@ -1354,7 +1374,54 @@
 			<locale>UI.CHARM_NAME_27</locale>
 		</locales>
 	</entry>
-	<!--Charm 28 Shape of Unn-->
+	<entry>
+		<name>Shape of Unn</name>
+		<type>Charm</type>
+		<vars>
+			<bool>gotCharm_28</bool>
+		</vars>
+		<requirements>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Vengeful Spirit</requirement>
+				<requirement>Isma's Tear</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Shade Soul</requirement>
+				<requirement>Isma's Tear</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Grubberfly's Elegy</requirement>
+				<requirement>Isma's Tear</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Isma's Tear</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Shade Cloak</requirement>
+				<requirement>Isma's Tear</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Isma's Tear</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Isma's Tear</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Glowing Womb</requirement>
+				<requirement>Isma's Tear</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Mark of Pride</requirement>
+				<requirement>Isma's Tear</requirement>
+			</requirementSet>
+		</requirements>
+		<locales>
+			<locale>UI.CHARM_NAME_28</locale>
+		</locales>
+	</entry>
 	<entry>
 		<name>Hiveblood</name>
 		<type>Charm</type>
@@ -1526,6 +1593,10 @@
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Monarch Wings</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Isma's Tear</requirement>
+				<requirement>Mantis Claw</requirement>
 			</requirementSet>
 			<requirementSet easy="false" hard="true" hardpermadeath="false">
 				<requirement>Mantis Claw</requirement>

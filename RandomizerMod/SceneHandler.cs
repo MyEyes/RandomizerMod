@@ -251,7 +251,77 @@ namespace RandomizerMod
                 }
             }
 
-            try {
+            if (destScene == "Waterways_13")
+            {
+                foreach (GameObject obj in SceneHandler.GetObjectsFromScene("Waterways_13"))
+                {
+                    if ((obj.name.ToLower().Contains("water") || obj.name.ToLower().Contains("acid")) && obj.name != "Shiny Item Acid")
+                    {
+                        PlayMakerFSM[] fsms = obj.GetComponents<PlayMakerFSM>();
+                        foreach (PlayMakerFSM fsm in fsms)
+                        {
+                            for (int i = 0; i < fsm.FsmStates.Length; i++)
+                            {
+                                bool foundAcid = false;
+
+                                FieldInfo[] fieldInfo = typeof(HutongGames.PlayMaker.ActionData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+
+                                for (int j = 0; j < fieldInfo.Length; j++)
+                                {
+                                    if (fieldInfo[j].Name == "fsmStringParams")
+                                    {
+                                        foreach (FsmString str in (List<FsmString>)fieldInfo[j].GetValue(fsm.FsmStates[i].ActionData))
+                                        {
+                                            List<FsmString> val = new List<FsmString>();
+
+                                            if (str.Value.Contains("hasAcidArmour"))
+                                            {
+                                                val.Add(PlayerData.instance.hasAcidArmour ? "_true" : "_false");
+                                                foundAcid = true;
+                                            }
+                                            else
+                                            {
+                                                val.Add(str);
+                                            }
+
+                                            if (val.Count > 0)
+                                            {
+                                                fieldInfo[j].SetValue(fsm.FsmStates[i].ActionData, val);
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (foundAcid)
+                                {
+                                    fsm.FsmStates[i].LoadActions();
+                                    fsm.SetState(fsm.FsmStates[i].Name);
+                                }
+                            }
+                        }
+                    }
+                    else if (obj.name.ToLower().Contains("water") || obj.name.ToLower().Contains("acid"))
+                    {
+                        if (Randomizer.permutation.ContainsKey("Isma's Tear"))
+                        {
+                            bool ismasReplacement;
+                            RandomizerVar var = Randomizer.entries[Randomizer.permutation["Isma's Tear"]].entries[0];
+
+                            if (var.type == typeof(bool))
+                            {
+                                ismasReplacement = PlayerData.instance.GetBoolInternal(var.name);
+                            }
+                            else
+                            {
+                                ismasReplacement = (PlayerData.instance.GetIntInternal(var.name) > 0) ? true : false;
+                            }
+
+                            if (ismasReplacement) GameObject.Destroy(obj);
+                        }
+                    }
+                }
+            }
+
             if (destScene == "Mines_33" && !PlayerData.instance.hasLantern)
             {
                 foreach (GameObject obj in SceneHandler.GetObjectsFromScene("Mines_33"))
@@ -298,10 +368,6 @@ namespace RandomizerMod
                         }
                     }
                 }
-            }
-            } catch (Exception e)
-            {
-                Modding.ModHooks.ModLog(e.ToString());
             }
         }
 

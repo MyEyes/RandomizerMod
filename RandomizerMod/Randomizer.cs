@@ -321,6 +321,14 @@ namespace RandomizerMod
             {
                 return true;
             }
+            else if (name == "_false")
+            {
+                return false;
+            }
+            else if (name == "hasAcidArmour")
+            {
+                return GameManager.instance.GetSceneNameString() == "Waterways_13" ? false : PlayerData.instance.hasAcidArmour;
+            }
 
             //Check stack trace to see if player is in a menu
             string stack = new StackTrace().ToString();
