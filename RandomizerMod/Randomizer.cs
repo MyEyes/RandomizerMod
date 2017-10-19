@@ -634,7 +634,7 @@ namespace RandomizerMod
                         List<RandomizerEntry> candidates = new List<RandomizerEntry>();
                         foreach (RandomizerEntry entry in unsorted)
                         {
-                            if (entry.LeadsTo(entries.Values.ToList(), sorted, reachable.Union(replaced).ToList()).Count == 0)
+                            if (random.Next(100) < 10 || entry.LeadsTo(entries.Values.ToList(), sorted, reachable.Union(replaced).ToList()).Count == 0)
                             {
                                 candidates.Add(entry);
                             }
