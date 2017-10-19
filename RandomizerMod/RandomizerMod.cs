@@ -49,7 +49,7 @@ namespace RandomizerMod
 
         public override string GetVersion()
         {
-            return "1.1.1 (XML Version: " + xmlVer + ")";
+            return "1.1.2 (XML Version: " + xmlVer + ")";
         }
     }
 }

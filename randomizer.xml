@@ -1,4 +1,4 @@
-<randomizer version="1.0.3">
+<randomizer version="1.0.4">
 	<entry>
 		<name>Mothwing Cloak</name>
 		<type>Ability</type>
@@ -65,6 +65,27 @@
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Grubberfly's Elegy</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Glowing Womb</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Desolate Dive</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Descending Dark</requirement>
 			</requirementSet>
 			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Vengeful Spirit</requirement>
@@ -253,7 +274,6 @@
 			<locale>UI.INV_NAME_DREAMNAIL_B</locale>
 		</locales>
 	</entry>
-	<!--TODO: Fix spell requirements-->
 	<entry>
 		<name>Vengeful Spirit</name>
 		<type>Spell</type>
@@ -360,26 +380,95 @@
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Desolate Dive</requirement>
-				<requirement>Mantis Claw</requirement>
 				<requirement>Monarch Wings</requirement>
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Desolate Dive</requirement>
-				<requirement>Mantis Claw</requirement>
 				<requirement>Monarch Wings</requirement>
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
 			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Desolate Dive</requirement>
-				<requirement>Mantis Claw</requirement>
 				<requirement>Monarch Wings</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
 			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Desolate Dive</requirement>
-				<requirement>Mantis Claw</requirement>
 				<requirement>Monarch Wings</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Shade Cloak</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Shade Cloak</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Shade Cloak</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Shade Cloak</requirement>
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
 		</requirements>
@@ -396,6 +485,9 @@
 		<requirements>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
 			</requirementSet>
 		</requirements>
 		<locales>
@@ -1269,6 +1361,27 @@
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Grubberfly's Elegy</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Glowing Womb</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Desolate Dive</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Descending Dark</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>

@@ -314,6 +314,11 @@ namespace RandomizerMod
                 return false;
             }
 
+            if (name == "_true")
+            {
+                return true;
+            }
+
             //Check stack trace to see if player is in a menu
             string stack = new StackTrace().ToString();
 
@@ -780,6 +785,18 @@ namespace RandomizerMod
         //Load randomizer save from file if applicable
         public static void LoadGame(int profileId)
         {
+            if (File.Exists(Application.persistentDataPath + @"\rnd.js"))
+            {
+                try
+                {
+                    File.Delete(Application.persistentDataPath + @"\rnd.js");
+                }
+                catch (Exception e)
+                {
+                    Modding.ModHooks.ModLog("[RANDOMIZER] Could not delete rnd.js:\n" + e.ToString());
+                }
+            }
+
             randomizer = false;
             hardMode = false;
             loadedSave = true;
@@ -859,6 +876,18 @@ namespace RandomizerMod
             PlayerData.instance.fireballLevel = 2;
             PlayerData.instance.screamLevel = 2;
             PlayerData.instance.quakeLevel = 2;*/
+
+            if (File.Exists(Application.persistentDataPath + @"\rnd.js"))
+            {
+                try
+                {
+                    File.Delete(Application.persistentDataPath + @"\rnd.js");
+                }
+                catch (Exception e)
+                {
+                    Modding.ModHooks.ModLog("[RANDOMIZER] Could not delete rnd.js:\n" + e.ToString());
+                }
+            }
 
             if (randomizer)
             {
