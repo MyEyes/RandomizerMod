@@ -369,6 +369,8 @@ namespace RandomizerMod
                     }
                 }
             }
+
+            GC.Collect();
         }
 
         // Token: 0x0600312F RID: 12591 RVA: 0x0012783C File Offset: 0x00125A3C

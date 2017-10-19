@@ -111,6 +111,8 @@ namespace RandomizerMod
             {
                 this.localeNames[i] = localesXml[i].InnerText;
             }
+
+            GC.Collect();
         }
 
         public List<RandomizerEntry> LeadsTo(List<RandomizerEntry> entries, List<RandomizerEntry> obtained, List<RandomizerEntry> reachable)

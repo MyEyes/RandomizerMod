@@ -1,4 +1,4 @@
-<randomizer version="1.1.0">
+<randomizer version="1.1.1">
 	<entry>
 		<name>Mothwing Cloak</name>
 		<type>Ability</type>
@@ -1382,39 +1382,11 @@
 		</vars>
 		<requirements>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
-				<requirement>Vengeful Spirit</requirement>
-				<requirement>Isma's Tear</requirement>
-			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true">
-				<requirement>Shade Soul</requirement>
-				<requirement>Isma's Tear</requirement>
-			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true">
-				<requirement>Grubberfly's Elegy</requirement>
-				<requirement>Isma's Tear</requirement>
-			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true">
-				<requirement>Mothwing Cloak</requirement>
-				<requirement>Isma's Tear</requirement>
-			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true">
-				<requirement>Shade Cloak</requirement>
-				<requirement>Isma's Tear</requirement>
-			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Isma's Tear</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
-				<requirement>Isma's Tear</requirement>
-			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true">
-				<requirement>Glowing Womb</requirement>
-				<requirement>Isma's Tear</requirement>
-			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true">
-				<requirement>Mark of Pride</requirement>
 				<requirement>Isma's Tear</requirement>
 			</requirementSet>
 		</requirements>

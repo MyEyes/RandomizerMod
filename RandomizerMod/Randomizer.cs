@@ -713,6 +713,8 @@ namespace RandomizerMod
                     writer.WriteLine("}");
                 }
             }
+
+            GC.Collect();
         }
 
         //Checks requirements to see if an entry is reachable
