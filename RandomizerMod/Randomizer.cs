@@ -60,8 +60,11 @@ namespace RandomizerMod
             {
                 return 0;
             }
-
-            if (name == "_fireballLevel")
+            if (name == "_true")
+            {
+                return 2;
+            }
+            else if (name == "_fireballLevel")
             {
                 return _fireball1 + _fireball2;
             }
