@@ -1022,6 +1022,11 @@
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
 		</requirements>
 		<locales>
 			<locale>UI.CHARM_NAME_16</locale>
