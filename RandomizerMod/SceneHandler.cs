@@ -11,6 +11,21 @@ namespace RandomizerMod
     // Token: 0x02000922 RID: 2338
     public static class SceneHandler
     {
+        private static FieldInfo fsmStringParamsField;
+        static SceneHandler()
+        {
+            // This is a private field, so it's kind of a pain to get to.
+            FieldInfo[] fieldInfo = typeof(HutongGames.PlayMaker.ActionData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            for (int j = 0; j < fieldInfo.Length; j++)
+            {
+                if (fieldInfo[j].Name == "fsmStringParams")
+                {
+                    fsmStringParamsField = fieldInfo[j];
+                    break;
+                }
+            }
+        }
+
         public static void CheckForChanges(Scene from, Scene to)
         {
             CheckForChanges(to.name);
@@ -34,41 +49,34 @@ namespace RandomizerMod
                     {
                         if (spell.FsmStates[i].Name == "Has Fireball?" || spell.FsmStates[i].Name == "Has Quake?" || spell.FsmStates[i].Name == "Has Scream?")
                         {
-                            FieldInfo[] fieldInfo = typeof(HutongGames.PlayMaker.ActionData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                            for (int j = 0; j < fieldInfo.Length; j++)
+                            foreach (FsmString str in (List<FsmString>)fsmStringParamsField.GetValue(spell.FsmStates[i].ActionData))
                             {
-                                if (fieldInfo[j].Name == "fsmStringParams")
+                                List<FsmString> val = new List<FsmString>();
+
+                                if (str.Value.Contains("fireball"))
                                 {
-                                    foreach (FsmString str in (List<FsmString>)fieldInfo[j].GetValue(spell.FsmStates[i].ActionData))
-                                    {
-                                        List<FsmString> val = new List<FsmString>();
+                                    val.Add("_fireballLevel");
+                                }
+                                else if (str.Value.Contains("quake"))
+                                {
+                                    val.Add("_quakeLevel");
+                                }
+                                else if (str.Value.Contains("scream"))
+                                {
+                                    val.Add("_screamLevel");
+                                }
+                                else
+                                {
+                                    val.Add(str);
+                                }
 
-                                        if (str.Value.Contains("fireball"))
-                                        {
-                                            val.Add("_fireballLevel");
-                                        }
-                                        else if (str.Value.Contains("quake"))
-                                        {
-                                            val.Add("_quakeLevel");
-                                        }
-                                        else if (str.Value.Contains("scream"))
-                                        {
-                                            val.Add("_screamLevel");
-                                        }
-                                        else
-                                        {
-                                            val.Add(str);
-                                        }
-
-                                        if (val.Count > 0)
-                                        {
-                                            fieldInfo[j].SetValue(spell.FsmStates[i].ActionData, val);
-                                        }
-                                    }
-
-                                    spell.FsmStates[i].LoadActions();
+                                if (val.Count > 0)
+                                {
+                                    fsmStringParamsField.SetValue(spell.FsmStates[i].ActionData, val);
                                 }
                             }
+
+                            spell.FsmStates[i].LoadActions();
                         }
                     }
                 }
@@ -78,6 +86,8 @@ namespace RandomizerMod
                 Modding.ModHooks.ModLog(e.ToString());
             }
 
+            // After defeating Soul Master, you are hard saved in the Desolate Dive tutorial.
+            // Add a platform to prevent you from being trapped here without Mantis Claw.
             if (destScene == "Ruins1_32" && !PlayerData.instance.hasWalljump)
             {
                 List<GameObject> objectsFromScene = SceneHandler.GetObjectsFromScene("Ruins1_32");
@@ -94,6 +104,7 @@ namespace RandomizerMod
                 }
             }
 
+            // In case you got to the Desolate Dive tutorial without Desolate Dive, break all the floors open so you can get out.
             if ((destScene == "Ruins1_30" || destScene == "Ruins1_32") && Randomizer._quake1 == 0 && Randomizer._quake2 == 0 && PlayerData.instance.killedMageLord)
             {
                 List<GameObject> objectsFromScene = SceneHandler.GetObjectsFromScene(destScene);
@@ -106,6 +117,9 @@ namespace RandomizerMod
                 }
             }
 
+            // Instead of letting the City Crest gate to City of Tears close behind you and trap you in the City of Tears,
+            // check the player's inventory for the City Crest, and then delete the gate.
+            // This way, you can still get out of City of Tears after entering through this entrance.
             if (destScene == "Fungus2_21" && PlayerData.instance.hasCityKey)
             {
                 foreach (GameObject gameObject2 in SceneHandler.GetObjectsFromScene("Fungus2_21"))
@@ -117,6 +131,8 @@ namespace RandomizerMod
                 }
             }
 
+            // You can get into the Ancient Basin without a way to get out.
+            // If this is the case, remove the bench down here to prevent you from hard locking your save.
             if (destScene == "Abyss_18" && !PlayerData.instance.hasWalljump)
             {
                 foreach (GameObject gameObject3 in SceneHandler.GetObjectsFromScene("Abyss_18"))
@@ -129,6 +145,9 @@ namespace RandomizerMod
                 }
             }
 
+            // When you get Vengeful Spirit, you are hard saved in the Vengeful Spirit tutorial.
+            // If you don't actualyl have Vengeful Spirit, reprogram the Elder Baldur's AI to never hide in its shell.
+            // This allows you to kill it with your unmodified nail.
             if (destScene == "Crossroads_ShamanTemple")
             {
                 foreach (GameObject obj in SceneHandler.GetObjectsFromScene("Crossroads_ShamanTemple"))
@@ -158,6 +177,8 @@ namespace RandomizerMod
                 }
             }
 
+            // You can get into Royal Waterways without a way to get back out.
+            // If this is the case, remove the bench to prevent you from hard locking your save.
             if (destScene == "Waterways_02" && !PlayerData.instance.hasWalljump && !PlayerData.instance.hasDoubleJump)
             {
                 foreach (GameObject obj in SceneHandler.GetObjectsFromScene("Waterways_02"))
@@ -184,34 +205,27 @@ namespace RandomizerMod
                         {
                             if (fsm.FsmStates[i].Name == "Can Roller?")
                             {
-                                FieldInfo[] fieldInfo = typeof(HutongGames.PlayMaker.ActionData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                                for (int j = 0; j < fieldInfo.Length; j++)
+                                foreach (FsmString str in (List<FsmString>)fsmStringParamsField.GetValue(fsm.FsmStates[i].ActionData))
                                 {
-                                    if (fieldInfo[j].Name == "fsmStringParams")
+                                    List<FsmString> val = new List<FsmString>();
+
+                                    if (str.Value.Contains("fireball"))
                                     {
-                                        foreach (FsmString str in (List<FsmString>)fieldInfo[j].GetValue(fsm.FsmStates[i].ActionData))
-                                        {
-                                            List<FsmString> val = new List<FsmString>();
+                                        val.Add("_true");
+                                        Modding.ModHooks.ModLog("[RANDOMIZER] Found FsmString on \"" + obj.name + "\" with value \"" + str.Value + "\", changing to \"_true\"");
+                                    }
+                                    else
+                                    {
+                                        val.Add(str);
+                                    }
 
-                                            if (str.Value.Contains("fireball"))
-                                            {
-                                                val.Add("_true");
-                                                Modding.ModHooks.ModLog("[RANDOMIZER] Found FsmString on \"" + obj.name +  "\" with value \"" + str.Value + "\", changing to \"_true\"");
-                                            }
-                                            else
-                                            {
-                                                val.Add(str);
-                                            }
-
-                                            if (val.Count > 0)
-                                            {
-                                                fieldInfo[j].SetValue(fsm.FsmStates[i].ActionData, val);
-                                            }
-                                        }
-
-                                        fsm.FsmStates[i].LoadActions();
+                                    if (val.Count > 0)
+                                    {
+                                        fsmStringParamsField.SetValue(fsm.FsmStates[i].ActionData, val);
                                     }
                                 }
+
+                                fsm.FsmStates[i].LoadActions();
                             }
                         }
                     }
@@ -251,6 +265,8 @@ namespace RandomizerMod
                 }
             }
 
+            // Isma's Tear has different code than other abilities for some reason.
+            // This code here is required to make the ability randomized.
             if (destScene == "Waterways_13")
             {
                 foreach (GameObject obj in SceneHandler.GetObjectsFromScene("Waterways_13"))
@@ -264,31 +280,23 @@ namespace RandomizerMod
                             {
                                 bool foundAcid = false;
 
-                                FieldInfo[] fieldInfo = typeof(HutongGames.PlayMaker.ActionData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-                                for (int j = 0; j < fieldInfo.Length; j++)
+                                foreach (FsmString str in (List<FsmString>)fsmStringParamsField.GetValue(fsm.FsmStates[i].ActionData))
                                 {
-                                    if (fieldInfo[j].Name == "fsmStringParams")
+                                    List<FsmString> val = new List<FsmString>();
+
+                                    if (str.Value.Contains("hasAcidArmour"))
                                     {
-                                        foreach (FsmString str in (List<FsmString>)fieldInfo[j].GetValue(fsm.FsmStates[i].ActionData))
-                                        {
-                                            List<FsmString> val = new List<FsmString>();
+                                        val.Add(PlayerData.instance.hasAcidArmour ? "_true" : "_false");
+                                        foundAcid = true;
+                                    }
+                                    else
+                                    {
+                                        val.Add(str);
+                                    }
 
-                                            if (str.Value.Contains("hasAcidArmour"))
-                                            {
-                                                val.Add(PlayerData.instance.hasAcidArmour ? "_true" : "_false");
-                                                foundAcid = true;
-                                            }
-                                            else
-                                            {
-                                                val.Add(str);
-                                            }
-
-                                            if (val.Count > 0)
-                                            {
-                                                fieldInfo[j].SetValue(fsm.FsmStates[i].ActionData, val);
-                                            }
-                                        }
+                                    if (val.Count > 0)
+                                    {
+                                        fsmStringParamsField.SetValue(fsm.FsmStates[i].ActionData, val);
                                     }
                                 }
 
@@ -322,6 +330,7 @@ namespace RandomizerMod
                 }
             }
 
+            // Enable the toll gate entrance to Crystal Peak even if you don't have the Lumafly Lantern.
             if (destScene == "Mines_33" && !PlayerData.instance.hasLantern)
             {
                 foreach (GameObject obj in SceneHandler.GetObjectsFromScene("Mines_33"))
@@ -335,34 +344,26 @@ namespace RandomizerMod
                             {
                                 if (fsm.FsmStates[i].Name == "Check")
                                 {
-                                    FieldInfo[] fieldInfo = typeof(HutongGames.PlayMaker.ActionData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-                                    for (int j = 0; j < fieldInfo.Length; j++)
+                                    foreach (FsmString str in (List<FsmString>)fsmStringParamsField.GetValue(fsm.FsmStates[i].ActionData))
                                     {
-                                        if (fieldInfo[j].Name == "fsmStringParams")
+                                        List<FsmString> val = new List<FsmString>();
+
+                                        if (str.Value.Contains("hasLantern"))
                                         {
-                                            foreach (FsmString str in (List<FsmString>)fieldInfo[j].GetValue(fsm.FsmStates[i].ActionData))
-                                            {
-                                                List<FsmString> val = new List<FsmString>();
+                                            val.Add("_true");
+                                        }
+                                        else
+                                        {
+                                            val.Add(str);
+                                        }
 
-                                                if (str.Value.Contains("hasLantern"))
-                                                {
-                                                    val.Add("_true");
-                                                }
-                                                else
-                                                {
-                                                    val.Add(str);
-                                                }
-
-                                                if (val.Count > 0)
-                                                {
-                                                    fieldInfo[j].SetValue(fsm.FsmStates[i].ActionData, val);
-                                                }
-                                            }
-
-                                            fsm.FsmStates[i].LoadActions();
+                                        if (val.Count > 0)
+                                        {
+                                            fsmStringParamsField.SetValue(fsm.FsmStates[i].ActionData, val);
                                         }
                                     }
+
+                                    fsm.FsmStates[i].LoadActions();
                                 }
                             }
                         }
