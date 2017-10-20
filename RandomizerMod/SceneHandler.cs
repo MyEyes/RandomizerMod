@@ -86,6 +86,8 @@ namespace RandomizerMod
                 Modding.ModHooks.ModLog(e.ToString());
             }
 
+            // After defeating Soul Master, you are hard saved in the Desolate Dive tutorial.
+            // Add a platform to prevent you from being trapped here without Mantis Claw.
             if (destScene == "Ruins1_32" && !PlayerData.instance.hasWalljump)
             {
                 List<GameObject> objectsFromScene = SceneHandler.GetObjectsFromScene("Ruins1_32");
@@ -102,6 +104,7 @@ namespace RandomizerMod
                 }
             }
 
+            // In case you got to the Desolate Dive tutorial without Desolate Dive, break all the floors open so you can get out.
             if ((destScene == "Ruins1_30" || destScene == "Ruins1_32") && Randomizer._quake1 == 0 && Randomizer._quake2 == 0 && PlayerData.instance.killedMageLord)
             {
                 List<GameObject> objectsFromScene = SceneHandler.GetObjectsFromScene(destScene);
@@ -114,6 +117,9 @@ namespace RandomizerMod
                 }
             }
 
+            // Instead of letting the City Crest gate to City of Tears close behind you and trap you in the City of Tears,
+            // check the player's inventory for the City Crest, and then delete the gate.
+            // This way, you can still get out of City of Tears after entering through this entrance.
             if (destScene == "Fungus2_21" && PlayerData.instance.hasCityKey)
             {
                 foreach (GameObject gameObject2 in SceneHandler.GetObjectsFromScene("Fungus2_21"))
@@ -125,6 +131,8 @@ namespace RandomizerMod
                 }
             }
 
+            // You can get into the Ancient Basin without a way to get out.
+            // If this is the case, remove the bench down here to prevent you from hard locking your save.
             if (destScene == "Abyss_18" && !PlayerData.instance.hasWalljump)
             {
                 foreach (GameObject gameObject3 in SceneHandler.GetObjectsFromScene("Abyss_18"))
@@ -137,6 +145,9 @@ namespace RandomizerMod
                 }
             }
 
+            // When you get Vengeful Spirit, you are hard saved in the Vengeful Spirit tutorial.
+            // If you don't actualyl have Vengeful Spirit, reprogram the Elder Baldur's AI to never hide in its shell.
+            // This allows you to kill it with your unmodified nail.
             if (destScene == "Crossroads_ShamanTemple")
             {
                 foreach (GameObject obj in SceneHandler.GetObjectsFromScene("Crossroads_ShamanTemple"))
@@ -166,6 +177,8 @@ namespace RandomizerMod
                 }
             }
 
+            // You can get into Royal Waterways without a way to get back out.
+            // If this is the case, remove the bench to prevent you from hard locking your save.
             if (destScene == "Waterways_02" && !PlayerData.instance.hasWalljump && !PlayerData.instance.hasDoubleJump)
             {
                 foreach (GameObject obj in SceneHandler.GetObjectsFromScene("Waterways_02"))
@@ -252,6 +265,8 @@ namespace RandomizerMod
                 }
             }
 
+            // Isma's Tear has different code than other abilities for some reason.
+            // This code here is required to make the ability randomized.
             if (destScene == "Waterways_13")
             {
                 foreach (GameObject obj in SceneHandler.GetObjectsFromScene("Waterways_13"))
@@ -315,6 +330,7 @@ namespace RandomizerMod
                 }
             }
 
+            // Enable the toll gate entrance to Crystal Peak even if you don't have the Lumafly Lantern.
             if (destScene == "Mines_33" && !PlayerData.instance.hasLantern)
             {
                 foreach (GameObject obj in SceneHandler.GetObjectsFromScene("Mines_33"))
