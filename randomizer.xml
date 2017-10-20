@@ -1,4 +1,4 @@
-<randomizer version="1.1.1">
+<randomizer version="1.1.5">
 	<entry>
 		<name>Mothwing Cloak</name>
 		<type>Ability</type>
@@ -12,6 +12,9 @@
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Isma's Tear</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Grubberfly's Elegy</requirement>
@@ -62,6 +65,9 @@
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Isma's Tear</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
@@ -209,6 +215,7 @@
 			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Shade Cloak</requirement>
+				<requirement>Monarch Wings</requirement>
 			</requirementSet>
 		</requirements>
 		<locales>
@@ -229,6 +236,11 @@
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Mantis Claw</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Isma's Tear</requirement>
 			</requirementSet>
 		</requirements>
 		<locales>
@@ -1055,6 +1067,10 @@
 				<requirement>Mantis Claw</requirement>
 				<requirement>Crystal Heart</requirement>
 			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Isma's Tear</requirement>
+			</requirementSet>
 			<requirementSet easy="false" hard="true" hardpermadeath="false">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Mothwing Cloak</requirement>
@@ -1062,6 +1078,10 @@
 			<requirementSet easy="false" hard="true" hardpermadeath="false">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Isma's Tear</requirement>
 			</requirementSet>
 		</requirements>
 		<locales>
@@ -1188,7 +1208,8 @@
 				<requirement>Monarch Wings</requirement>
 				<requirement>Crystal Heart</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true">
+			<!--Removing this for now because this skip suck ass-->
+			<!--<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Mantis Claw</requirement>
 				<requirement>Vengeful Spirit</requirement>
@@ -1207,7 +1228,7 @@
 				<requirement>Shade Cloak</requirement>
 				<requirement>Mantis Claw</requirement>
 				<requirement>Shade Soul</requirement>
-			</requirementSet>
+			</requirementSet>-->
 		</requirements>
 		<locales>
 			<locale>UI.CHARM_NAME_22</locale>
@@ -1231,6 +1252,10 @@
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
@@ -1248,6 +1273,10 @@
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Descending Dark</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Isma's Tear</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
@@ -1281,6 +1310,10 @@
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
@@ -1298,6 +1331,10 @@
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Descending Dark</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Isma's Tear</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
@@ -1331,6 +1368,10 @@
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
@@ -1348,6 +1389,10 @@
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Descending Dark</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Isma's Tear</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
@@ -1409,6 +1454,14 @@
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Monarch Wings</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Shade Cloak</requirement>
 			</requirementSet>
 			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
@@ -1477,6 +1530,10 @@
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Descending Dark</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Isma's Tear</requirement>
 			</requirementSet>
 			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>

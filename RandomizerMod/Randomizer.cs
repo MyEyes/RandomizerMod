@@ -645,7 +645,7 @@ namespace RandomizerMod
                         List<RandomizerEntry> candidates = new List<RandomizerEntry>();
                         foreach (RandomizerEntry entry in unsorted)
                         {
-                            if (random.Next(100) < 50 || entry.LeadsTo(entries.Values.ToList(), sorted, reachable.Union(replaced).ToList()).Count == 0)
+                            if (random.Next(100) < 35 || entry.LeadsTo(entries.Values.ToList(), sorted, reachable.Union(replaced).ToList()).Count == 0)
                             {
                                 candidates.Add(entry);
                             }
@@ -979,25 +979,6 @@ namespace RandomizerMod
             foreach (XmlNode node in nodes.SelectNodes("entry"))
             {
                 AddEntry(node, permadeath);
-            }
-        }
-
-        //Log to file
-        public static void DebugLog(string message)
-        {
-            if (!debug)
-            {
-                return;
-            }
-            if (debugWriter == null)
-            {
-                debugWriter = new StreamWriter(Application.persistentDataPath + "\\txt", true);
-                debugWriter.AutoFlush = true;
-            }
-            if (debugWriter != null)
-            {
-                debugWriter.WriteLine(message);
-                debugWriter.Flush();
             }
         }
 
