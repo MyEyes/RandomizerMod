@@ -170,7 +170,7 @@ namespace RandomizerMod
                 }
             }
 
-            if ((destScene == "Crossroads_11_alt" || destScene == "Fungus1_28") && (Randomizer._fireball1 > 0 || Randomizer._fireball2 > 0))
+            if ((destScene == "Crossroads_11_alt" || destScene == "Fungus1_28"))
             {
                 Modding.ModHooks.ModLog("[RANDOMIZER] Attempting to fix baldurs in scene " + destScene);
                 foreach (GameObject obj in SceneHandler.GetObjectsFromScene(destScene))
@@ -369,8 +369,6 @@ namespace RandomizerMod
                     }
                 }
             }
-
-            GC.Collect();
         }
 
         // Token: 0x0600312F RID: 12591 RVA: 0x0012783C File Offset: 0x00125A3C
