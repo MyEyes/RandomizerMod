@@ -11,6 +11,21 @@ namespace RandomizerMod
     // Token: 0x02000922 RID: 2338
     public static class SceneHandler
     {
+        private static FieldInfo fsmStringParamsField;
+        static SceneHandler()
+        {
+            // This is a private field, so it's kind of a pain to get to.
+            FieldInfo[] fieldInfo = typeof(HutongGames.PlayMaker.ActionData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
+            for (int j = 0; j < fieldInfo.Length; j++)
+            {
+                if (fieldInfo[j].Name == "fsmStringParams")
+                {
+                    fsmStringParamsField = fieldInfo[j];
+                    break;
+                }
+            }
+        }
+
         public static void CheckForChanges(Scene from, Scene to)
         {
             CheckForChanges(to.name);
@@ -34,41 +49,34 @@ namespace RandomizerMod
                     {
                         if (spell.FsmStates[i].Name == "Has Fireball?" || spell.FsmStates[i].Name == "Has Quake?" || spell.FsmStates[i].Name == "Has Scream?")
                         {
-                            FieldInfo[] fieldInfo = typeof(HutongGames.PlayMaker.ActionData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                            for (int j = 0; j < fieldInfo.Length; j++)
+                            foreach (FsmString str in (List<FsmString>)fsmStringParamsField.GetValue(spell.FsmStates[i].ActionData))
                             {
-                                if (fieldInfo[j].Name == "fsmStringParams")
+                                List<FsmString> val = new List<FsmString>();
+
+                                if (str.Value.Contains("fireball"))
                                 {
-                                    foreach (FsmString str in (List<FsmString>)fieldInfo[j].GetValue(spell.FsmStates[i].ActionData))
-                                    {
-                                        List<FsmString> val = new List<FsmString>();
+                                    val.Add("_fireballLevel");
+                                }
+                                else if (str.Value.Contains("quake"))
+                                {
+                                    val.Add("_quakeLevel");
+                                }
+                                else if (str.Value.Contains("scream"))
+                                {
+                                    val.Add("_screamLevel");
+                                }
+                                else
+                                {
+                                    val.Add(str);
+                                }
 
-                                        if (str.Value.Contains("fireball"))
-                                        {
-                                            val.Add("_fireballLevel");
-                                        }
-                                        else if (str.Value.Contains("quake"))
-                                        {
-                                            val.Add("_quakeLevel");
-                                        }
-                                        else if (str.Value.Contains("scream"))
-                                        {
-                                            val.Add("_screamLevel");
-                                        }
-                                        else
-                                        {
-                                            val.Add(str);
-                                        }
-
-                                        if (val.Count > 0)
-                                        {
-                                            fieldInfo[j].SetValue(spell.FsmStates[i].ActionData, val);
-                                        }
-                                    }
-
-                                    spell.FsmStates[i].LoadActions();
+                                if (val.Count > 0)
+                                {
+                                    fsmStringParamsField.SetValue(spell.FsmStates[i].ActionData, val);
                                 }
                             }
+
+                            spell.FsmStates[i].LoadActions();
                         }
                     }
                 }
@@ -184,34 +192,27 @@ namespace RandomizerMod
                         {
                             if (fsm.FsmStates[i].Name == "Can Roller?")
                             {
-                                FieldInfo[] fieldInfo = typeof(HutongGames.PlayMaker.ActionData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-                                for (int j = 0; j < fieldInfo.Length; j++)
+                                foreach (FsmString str in (List<FsmString>)fsmStringParamsField.GetValue(fsm.FsmStates[i].ActionData))
                                 {
-                                    if (fieldInfo[j].Name == "fsmStringParams")
+                                    List<FsmString> val = new List<FsmString>();
+
+                                    if (str.Value.Contains("fireball"))
                                     {
-                                        foreach (FsmString str in (List<FsmString>)fieldInfo[j].GetValue(fsm.FsmStates[i].ActionData))
-                                        {
-                                            List<FsmString> val = new List<FsmString>();
+                                        val.Add("_true");
+                                        Modding.ModHooks.ModLog("[RANDOMIZER] Found FsmString on \"" + obj.name + "\" with value \"" + str.Value + "\", changing to \"_true\"");
+                                    }
+                                    else
+                                    {
+                                        val.Add(str);
+                                    }
 
-                                            if (str.Value.Contains("fireball"))
-                                            {
-                                                val.Add("_true");
-                                                Modding.ModHooks.ModLog("[RANDOMIZER] Found FsmString on \"" + obj.name +  "\" with value \"" + str.Value + "\", changing to \"_true\"");
-                                            }
-                                            else
-                                            {
-                                                val.Add(str);
-                                            }
-
-                                            if (val.Count > 0)
-                                            {
-                                                fieldInfo[j].SetValue(fsm.FsmStates[i].ActionData, val);
-                                            }
-                                        }
-
-                                        fsm.FsmStates[i].LoadActions();
+                                    if (val.Count > 0)
+                                    {
+                                        fsmStringParamsField.SetValue(fsm.FsmStates[i].ActionData, val);
                                     }
                                 }
+
+                                fsm.FsmStates[i].LoadActions();
                             }
                         }
                     }
@@ -264,31 +265,23 @@ namespace RandomizerMod
                             {
                                 bool foundAcid = false;
 
-                                FieldInfo[] fieldInfo = typeof(HutongGames.PlayMaker.ActionData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-                                for (int j = 0; j < fieldInfo.Length; j++)
+                                foreach (FsmString str in (List<FsmString>)fsmStringParamsField.GetValue(fsm.FsmStates[i].ActionData))
                                 {
-                                    if (fieldInfo[j].Name == "fsmStringParams")
+                                    List<FsmString> val = new List<FsmString>();
+
+                                    if (str.Value.Contains("hasAcidArmour"))
                                     {
-                                        foreach (FsmString str in (List<FsmString>)fieldInfo[j].GetValue(fsm.FsmStates[i].ActionData))
-                                        {
-                                            List<FsmString> val = new List<FsmString>();
+                                        val.Add(PlayerData.instance.hasAcidArmour ? "_true" : "_false");
+                                        foundAcid = true;
+                                    }
+                                    else
+                                    {
+                                        val.Add(str);
+                                    }
 
-                                            if (str.Value.Contains("hasAcidArmour"))
-                                            {
-                                                val.Add(PlayerData.instance.hasAcidArmour ? "_true" : "_false");
-                                                foundAcid = true;
-                                            }
-                                            else
-                                            {
-                                                val.Add(str);
-                                            }
-
-                                            if (val.Count > 0)
-                                            {
-                                                fieldInfo[j].SetValue(fsm.FsmStates[i].ActionData, val);
-                                            }
-                                        }
+                                    if (val.Count > 0)
+                                    {
+                                        fsmStringParamsField.SetValue(fsm.FsmStates[i].ActionData, val);
                                     }
                                 }
 
@@ -335,34 +328,26 @@ namespace RandomizerMod
                             {
                                 if (fsm.FsmStates[i].Name == "Check")
                                 {
-                                    FieldInfo[] fieldInfo = typeof(HutongGames.PlayMaker.ActionData).GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
-
-                                    for (int j = 0; j < fieldInfo.Length; j++)
+                                    foreach (FsmString str in (List<FsmString>)fsmStringParamsField.GetValue(fsm.FsmStates[i].ActionData))
                                     {
-                                        if (fieldInfo[j].Name == "fsmStringParams")
+                                        List<FsmString> val = new List<FsmString>();
+
+                                        if (str.Value.Contains("hasLantern"))
                                         {
-                                            foreach (FsmString str in (List<FsmString>)fieldInfo[j].GetValue(fsm.FsmStates[i].ActionData))
-                                            {
-                                                List<FsmString> val = new List<FsmString>();
+                                            val.Add("_true");
+                                        }
+                                        else
+                                        {
+                                            val.Add(str);
+                                        }
 
-                                                if (str.Value.Contains("hasLantern"))
-                                                {
-                                                    val.Add("_true");
-                                                }
-                                                else
-                                                {
-                                                    val.Add(str);
-                                                }
-
-                                                if (val.Count > 0)
-                                                {
-                                                    fieldInfo[j].SetValue(fsm.FsmStates[i].ActionData, val);
-                                                }
-                                            }
-
-                                            fsm.FsmStates[i].LoadActions();
+                                        if (val.Count > 0)
+                                        {
+                                            fsmStringParamsField.SetValue(fsm.FsmStates[i].ActionData, val);
                                         }
                                     }
+
+                                    fsm.FsmStates[i].LoadActions();
                                 }
                             }
                         }
