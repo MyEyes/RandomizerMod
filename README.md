@@ -21,3 +21,11 @@ Here's how to resolve them:
 5. Add Folder
 
 Now if you open up RandomizerMod.cs, you should see no errors.
+
+### Debugging
+
+Printf-style debugging is done through calls to `Modding.ModHooks.ModLog()`,
+which outputs text to `%APPDATA%\..\LocalLow\Team Cherry\Hollow Knight\ModLog.txt`.
+
+There is currently no easy way to use the Visual Studio debugger while Hollow Knight is running.
+Please let someone know if you manage to get this working, and we'll update these instructions.
