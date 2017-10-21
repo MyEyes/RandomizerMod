@@ -613,23 +613,45 @@ namespace RandomizerMod
             //Loop until we've run out of places to put things at
             while (reachable.Count > 0)
             {
-                RandomizerEntry newItem;
+                RandomizerEntry newItem = default(RandomizerEntry);
 
                 //Need to select an item that isn't a dead end if we're almost out of options
                 if (reachable.Count == 1 && unsorted.Count > 1)
                 {
                     List<RandomizerEntry> candidates = new List<RandomizerEntry>();
+                    List<float> weights = new List<float>();
+                    float totalWeights = 0;
                     foreach (RandomizerEntry entry in unsorted)
                     {
-                        if (entry.LeadsTo(entries.Values.ToList(), sorted, reachable.Union(replaced).ToList()).Count > 0)
+                        int leadCount = entry.LeadsTo(entries.Values.ToList(), sorted, reachable.Union(replaced).ToList()).Count;
+                        if (leadCount > 0)
                         {
+                            totalWeights += (float)1.0 + Mathf.Log(leadCount);
+                            weights.Add(totalWeights);
                             candidates.Add(entry);
                         }
                     }
 
                     if (candidates.Count > 0)
                     {
-                        newItem = candidates.ElementAt(random.Next(candidates.Count));
+                        bool itemAssigned = false;
+                        float weight = (float)random.NextDouble() * totalWeights;
+
+                        for (int i = 0; i < weights.Count; i++)
+                        {
+                            if (weight <= weights.ElementAt(i))
+                            {
+                                newItem = candidates.ElementAt(i);
+                                itemAssigned = true;
+                                break;
+                            }
+                        }
+
+                        if (!itemAssigned)
+                        {
+                            Modding.ModHooks.ModLog("[RANDOMIZER] Weighted randomness has failed, picking full random value");
+                            newItem = candidates.ElementAt(random.Next(candidates.Count));
+                        }
                         Modding.ModHooks.ModLog("[RANDOMIZER] Running out of options, " + newItem.name + " should prevent hard lock");
                     }
                     else

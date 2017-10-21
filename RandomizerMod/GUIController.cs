@@ -111,6 +111,7 @@ namespace RandomizerMod
                         int.TryParse(this.seedString, out Randomizer.seed);
 
                         if (GUI.Button(new Rect(200f, 850f, 330f, 82f), "Log Randomization")) Randomizer.LogRandomization();
+                        if (GUI.Button(new Rect(100f, 757f, 75f, 82f), "New")) this.seedString = rnd.Next(1000000000).ToString();
                     }
                 }
                 else
