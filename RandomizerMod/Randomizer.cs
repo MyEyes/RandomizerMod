@@ -342,7 +342,7 @@ namespace RandomizerMod
                     return pd.GetBoolInternal(name);
                 }
 
-                if (name.Contains("gotCharm_") && stack.Contains("at HutongGames.PlayMaker.Fsm.DoTransition(HutongGames.PlayMaker.FsmTransition transition, Boolean isGlobal)"))
+                if (name.Contains("gotCharm_") && (stack.Contains("at HutongGames.PlayMaker.Fsm.DoTransition(HutongGames.PlayMaker.FsmTransition transition, Boolean isGlobal)") || InInventory()))
                 {
                     return pd.GetBoolInternal(name);
                 }
@@ -502,6 +502,11 @@ namespace RandomizerMod
         public static void AddEntry(XmlNode node, bool permadeath)
         {
             RandomizerEntry entry = new RandomizerEntry(node);
+
+            foreach (RandomizerVar var in entry.entries)
+            {
+                if (typeof(PlayerData).GetField(var.name, BindingFlags.Public | BindingFlags.NonPublic) == null) return;
+            }
 
             if (!entries.ContainsKey(entry.name))
             {
