@@ -505,7 +505,10 @@ namespace RandomizerMod
 
             foreach (RandomizerVar var in entry.entries)
             {
-                if (typeof(PlayerData).GetField(var.name, BindingFlags.Public | BindingFlags.NonPublic) == null) return;
+                if (typeof(PlayerData).GetField(var.name, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static) == null)
+                {
+                    return;
+                }
             }
 
             if (!entries.ContainsKey(entry.name))
