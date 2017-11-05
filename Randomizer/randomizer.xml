@@ -1,17 +1,5 @@
-<randomizer version="1.3.0">
-	<keyitems>
-		<item minversion="1.0.0.5">Mothwing Cloak</item>
-		<item minversion="1.0.0.5">Shade Cloak</item>
-		<item minversion="1.0.0.5">Mantis Claw</item>
-		<item minversion="1.0.0.5">Monarch Wings</item>
-		<item minversion="1.0.0.5">Isma's Tear</item>
-		<item minversion="1.0.0.5">Crystal Heart</item>
-		<item minversion="1.0.0.5">Dream Nail</item>
-		<item minversion="1.0.0.5">Howling Wraiths</item>
-		<item minversion="1.0.0.5">Desolate Dive</item>
-		<item minversion="1.0.0.5">Vengeful Spirit</item>
-	</keyitems>
-	<entry minversion="1.0.0.5">
+<randomizer version="1.2.0">
+	<entry>
 		<name>Mothwing Cloak</name>
 		<type>Ability</type>
 		<vars>
@@ -19,20 +7,39 @@
 			<bool>canDash</bool>
 		</vars>
 		<requirements>
-			<or>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Vengeful Spirit</requirement>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Shade Soul</requirement>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Isma's Tear</requirement>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Grubberfly's Elegy</requirement>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mothwing Cloak</requirement>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Shade Cloak</requirement>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mantis Claw</requirement>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Monarch Wings</requirement>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Glowing Womb</requirement>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Spore Shroom</requirement>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.2.1.0">Weaversong</requirement>
-				<requirement easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mark of Pride</requirement>
-			</or>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Isma's Tear</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Grubberfly's Elegy</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Glowing Womb</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Spore Shroom</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Mark of Pride</requirement>
+			</requirementSet>
 		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_DASH</locale>
@@ -42,7 +49,7 @@
 			<locale>Prompts.GET_DASH_2</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Mantis Claw</name>
 		<type>Ability</type>
 		<vars>
@@ -50,28 +57,55 @@
 			<bool>canWallJump</bool>
 		</vars>
 		<requirements>
-			<or>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mothwing Cloak</requirement>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Shade Cloak</requirement>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Monarch Wings</requirement>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mantis Claw</requirement>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Isma's Tear</requirement>
-				<requirement easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">Vengeful Spirit</requirement>
-				<requirement easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">Shade Soul</requirement>
-				<and>
-					<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Crystal Heart</requirement>
-					<or>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Vengeful Spirit</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Shade Soul</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Grubberfly's Elegy</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Glowing Womb</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Spore Shroom</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Desolate Dive</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Descending Dark</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.2.1.0">Weaversong</requirement>
-					</or>
-				</and>
-			</or>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Isma's Tear</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Grubberfly's Elegy</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Glowing Womb</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Spore Shroom</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Desolate Dive</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Descending Dark</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
 		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_WALLJUMP</locale>
@@ -81,7 +115,7 @@
 			<locale>Prompts.GET_WALLJUMP_2</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Crystal Heart</name>
 		<type>Ability</type>
 		<vars>
@@ -89,28 +123,42 @@
 			<bool>canSuperDash</bool>
 		</vars>
 		<requirements>
-			<or>
-				<and>
-					<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mantis Claw</requirement>
-					<or>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mothwing Cloak</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Shade Cloak</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Crystal Heart</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Monarch Wings</requirement>
-						<requirement easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">Vengeful Spirit</requirement>
-						<requirement easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">Shade Soul</requirement>
-					</or>
-				</and>
-				<and>
-					<requirement easy="false" hard="true" hardpermadeath="false" minversion="1.0.0.5">Monarch Wings</requirement>
-					<or>
-						<requirement easy="false" hard="true" hardpermadeath="false" minversion="1.0.0.5">Mothwing Cloak</requirement>
-						<requirement easy="false" hard="true" hardpermadeath="false" minversion="1.0.0.5">Shade Cloak</requirement>
-						<requirement easy="false" hard="true" hardpermadeath="false" minversion="1.0.0.5">Vengeful Spirit</requirement>
-						<requirement easy="false" hard="true" hardpermadeath="false" minversion="1.0.0.5">Shade Soul</requirement>
-					</or>
-				</and>
-			</or>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
 		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_SUPERDASH</locale>
@@ -120,23 +168,24 @@
 			<locale>Prompts.GET_SUPERDASH_2</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Monarch Wings</name>
 		<type>Ability</type>
 		<vars>
 			<bool>hasDoubleJump</bool>
 		</vars>
 		<requirements>
-			<or>
-				<and>
-					<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mantis Claw</requirement>
-					<or>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Crystal Heart</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Monarch Wings</requirement>
-					</or>
-				</and>
-				<requirement easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">Monarch Wings</requirement>
-			</or>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Mantis Claw</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Monarch Wings</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+			</requirementSet>
 		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_DOUBLEJUMP</locale>
@@ -146,7 +195,7 @@
 			<locale>Prompts.GET_DOUBLEJUMP_2</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Shade Cloak</name>
 		<type>Ability</type>
 		<vars>
@@ -154,22 +203,27 @@
 			<bool>canShadowDash</bool>
 		</vars>
 		<requirements>
-			<or>
-				<and>
-					<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mantis Claw</requirement>
-					<or>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Monarch Wings</requirement>
-						<requirement easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mothwing Cloak</requirement>
-						<requirement easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">Shade Cloak</requirement>
-						<requirement easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">Crystal Heart</requirement>
-					</or>
-				</and>
-				<and>
-					<requirement easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mothwing Cloak</requirement>
-					<requirement easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">Shade Cloak</requirement>
-					<requirement easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">Monarch Wings</requirement>
-				</and>
-			</or>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Monarch Wings</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Shade Cloak</requirement>
+				<requirement>Monarch Wings</requirement>
+			</requirementSet>
 		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_SHADOWDASH</locale>
@@ -179,64 +233,83 @@
 			<locale>Prompts.GET_SHADOWDASH_2</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Isma's Tear</name>
 		<type>Ability</type>
 		<vars>
 			<bool>hasAcidArmour</bool>
 		</vars>
 		<requirements>
-			<and>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Crystal Heart</requirement>
-				<or>
-					<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mantis Claw</requirement>
-					<and>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Monarch Wings</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Isma's Tear</requirement>
-					</and>
-				</or>
-			</and>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Mantis Claw</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Isma's Tear</requirement>
+			</requirementSet>
 		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_ACIDARMOUR</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Dream Nail</name>
 		<type>Ability</type>
 		<vars>
 			<bool>hasDreamNail</bool>
 		</vars>
 		<requirements>
-			<requirement easy="true" hard="false" hardpermadeath="false" minversion="1.0.0.5">Mantis Claw</requirement>
+			<requirementSet easy="true" hard="false" hardpermadeath="false">
+				<requirement>Mantis Claw</requirement>
+			</requirementSet>
 		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_DREAMNAIL_A</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.1.1.4">
+	<entry>
 		<name>Dream Gate</name>
-		<type>Shitty</type>
+		<type>Ability</type>
 		<vars>
 			<bool>hasDreamGate</bool>
 		</vars>
-		<requirements></requirements>
+		<requirements>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Dream Nail</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Crystal Heart</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_DREAMGATE</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Awoken Dream Nail</name>
-		<type>Shitty</type>
+		<type>Ability</type>
 		<vars>
 			<bool>dreamNailUpgraded</bool>
 		</vars>
-		<requirements></requirements>
+		<requirements>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Dream Nail</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Crystal Heart</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_DREAMNAIL_B</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Vengeful Spirit</name>
 		<type>Spell</type>
 		<vars>
@@ -247,149 +320,236 @@
 			<locale>UI.INV_NAME_SPELL_FIREBALL1</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Shade Soul</name>
 		<type>Spell</type>
 		<vars>
 			<int value="2">fireballLevel</int>
 		</vars>
 		<requirements>
-			<or>
-				<requirement easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mantis Claw</requirement>
-				<and>
-					<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mantis Claw</requirement>
-					<or>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mothwing Cloak</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Shade Cloak</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Crystal Heart</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Monarch Wings</requirement>
-					</or>
-				</and>
-				<and>
-					<requirement easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">Monarch Wings</requirement>
-					<or>
-						<requirement easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mothwing Cloak</requirement>
-						<requirement easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">Shade Cloak</requirement>
-						<requirement easy="false" hard="true" hardpermadeath="false" minversion="1.0.0.5">Vengeful Spirit</requirement>
-						<requirement easy="false" hard="true" hardpermadeath="false" minversion="1.0.0.5">Shade Soul</requirement>
-					</or>
-				</and>
-			</or>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Monarch Wings</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
 		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_SPELL_FIREBALL2</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Desolate Dive</name>
 		<type>Spell</type>
 		<vars>
 			<int value="1">quakeLevel</int>
 		</vars>
 		<requirements>
-			<or>
-				<requirement easy="false" hard="true" hardpermadeath="false" minversion="1.0.0.5">Mantis Claw</requirement>
-				<requirement easy="false" hard="true" hardpermadeath="false" minversion="1.0.0.5">Monarch Wings</requirement>
-				<and>
-					<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mantis Claw</requirement>
-					<or>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mothwing Cloak</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Shade Cloak</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Crystal Heart</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Monarch Wings</requirement>
-						<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Isma's Tear</requirement>
-					</or>
-				</and>
-				<and>
-					<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Monarch Wings</requirement>
-					<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Crystal Heart</requirement>
-				</and>
-			</or>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+				<requirement>Monarch Wings</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Isma's Tear</requirement>
+				<requirement>Mantis Claw</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
+				<requirement>Mantis Claw</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
+				<requirement>Monarch Wings</requirement>
+			</requirementSet>
 		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_SPELL_QUAKE1</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Descending Dark</name>
 		<type>Spell</type>
 		<vars>
 			<int value="2">quakeLevel</int>
 		</vars>
-		<requirements>("Desolate Dive" | "Descending Dark") & (("Mantis Claw" & ("Crystal Heart" | ((("Mothwing Cloak" | "Shade Cloak") & ("Vengeful Spirit" | "Shade Soul")) & HARD))) | ("Monarch Wings" & ("Crystal Heart" | "Mothwing Cloak" | "Shade Cloak" | (("Vengeful Spirit" | "Shade Soul") & HARD))))</requirements>
 		<requirements>
-			<and>
-				<or>
-					<requirement easy="true" hard="true" hardpermadeath="true">Desolate Dive</requirement>
-					<requirement easy="true" hard="true" hardpermadeath="true">Descending Dark</requirement>
-				</or>
-				<or>
-					<and>
-						<requirement easy="true" hard="true" hardpermadeath="true">Mantis Claw</requirement>
-						<or>
-							<requirement easy="true" hard="true" hardpermadeath="true">Crystal Heart</requirement>
-							<and>
-								<or>
-									<requirement easy="false" hard="true" hardpermadeath="true">Mothwing Cloak</requirement>
-									<requirement easy="false" hard="true" hardpermadeath="true">Shade Cloak</requirement>
-								</or>
-								<or>
-									<requirement easy="false" hard="true" hardpermadeath="true">Vengeful Spirit</requirement>
-									<requirement easy="false" hard="true" hardpermadeath="true">Shade Soul</requirement>
-								</or>
-							</and>
-						</or>
-					</and>
-					<and>
-						<requirement easy="true" hard="true" hardpermadeath="true">Monarch Wings</requirement>
-						<or>
-							<requirement easy="true" hard="true" hardpermadeath="true">Crystal Heart</requirement>
-							<requirement easy="true" hard="true" hardpermadeath="true">Mothwing Cloak</requirement>
-							<requirement easy="true" hard="true" hardpermadeath="true">Shade Cloak</requirement>
-							<requirement easy="false" hard="true" hardpermadeath="true">Vengeful Spirit</requirement>
-							<requirement easy="false" hard="true" hardpermadeath="true">Shade Soul</requirement>
-						</or>
-					</and>
-				</or>
-			</and>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Shade Cloak</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Desolate Dive</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Shade Cloak</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Shade Cloak</requirement>
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
+				<requirement>Descending Dark</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Shade Cloak</requirement>
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
 		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_SPELL_QUAKE2</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Howling Wraiths</name>
 		<type>Spell</type>
 		<vars>
 			<int value="1">screamLevel</int>
 		</vars>
 		<requirements>
-			<or>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Mantis Claw</requirement>
-				<requirement easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">Monarch Wings</requirement>
-			</or>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+			</requirementSet>
 		</requirements>
 		<locales>
 			<locale>UI.INV_NAME_SPELL_SCREAM1</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Abyss Shriek</name>
 		<type>Spell</type>
 		<vars>
 			<int value="2">screamLevel</int>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Monarch Wings</requirement>
 				<requirement>Howling Wraiths</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Howling Wraiths</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Howling Wraiths</requirement>
 			</requirementSet>
@@ -398,7 +558,7 @@
 			<locale>UI.INV_NAME_SPELL_SCREAM2</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Gathering Swarm</name>
 		<type>Charm</type>
 		<vars>
@@ -409,7 +569,7 @@
 			<locale>UI.CHARM_NAME_1</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Wayward Compass</name>
 		<type>Charm</type>
 		<vars>
@@ -420,18 +580,27 @@
 			<locale>UI.CHARM_NAME_2</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Grubsong</name>
-		<type>Shitty</type>
+		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_3</bool>
 		</vars>
-		<requirements></requirements>
+		<requirements>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Dream Nail</requirement>
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Crystal Heart</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+		</requirements>
 		<locales>
 			<locale>UI.CHARM_NAME_3</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Stalwart Shell</name>
 		<type>Charm</type>
 		<vars>
@@ -442,174 +611,174 @@
 			<locale>UI.CHARM_NAME_4</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Baldur Shell</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_5</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Desolate Dive</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Descending Dark</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Grubberfly's Elegy</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Glowing Womb</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Spore Shroom</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Desolate Dive</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Descending Dark</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Grubberfly's Elegy</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Glowing Womb</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Spore Shroom</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 				<requirement>Desolate Dive</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 				<requirement>Descending Dark</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 				<requirement>Grubberfly's Elegy</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 				<requirement>Glowing Womb</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 				<requirement>Spore Shroom</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Desolate Dive</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Descending Dark</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Grubberfly's Elegy</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Glowing Womb</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Spore Shroom</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Desolate Dive</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Descending Dark</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Grubberfly's Elegy</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Glowing Womb</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Spore Shroom</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Mark of Pride</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Mark of Pride</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 				<requirement>Mark of Pride</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Mark of Pride</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Mark of Pride</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Mark of Pride</requirement>
 			</requirementSet>
@@ -618,58 +787,77 @@
 			<locale>UI.CHARM_NAME_5</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Fury of the Fallen</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_6</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
-				<requirement>Mantis Claw</requirement>
-			</requirementSet>
 		</requirements>
 		<locales>
 			<locale>UI.CHARM_NAME_6</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Quick Focus</name>
-		<type>Shitty</type>
+		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_7</bool>
 		</vars>
-		<requirements></requirements>
+		<requirements>
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
+				<requirement>Mantis Claw</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
+				<requirement>Mothwing Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
+				<requirement>Monarch Wings</requirement>
+			</requirementSet>
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
+				<requirement>Crystal Heart</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
+				<requirement>Vengeful Spirit</requirement>
+			</requirementSet>
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
+				<requirement>Shade Soul</requirement>
+			</requirementSet>
+		</requirements>
 		<locales>
 			<locale>UI.CHARM_NAME_7</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Lifeblood Heart</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_8</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
 		</requirements>
@@ -677,44 +865,53 @@
 			<locale>UI.CHARM_NAME_8</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Lifeblood Core</name>
-		<type>Shitty</type>
+		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_9</bool>
 		</vars>
-		<requirements></requirements>
+		<requirements>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Dream Nail</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Crystal Heart</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+		</requirements>
 		<locales>
 			<locale>UI.CHARM_NAME_9</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Defender's Crest</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_10</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Crystal Heart</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Monarch Wings</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 			</requirementSet>
 		</requirements>
@@ -722,25 +919,25 @@
 			<locale>UI.CHARM_NAME_10</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Flukenest</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_11</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Desolate Dive</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Descending Dark</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Desolate Dive</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Descending Dark</requirement>
 			</requirementSet>
 		</requirements>
@@ -748,20 +945,20 @@
 			<locale>UI.CHARM_NAME_11</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Thorns of Agony</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_12</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Crystal Heart</requirement>
 			</requirementSet>
@@ -770,17 +967,17 @@
 			<locale>UI.CHARM_NAME_12</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Mark of Pride</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_13</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 			</requirementSet>
 		</requirements>
@@ -788,32 +985,32 @@
 			<locale>UI.CHARM_NAME_13</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Steady Body</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_14</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
 		</requirements>
@@ -821,29 +1018,29 @@
 			<locale>UI.CHARM_NAME_14</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Heavy Blow</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_15</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="false" hardpermadeath="false" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="false">
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
@@ -852,19 +1049,19 @@
 			<locale>UI.CHARM_NAME_15</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Sharp Shadow</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_16</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="false" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Shade Cloak</requirement>
@@ -874,42 +1071,42 @@
 			<locale>UI.CHARM_NAME_16</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Spore Shroom</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_17</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Monarch Wings</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Crystal Heart</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Isma's Tear</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="false" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="false" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="false" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Isma's Tear</requirement>
 			</requirementSet>
@@ -918,32 +1115,32 @@
 			<locale>UI.CHARM_NAME_17</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Longnail</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_18</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
 		</requirements>
@@ -951,32 +1148,32 @@
 			<locale>UI.CHARM_NAME_18</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Shaman Stone</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_19</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="false" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="false" hardpermadeath="true">
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
 		</requirements>
@@ -984,7 +1181,7 @@
 			<locale>UI.CHARM_NAME_19</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Soul Catcher</name>
 		<type>Charm</type>
 		<vars>
@@ -995,26 +1192,26 @@
 			<locale>UI.CHARM_NAME_20</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Soul Eater</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_21</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Desolate Dive</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Desolate Dive</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Descending Dark</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Descending Dark</requirement>
 			</requirementSet>
@@ -1023,38 +1220,38 @@
 			<locale>UI.CHARM_NAME_21</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Glowing Womb</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_22</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Crystal Heart</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Crystal Heart</requirement>
 			</requirementSet>
 			<!--Removing this for now because this skip suck ass-->
-			<!--<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<!--<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Mantis Claw</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Mantis Claw</requirement>
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 				<requirement>Mantis Claw</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 				<requirement>Mantis Claw</requirement>
 				<requirement>Shade Soul</requirement>
@@ -1064,61 +1261,61 @@
 			<locale>UI.CHARM_NAME_22</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Fragile Heart</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_23</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Grubberfly's Elegy</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Glowing Womb</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Spore Shroom</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Desolate Dive</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Descending Dark</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Isma's Tear</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
 		</requirements>
@@ -1126,61 +1323,61 @@
 			<locale>UI.CHARM_NAME_23</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Fragile Greed</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_24</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Grubberfly's Elegy</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Glowing Womb</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Spore Shroom</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Desolate Dive</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Descending Dark</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Isma's Tear</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
 		</requirements>
@@ -1188,61 +1385,61 @@
 			<locale>UI.CHARM_NAME_24</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Fragile Strength</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_25</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Grubberfly's Elegy</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Glowing Womb</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Spore Shroom</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Desolate Dive</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Descending Dark</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Isma's Tear</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
 		</requirements>
@@ -1251,14 +1448,14 @@
 		</locales>
 	</entry>
 	<!--Charm 26 Nailmaster's Glory-->
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Joni's Blessing</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_27</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
 		</requirements>
@@ -1266,18 +1463,18 @@
 			<locale>UI.CHARM_NAME_27</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Shape of Unn</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_28</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Isma's Tear</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Isma's Tear</requirement>
 			</requirementSet>
@@ -1286,26 +1483,26 @@
 			<locale>UI.CHARM_NAME_28</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Hiveblood</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_29</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Monarch Wings</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
 		</requirements>
@@ -1313,72 +1510,81 @@
 			<locale>UI.CHARM_NAME_29</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Dream Wielder</name>
-		<type>Shitty</type>
+		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_30</bool>
 		</vars>
-		<requirements></requirements>
+		<requirements>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Dream Nail</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Crystal Heart</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+		</requirements>
 		<locales>
 			<locale>UI.CHARM_NAME_30</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Dashmaster</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_31</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Grubberfly's Elegy</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Glowing Womb</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Spore Shroom</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Desolate Dive</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Descending Dark</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Isma's Tear</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
 		</requirements>
@@ -1386,49 +1592,49 @@
 			<locale>UI.CHARM_NAME_31</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Quick Slash</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_32</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Desolate Dive</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Shade Cloak</requirement>
 				<requirement>Desolate Dive</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Desolate Dive</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Shade Cloak</requirement>
 				<requirement>Desolate Dive</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Descending Dark</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Shade Cloak</requirement>
 				<requirement>Descending Dark</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Mothwing Cloak</requirement>
 				<requirement>Descending Dark</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Shade Cloak</requirement>
 				<requirement>Descending Dark</requirement>
@@ -1438,41 +1644,41 @@
 			<locale>UI.CHARM_NAME_32</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Spell Twister</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_33</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Crystal Heart</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Crystal Heart</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 				<requirement>Monarch Wings</requirement>
 			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Isma's Tear</requirement>
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="false" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="false" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="false">
 				<requirement>Monarch Wings</requirement>
 			</requirementSet>
 		</requirements>
@@ -1480,32 +1686,32 @@
 			<locale>UI.CHARM_NAME_33</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Deep Focus</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_34</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Monarch Wings</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Crystal Heart</requirement>
 				<requirement>Monarch Wings</requirement>
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
@@ -1514,41 +1720,50 @@
 			<locale>UI.CHARM_NAME_34</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.0.0.5">
+	<entry>
 		<name>Grubberfly's Elegy</name>
-		<type>Shitty</type>
+		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_35</bool>
 		</vars>
-		<requirements></requirements>
+		<requirements>
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
+				<requirement>Dream Nail</requirement>
+				<requirement>Mantis Claw</requirement>
+				<requirement>Mothwing Cloak</requirement>
+				<requirement>Monarch Wings</requirement>
+				<requirement>Crystal Heart</requirement>
+				<requirement>Shade Cloak</requirement>
+			</requirementSet>
+		</requirements>
 		<locales>
 			<locale>UI.CHARM_NAME_35</locale>
 		</locales>
 	</entry>
 	<!--Charm 36 Kingsoul/Void Heart-->
-	<entry minversion="1.2.1.0">
+	<entry>
 		<name>Sprintmaster</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_37</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="false">
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Vengeful Spirit</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Shade Soul</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Mothwing Cloak</requirement>
 			</requirementSet>
-			<requirementSet easy="false" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="false" hard="true" hardpermadeath="true">
 				<requirement>Monarch Wings</requirement>
 				<requirement>Shade Cloak</requirement>
 			</requirementSet>
@@ -1557,14 +1772,14 @@
 			<locale>UI.CHARM_NAME_37</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.2.1.0">
+	<entry>
 		<name>Dreamshield</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_38</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="false" hardpermadeath="false" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="false" hardpermadeath="false">
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
 		</requirements>
@@ -1572,14 +1787,14 @@
 			<locale>UI.CHARM_NAME_38</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.2.1.0">
+	<entry>
 		<name>Weaversong</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_39</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
 			</requirementSet>
 		</requirements>
@@ -1587,24 +1802,15 @@
 			<locale>UI.CHARM_NAME_39</locale>
 		</locales>
 	</entry>
-	<entry minversion="1.2.1.0">
+	<entry>
 		<name>Grimmchild</name>
 		<type>Charm</type>
 		<vars>
 			<bool>gotCharm_40</bool>
 		</vars>
 		<requirements>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
+			<requirementSet easy="true" hard="true" hardpermadeath="true">
 				<requirement>Mantis Claw</requirement>
-				<requirement>Dream Nail</requirement>
-			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
-				<requirement>Mantis Claw</requirement>
-				<requirement>Dream Gate</requirement>
-			</requirementSet>
-			<requirementSet easy="true" hard="true" hardpermadeath="true" minversion="1.0.0.5">
-				<requirement>Mantis Claw</requirement>
-				<requirement>Awoken Dream Nail</requirement>
 			</requirementSet>
 		</requirements>
 		<locales>
