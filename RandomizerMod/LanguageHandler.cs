@@ -7,7 +7,7 @@ namespace RandomizerMod
     {
         public static string Get(string key, string sheet)
         {
-            if (!Randomizer.randomizer)
+            if (!RandomizerMod.instance.Settings.randomizer)
             {
                 return Language.Language.GetInternal(key, sheet);
             }
@@ -24,7 +24,7 @@ namespace RandomizerMod
                 {
                     string switchedPickup;
 
-                    if (Randomizer.permutation.TryGetValue(pickupName, out switchedPickup))
+                    if (RandomizerMod.instance.Settings.StringValues.TryGetValue(pickupName, out switchedPickup))
                     {
                         //Check to make sure we're not showing the player shade cloak when we don't intend to give it to them
                         if (switchedPickup == "Shade Cloak" && !PlayerData.instance.hasDash)
@@ -44,17 +44,17 @@ namespace RandomizerMod
                         }
 
                         //Similar checks for spells
-                        if (switchedPickup == "Shade Soul" && (Randomizer._fireball1 + Randomizer._fireball2) == 0)
+                        if (switchedPickup == "Shade Soul" && RandomizerMod.instance.Settings.FireballLevel() == 0)
                         {
                             switchedPickup = "Vengeful Spirit";
                         }
 
-                        if (switchedPickup == "Descending Dark" && (Randomizer._quake1 + Randomizer._quake2) == 0)
+                        if (switchedPickup == "Descending Dark" && RandomizerMod.instance.Settings.QuakeLevel() == 0)
                         {
                             switchedPickup = "Desolate Dive";
                         }
 
-                        if (switchedPickup == "Abyss Shriek" && (Randomizer._scream1 + Randomizer._scream2) == 0)
+                        if (switchedPickup == "Abyss Shriek" && RandomizerMod.instance.Settings.ScreamLevel() == 0)
                         {
                             switchedPickup = "Howling Wraiths";
                         }

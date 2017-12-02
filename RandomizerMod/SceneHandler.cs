@@ -11,7 +11,7 @@ namespace RandomizerMod
     // Token: 0x02000922 RID: 2338
     public static class SceneHandler
     {
-        private static FieldInfo fsmStringParamsField;
+        private static readonly FieldInfo fsmStringParamsField;
         static SceneHandler()
         {
             // This is a private field, so it's kind of a pain to get to.
@@ -34,7 +34,7 @@ namespace RandomizerMod
         // Token: 0x0600312E RID: 12590 RVA: 0x00127658 File Offset: 0x00125858
         public static void CheckForChanges(string destScene)
         {
-            if (!Randomizer.randomizer)
+            if (!RandomizerMod.instance.Settings.randomizer)
             {
                 return;
             }
@@ -83,7 +83,29 @@ namespace RandomizerMod
             }
             catch (Exception e)
             {
-                Modding.ModHooks.ModLog(e.ToString());
+                RandomizerMod.instance.LogError("Could not modify spell fsm:\n" + e);
+            }
+
+            //Remove hard save from shade cloak platform
+            if (destScene == "Abyss_10")
+            {
+                foreach (GameObject obj in GetObjectsFromScene(destScene))
+                {
+                    if (obj.name == "Dish Plat")
+                    {
+                        PlayMakerFSM getShadowDash = FSMUtility.LocateFSM(obj, "Get Shadow Dash");
+
+                        foreach (FsmState state in getShadowDash.FsmStates)
+                        {
+                            if (state.Name == "Take Control")
+                            {
+                                state.Transitions[0].ToState = "PlayerData";
+                                break;
+                            }
+                        }
+                        break;
+                    }
+                }
             }
 
             // After defeating Soul Master, you are hard saved in the Desolate Dive tutorial.
@@ -105,7 +127,7 @@ namespace RandomizerMod
             }
 
             // In case you got to the Desolate Dive tutorial without Desolate Dive, break all the floors open so you can get out.
-            if ((destScene == "Ruins1_30" || destScene == "Ruins1_32") && Randomizer._quake1 == 0 && Randomizer._quake2 == 0 && PlayerData.instance.killedMageLord)
+            if ((destScene == "Ruins1_30" || destScene == "Ruins1_32") && RandomizerMod.instance.Settings.QuakeLevel() == 0 && PlayerData.instance.killedMageLord)
             {
                 List<GameObject> objectsFromScene = SceneHandler.GetObjectsFromScene(destScene);
                 for (int i = 0; i < objectsFromScene.Count; i++)
@@ -193,12 +215,12 @@ namespace RandomizerMod
 
             if ((destScene == "Crossroads_11_alt" || destScene == "Fungus1_28"))
             {
-                Modding.ModHooks.ModLog("[RANDOMIZER] Attempting to fix baldurs in scene " + destScene);
+                RandomizerMod.instance.Log("Attempting to fix baldurs in scene " + destScene);
                 foreach (GameObject obj in SceneHandler.GetObjectsFromScene(destScene))
                 {
                     if (obj.name == "Blocker" || obj.name == "Blocker 1" || obj.name == "Blocker 2")
                     {
-                        Modding.ModHooks.ModLog("[RANDOMIZER] Found baldur with name \"" + obj.name + "\"");
+                        RandomizerMod.instance.Log("Found baldur with name \"" + obj.name + "\"");
                         PlayMakerFSM fsm = FSMUtility.LocateFSM(obj, "Blocker Control");
 
                         for (int i = 0; i < fsm.FsmStates.Length; i++)
@@ -212,7 +234,7 @@ namespace RandomizerMod
                                     if (str.Value.Contains("fireball"))
                                     {
                                         val.Add("_true");
-                                        Modding.ModHooks.ModLog("[RANDOMIZER] Found FsmString on \"" + obj.name + "\" with value \"" + str.Value + "\", changing to \"_true\"");
+                                        RandomizerMod.instance.Log("Found FsmString on \"" + obj.name + "\" with value \"" + str.Value + "\", changing to \"_true\"");
                                     }
                                     else
                                     {
@@ -236,7 +258,6 @@ namespace RandomizerMod
             {
                 foreach (GameObject obj in SceneHandler.GetObjectsFromScene("Ruins1_01"))
                 {
-                    Modding.ModHooks.ModLog(obj.name);
                     if (obj.name == "ruind_int_plat_float_01")
                     {
                         GameObject gameObject = UnityEngine.Object.Instantiate(obj, obj.transform.position, obj.transform.rotation) as GameObject;
@@ -310,10 +331,10 @@ namespace RandomizerMod
                     }
                     else if (obj.name.ToLower().Contains("water") || obj.name.ToLower().Contains("acid"))
                     {
-                        if (Randomizer.permutation.ContainsKey("Isma's Tear"))
+                        if (RandomizerMod.instance.Settings.StringValues.ContainsKey("Isma's Tear"))
                         {
                             bool ismasReplacement;
-                            RandomizerVar var = Randomizer.entries[Randomizer.permutation["Isma's Tear"]].entries[0];
+                            RandomizerVar var = Randomizer.entries[RandomizerMod.instance.Settings.StringValues["Isma's Tear"]].entries[0];
 
                             if (var.type == typeof(bool))
                             {
@@ -321,7 +342,7 @@ namespace RandomizerMod
                             }
                             else
                             {
-                                ismasReplacement = (PlayerData.instance.GetIntInternal(var.name) > 0) ? true : false;
+                                ismasReplacement = PlayerData.instance.GetIntInternal(var.name) > 0;
                             }
 
                             if (ismasReplacement) GameObject.Destroy(obj);

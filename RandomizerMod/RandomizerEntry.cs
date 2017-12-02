@@ -41,7 +41,7 @@ namespace RandomizerMod
 
         public string[][] GetRequires()
         {
-            if (Randomizer.hardMode)
+            if (RandomizerMod.instance.Settings.hardMode)
             {
                 if (PlayerData.instance.permadeathMode > 0)
                 {

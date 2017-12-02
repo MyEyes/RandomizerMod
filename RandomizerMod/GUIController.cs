@@ -85,30 +85,30 @@ namespace RandomizerMod
                     GUI.color = new Color(color.r, color.g, color.b, UIManager.instance.playModeMenuScreen.screenCanvasGroup.alpha);
 
                     //Create button for off/easy/hard
-                    if (!Randomizer.randomizer && this.TextureButton(this.textures["off"], new Rect(590f, 757f, 740f, 80f)))
+                    if (!NewGameSettings.randomizer && this.TextureButton(this.textures["off"], new Rect(590f, 757f, 740f, 80f)))
                     {
-                        Randomizer.randomizer = true;
-                        Randomizer.hardMode = false;
+                        NewGameSettings.randomizer = true;
+                        NewGameSettings.hardMode = false;
                     }
-                    else if (Randomizer.randomizer && !Randomizer.hardMode && this.TextureButton(this.textures["easy"], new Rect(590f, 757f, 740f, 80f)))
+                    else if (NewGameSettings.randomizer && !NewGameSettings.hardMode && this.TextureButton(this.textures["easy"], new Rect(590f, 757f, 740f, 80f)))
                     {
-                        Randomizer.randomizer = true;
-                        Randomizer.hardMode = true;
+                        NewGameSettings.randomizer = true;
+                        NewGameSettings.hardMode = true;
                     }
-                    else if (Randomizer.randomizer && Randomizer.hardMode && this.TextureButton(this.textures["hard"], new Rect(590f, 757f, 740f, 80f)))
+                    else if (NewGameSettings.randomizer && NewGameSettings.hardMode && this.TextureButton(this.textures["hard"], new Rect(590f, 757f, 740f, 80f)))
                     {
-                        Randomizer.randomizer = false;
-                        Randomizer.hardMode = false;
+                        NewGameSettings.randomizer = false;
+                        NewGameSettings.hardMode = false;
                     }
 
                     //Create text field for seed if randomizer is not off
-                    if (Randomizer.randomizer)
+                    if (NewGameSettings.randomizer)
                     {
                         this.seedString = GUI.TextField(new Rect(200f, 757f, 330f, 82f), this.seedString, 9, this.style);
 
                         //Running Regex every frame is not efficient, but I figure the potential performance hit doesn't matter too much in the main menu
                         this.seedString = Regex.Replace(this.seedString, "[^0-9]", "");
-                        int.TryParse(this.seedString, out Randomizer.seed);
+                        int.TryParse(this.seedString, out NewGameSettings.seed);
 
                         if (GUI.Button(new Rect(200f, 850f, 330f, 82f), "Log Randomization")) Randomizer.LogRandomization();
                         if (GUI.Button(new Rect(100f, 757f, 75f, 82f), "New")) this.seedString = rnd.Next(1000000000).ToString();
@@ -122,8 +122,8 @@ namespace RandomizerMod
                 //Disable randomizer while looking at saves so that the variables don't carry over to places they shouldn't
                 if (UIManager.instance.menuState == GlobalEnums.MainMenuState.SAVE_PROFILES && !Randomizer.loadedSave)
                 {
-                    Randomizer.randomizer = false;
-                    Randomizer.hardMode = false;
+                    NewGameSettings.randomizer = false;
+                    NewGameSettings.hardMode = false;
                 }
             }
 
