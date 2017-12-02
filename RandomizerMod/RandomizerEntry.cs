@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Xml;
 using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace RandomizerMod
 {
@@ -18,13 +19,99 @@ namespace RandomizerMod
 
     public struct RandomizerEntry
     {
+        private readonly string reqString;
+
         public string name;
         public RandomizerVar[] entries;
-        public string[][] requiresEasy;
-        public string[][] requiresHard;
-        public string[][] requiresHardPermadeath;
         public RandomizerType type;
         public string[] localeNames;
+
+        public bool IsReachable(List<RandomizerEntry> obtained)
+        {
+            //RandomizerMod.instance.Log("Checking if " + this.name + " is reachable");
+
+            List<string> names = new List<string>();
+            foreach (RandomizerEntry entry in obtained)
+            {
+                names.Add(entry.name);
+                //RandomizerMod.instance.Log("Have " + entry.name);
+            }
+            
+            string logic = string.Copy(reqString).Replace("HARD", RandomizerMod.instance.Settings.hardMode ? "true" : "false").Replace("KEYITEMS", Randomizer.keyItems);
+
+            string logic2 = string.Copy(logic);
+            List<int> quoteIndices = logic.AllIndexesOf("\"");
+            for (int i = 0; i < quoteIndices.Count - 1; i += 2)
+            {
+                string itemName = logic2.Substring(quoteIndices[i] + 1, quoteIndices[i + 1] - quoteIndices[i] - 1);
+                logic = logic.Replace("\"" + itemName + "\"", names.Contains(itemName) ? "true" : "false");
+            }
+
+            return ParseLogicString(logic);
+        }
+
+        private bool ParseLogicString(string logic)
+        {
+            //RandomizerMod.instance.Log("Parsing for " + this.name + ": " + logic);
+            while (true)
+            {
+                int idx = logic.LastIndexOf("(");
+                if (idx != -1)
+                {
+                    int endIdx = logic.IndexOf(")", idx);
+
+                    logic = logic.Replace("(" + logic.Substring(idx + 1, endIdx - idx - 1) + ")", ParseLogicString(logic.Substring(idx + 1, endIdx - idx - 1)) ? "true" : "false");
+                }
+                else break;
+            }
+
+            string[] logicArr = logic.Split(' ');
+
+            bool and = false;
+            bool or = false;
+            bool ret = true;
+
+            foreach (string str in logicArr)
+            {
+                switch (str)
+                {
+                    case "true":
+                        if (and)
+                        {
+                            ret = ret && true;
+                            and = false;
+                        }
+                        else if (or)
+                        {
+                            ret = ret || true;
+                            or = false;
+                        }
+                        else ret = true;
+                        break;
+                    case "false":
+                        if (and)
+                        {
+                            ret = ret && false;
+                            and = false;
+                        }
+                        else if (or)
+                        {
+                            ret = ret || false;
+                            or = false;
+                        }
+                        else ret = false;
+                        break;
+                    case "+":
+                        and = true;
+                        break;
+                    case "|":
+                        or = true;
+                        break;
+                }
+            }
+
+            return ret;
+        }
 
         //Get index of entry so we can change the matching index on the swapped item
         public int GetIndex(string s)
@@ -39,28 +126,13 @@ namespace RandomizerMod
             return -1;
         }
 
-        public string[][] GetRequires()
-        {
-            if (RandomizerMod.instance.Settings.hardMode)
-            {
-                if (PlayerData.instance.permadeathMode > 0)
-                {
-                    return this.requiresHardPermadeath;
-                }
-
-                return this.requiresHard;
-            }
-
-            return this.requiresEasy;
-        }
-
         //Load entry from XML
         //TODO: Add error checking for malformatted XML
         public RandomizerEntry(XmlNode xml)
         {
             this.name = xml.SelectSingleNode("name").InnerText;
             XmlNodeList entriesXml = xml.SelectSingleNode("vars").ChildNodes;
-            XmlNodeList requiresXml = xml.SelectNodes("requirements/requirementSet");
+            XmlNode requiresXml = xml.SelectSingleNode("requirements");
             this.type = RandomizerEntry.GetTypeFromString(xml.SelectSingleNode("type").InnerText);
             XmlNodeList localesXml = xml.SelectNodes("locales/locale");
 
@@ -72,39 +144,7 @@ namespace RandomizerMod
                 this.entries[i] = new RandomizerVar(entriesXml[i].InnerText, entriesXml[i].Name, value);
             }
 
-            List<List<string>> easy = new List<List<string>>();
-            List<List<string>> hard = new List<List<string>>();
-            List<List<string>> hardPermaDeath = new List<List<string>>();
-
-            for (int i = 0; i < requiresXml.Count; i++)
-            {
-                XmlNodeList reqsSetXml = requiresXml[i].SelectNodes("requirement");
-                List<string> reqSetList = new List<string>();
-
-                for (int j = 0; j < reqsSetXml.Count; j++)
-                {
-                    reqSetList.Add(reqsSetXml[j].InnerText);
-                }
-
-                if (Convert.ToBoolean(requiresXml[i].Attributes["easy"].Value))
-                {
-                    easy.Add(reqSetList);
-                }
-
-                if (Convert.ToBoolean(requiresXml[i].Attributes["hard"].Value))
-                {
-                    hard.Add(reqSetList);
-                }
-
-                if (Convert.ToBoolean(requiresXml[i].Attributes["hardpermadeath"].Value))
-                {
-                    hardPermaDeath.Add(reqSetList);
-                }
-            }
-
-            this.requiresEasy = easy.Select(l => l.ToArray()).ToArray();
-            this.requiresHard = hard.Select(l => l.ToArray()).ToArray();
-            this.requiresHardPermadeath = hardPermaDeath.Select(l => l.ToArray()).ToArray();
+            this.reqString = requiresXml.InnerText;
 
             this.localeNames = new string[localesXml.Count];
             for (int i = 0; i < localesXml.Count; i++)
@@ -122,43 +162,15 @@ namespace RandomizerMod
                 entries.Remove(item);
             }
 
+            List<RandomizerEntry> obtainedCopy = obtained.ToList();
+            obtainedCopy.Add(this);
+
             List<RandomizerEntry> l = new List<RandomizerEntry>();
             foreach (RandomizerEntry entry in entries)
             {
-                foreach (string[] reqSet in entry.GetRequires())
+                if (entry.IsReachable(obtainedCopy))
                 {
-                    if (l.Contains(entry))
-                    {
-                        break;
-                    }
-
-                    bool flag = true;
-
-                    foreach (string req in reqSet)
-                    {
-                        if (req != this.name)
-                        {
-                            bool hasItem = false;
-
-                            foreach(RandomizerEntry item in obtained)
-                            {
-                                if (req == item.name)
-                                {
-                                    hasItem = true;
-                                }
-                            }
-
-                            if (!hasItem)
-                            {
-                                flag = false;
-                            }
-                        }
-                    }
-
-                    if (flag)
-                    {
-                        l.Add(entry);
-                    }
+                    l.Add(entry);
                 }
             }
 

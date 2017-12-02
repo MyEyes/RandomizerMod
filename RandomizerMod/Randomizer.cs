@@ -17,6 +17,8 @@ namespace RandomizerMod
         public static Dictionary<string, RandomizerEntry> entries = new Dictionary<string, RandomizerEntry>();
         public static Dictionary<string, string> reverseLookup = new Dictionary<string, string>();
 
+        public static string keyItems;
+
         public static bool loadedSave;
         public static bool xmlLoaded;
 
@@ -499,41 +501,6 @@ namespace RandomizerMod
             }
         }
 
-        public static List<RandomizerEntry> GetRequirementSet(RandomizerEntry entry, List<RandomizerEntry> unobtained)
-        {
-            string[][] sets = entry.GetRequires();
-
-            if (sets.Length == 0)
-            {
-                return new List<RandomizerEntry>();
-            }
-
-            int bestSet = -1;
-            int count = 0;
-
-            for (int i = 0; i < sets.Length; i++)
-            {
-                sets[i] = (from item in unobtained.AsEnumerable() where sets[i].Contains(item.name) select item.name).ToArray();
-
-                if (sets[i].Length < count || bestSet == -1)
-                {
-                    bestSet = i;
-                    count = sets[i].Length;
-                }
-            }
-
-            List<RandomizerEntry> retList = new List<RandomizerEntry>();
-            foreach (RandomizerEntry item in unobtained)
-            {
-                if (sets[bestSet].Contains(item.name))
-                {
-                    retList.Add(item);
-                }
-            }
-
-            return retList;
-        }
-
         public static List<RandomizerEntry> GetNewReachableItems(List<RandomizerEntry> reachable, List<RandomizerEntry> replaced, List<RandomizerEntry> obtained)
         {
             List<RandomizerEntry> candidates = (from item in entries.Values.AsEnumerable() where !(reachable.Contains(item) || replaced.Contains(item)) select item).ToList();
@@ -541,25 +508,10 @@ namespace RandomizerMod
 
             foreach (RandomizerEntry candidate in candidates)
             {
-                foreach (string[] reqSet in candidate.GetRequires())
+                if (candidate.IsReachable(obtained))
                 {
-                    bool reqsMet = true;
-
-                    foreach (string req in reqSet)
-                    {
-                        if (!obtained.Any(item => item.name == req))
-                        {
-                            reqsMet = false;
-                            break;
-                        }
-                    }
-
-                    if (reqsMet)
-                    {
-                        newEntries.Add(candidate);
-                        RandomizerMod.instance.Log("" + candidate.name + " is now reachable");
-                        break;
-                    }
+                    newEntries.Add(candidate);
+                    RandomizerMod.instance.Log(candidate.name + " is now reachable");
                 }
             }
 
@@ -570,12 +522,12 @@ namespace RandomizerMod
         public static void Randomize(System.Random random)
         {
             RandomizerMod.instance.Log("----------------------------------------------------------");
-            RandomizerMod.instance.Log("Beginning randomization with seed " + RandomizerMod.instance.Settings.seed);
+            RandomizerMod.instance.Log("Beginning randomization with seed " + NewGameSettings.seed);
             RandomizerMod.instance.Settings.StringValues.Clear();
 
             List<RandomizerEntry> unsorted = new List<RandomizerEntry>();
             List<RandomizerEntry> sorted = new List<RandomizerEntry>();
-            List<RandomizerEntry> reachable = (from entry in entries.Values.AsEnumerable() where (entry.GetRequires().Length == 0) select entry).ToList();
+            List<RandomizerEntry> reachable = (from entry in entries.Values.AsEnumerable() where (entry.IsReachable(sorted)) select entry).ToList();
             List<RandomizerEntry> replaced = new List<RandomizerEntry>();
             unsorted.AddRange(entries.Values);
 
@@ -711,40 +663,18 @@ namespace RandomizerMod
             }
         }
 
-        //Checks requirements to see if an entry is reachable
-        public static bool IsReachable(List<string> reachable, RandomizerEntry entry)
-        {
-            //Loop through requirement sets
-            for (int i = 0; i < entry.GetRequires().Length; i++)
-            {
-                bool flag = true;
-
-                //Loop through requirements in sets
-                for (int j = 0; j < entry.GetRequires()[i].Length; j++)
-                {
-                    if (!reachable.Contains(entry.GetRequires()[i][j]))
-                    {
-                        flag = false;
-                        break;
-                    }
-                }
-
-                //Return true if all requirements in set are met
-                if (flag)
-                {
-                    return true;
-                }
-            }
-
-            //Check for pickups with no requirements
-            return entry.GetRequires().Length == 0;
-        }
-
         //Call randomization without starting the game
         public static void LogRandomization()
         {
-            SetHardMode(RandomizerMod.instance.Settings.hardMode);
-            Randomize(new System.Random(RandomizerMod.instance.Settings.seed));
+            try
+            {
+                SetHardMode(NewGameSettings.hardMode);
+                Randomize(new System.Random(NewGameSettings.seed));
+            }
+            catch (Exception e)
+            {
+                RandomizerMod.instance.LogError(e);
+            }
         }
 
         //Set up randomization if applicable
@@ -840,6 +770,20 @@ namespace RandomizerMod
         //Add entry for each node
         public static void LoadEntries(XmlNode nodes)
         {
+            List<string> keyItemsList = new List<string>();
+            foreach (XmlNode node in nodes.SelectNodes("keyitems/item"))
+            {
+                keyItemsList.Add(node.InnerText);
+            }
+
+            keyItems = "(";
+            for (int i = 0; i < keyItemsList.Count; i++)
+            {
+                keyItems += "(" + keyItemsList[i] + ")";
+                if (i != keyItemsList.Count - 1) keyItems += " + ";
+            }
+            keyItems += ")";
+
             foreach (XmlNode node in nodes.SelectNodes("entry"))
             {
                 AddEntry(node);
