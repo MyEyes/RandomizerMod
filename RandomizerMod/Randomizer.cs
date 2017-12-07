@@ -208,7 +208,7 @@ namespace RandomizerMod
 
                     if (var.type == typeof(bool))
                     {
-                        pd.SetBoolInternal(var.name, value > 0);
+                        SetBoolInternal(var.name, value > 0);
                     }
                     else
                     {
@@ -240,6 +240,12 @@ namespace RandomizerMod
         {
             PlayerData.instance.SetIntInternal(name, value);
 
+            HookSetInt(name, value);
+        }
+
+
+        private static void HookSetInt(string name, int value)
+        {
             //If other mods want to be compatible with Randomizer logic, but don't want to implement randomizer logic, that can find out what's set this way.
             if (_SetPlayerIntHook != null)
             {
@@ -466,12 +472,33 @@ namespace RandomizerMod
                     }
                     else
                     {
-                        if (text == "Vengeful Spirit") RandomizerMod.instance.Settings.fireball1 = val;
-                        else if (text == "Shade Soul") RandomizerMod.instance.Settings.fireball2 = val;
-                        else if (text == "Desolate Dive") RandomizerMod.instance.Settings.quake1 = val;
-                        else if (text == "Descending Dark") RandomizerMod.instance.Settings.quake2 = val;
-                        else if (text == "Howling Wraiths") RandomizerMod.instance.Settings.scream1 = val;
-                        else if (text == "Abyss Shriek") RandomizerMod.instance.Settings.scream2 = val;
+                        switch (text)
+                        {
+                            case "Vengeful Spirit":
+                                RandomizerMod.instance.Settings.fireball1 = val;
+                                HookSetInt("fireballLevel", 1);
+                                break;
+                            case "Shade Soul":
+                                RandomizerMod.instance.Settings.fireball2 = val;
+                                HookSetInt("fireballLevel", 2);
+                                break;
+                            case "Desolate Dive":
+                                RandomizerMod.instance.Settings.quake1 = val;
+                                HookSetInt("quakeLevel", 1);
+                                break;
+                            case "Descending Dark":
+                                RandomizerMod.instance.Settings.quake2 = val;
+                                HookSetInt("quakeLevel", 2);
+                                break;
+                            case "Howling Wraiths":
+                                RandomizerMod.instance.Settings.scream1 = val;
+                                HookSetInt("screamLevel", 1);
+                                break;
+                            case "Abyss Shriek":
+                                RandomizerMod.instance.Settings.scream2 = val;
+                                HookSetInt("screamLevel", 2);
+                                break;
+                        }
                     }
 
                     //FSM variable is probably tracked separately, need to make sure it's accurate
@@ -508,6 +535,8 @@ namespace RandomizerMod
                 }
             }
         }
+
+
         //Adds data to the randomizer dictionaries
         public static void AddEntry(XmlNode node)
         {
