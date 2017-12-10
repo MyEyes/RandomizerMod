@@ -81,7 +81,7 @@ namespace RandomizerMod
             {
                 GithubVersionHelper helper = new GithubVersionHelper("MyEyes/RandomizerMod");
                 Log("Github = " + helper.GetVersion());
-                return helper.GetVersion() == GetVersion();
+                return GetVersion().StartsWith(helper.GetVersion());
             }
             catch (Exception)
             {
