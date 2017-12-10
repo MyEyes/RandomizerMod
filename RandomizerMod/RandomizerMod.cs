@@ -72,12 +72,21 @@ namespace RandomizerMod
 
         public override string GetVersion()
         {
-            return "1.5.0 (XML Version: " + xmlVer + ")";
+            return "1.5.1 (XML Version: " + xmlVer + ")";
         }
 
         public override bool IsCurrent()
         {
-            return true;
+            try
+            {
+                GithubVersionHelper helper = new GithubVersionHelper("MyEyes/RandomizerMod");
+                Log("Github = " + helper.GetVersion());
+                return helper.GetVersion() == GetVersion();
+            }
+            catch (Exception)
+            {
+                return true;
+            }
         }
     }
 }
