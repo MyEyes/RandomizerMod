@@ -9,6 +9,8 @@ using System.Web.Extensions;
 using UnityEngine;
 using HutongGames.PlayMaker;
 using GlobalEnums;
+using HutongGames.PlayMaker.Actions;
+using Modding;
 
 namespace RandomizerMod
 {
@@ -107,7 +109,8 @@ namespace RandomizerMod
 
             if (!RandomizerMod.instance.Settings.randomizer)
             {
-                PlayerData.instance.SetIntInternal(name, value);
+                SetIntInternal(name, value);
+                
                 return;
             }
 
@@ -135,13 +138,13 @@ namespace RandomizerMod
 
                 if (change != 1)
                 {
-                    PlayerData.instance.SetIntInternal(name, value);
+                    SetIntInternal(name, value);
                     return;
                 }
 
                 int trinketNum = GetTrinketForScene();
 
-                PlayerData.instance.SetIntInternal("trinket" + trinketNum, PlayerData.instance.GetIntInternal("trinket" + trinketNum) + 1);
+                SetIntInternal("trinket" + trinketNum, PlayerData.instance.GetIntInternal("trinket" + trinketNum) + 1);
                 return;
             }
 
@@ -205,7 +208,7 @@ namespace RandomizerMod
 
                     if (var.type == typeof(bool))
                     {
-                        pd.SetBoolInternal(var.name, value > 0);
+                        SetBoolInternal(var.name, value > 0);
                     }
                     else
                     {
@@ -229,7 +232,32 @@ namespace RandomizerMod
                 return;
             }
 
+            SetIntInternal(name, value);
+        }
+
+
+        private static void SetIntInternal(string name, int value)
+        {
             PlayerData.instance.SetIntInternal(name, value);
+
+            HookSetInt(name, value);
+        }
+
+
+        private static void HookSetInt(string name, int value)
+        {
+            //If other mods want to be compatible with Randomizer logic, but don't want to implement randomizer logic, that can find out what's set this way.
+            if (_SetPlayerIntHook != null)
+            {
+                try
+                {
+                    _SetPlayerIntHook(name, value);
+                }
+                catch (Exception ex)
+                {
+                    RandomizerMod.instance.LogError(ex);
+                }
+            }
         }
 
         //Randomize trinkets based on scene name and seed
@@ -372,7 +400,8 @@ namespace RandomizerMod
             //Don't run randomizer code in non-randomizer saves
 	        if (!RandomizerMod.instance.Settings.randomizer)
 	        {
-	            pd.SetBoolInternal(name, val);
+	            SetBoolInternal(name, val);
+
                 return;
 	        }
 
@@ -439,16 +468,37 @@ namespace RandomizerMod
 
                     if (var.type == typeof(bool))
                     {
-                        pd.SetBoolInternal(var.name, val);
+                        SetBoolInternal(var.name, val);
                     }
                     else
                     {
-                        if (text == "Vengeful Spirit") RandomizerMod.instance.Settings.fireball1 = val;
-                        else if (text == "Shade Soul") RandomizerMod.instance.Settings.fireball2 = val;
-                        else if (text == "Desolate Dive") RandomizerMod.instance.Settings.quake1 = val;
-                        else if (text == "Descending Dark") RandomizerMod.instance.Settings.quake2 = val;
-                        else if (text == "Howling Wraiths") RandomizerMod.instance.Settings.scream1 = val;
-                        else if (text == "Abyss Shriek") RandomizerMod.instance.Settings.scream2 = val;
+                        switch (text)
+                        {
+                            case "Vengeful Spirit":
+                                RandomizerMod.instance.Settings.fireball1 = val;
+                                HookSetInt("fireballLevel", 1);
+                                break;
+                            case "Shade Soul":
+                                RandomizerMod.instance.Settings.fireball2 = val;
+                                HookSetInt("fireballLevel", 2);
+                                break;
+                            case "Desolate Dive":
+                                RandomizerMod.instance.Settings.quake1 = val;
+                                HookSetInt("quakeLevel", 1);
+                                break;
+                            case "Descending Dark":
+                                RandomizerMod.instance.Settings.quake2 = val;
+                                HookSetInt("quakeLevel", 2);
+                                break;
+                            case "Howling Wraiths":
+                                RandomizerMod.instance.Settings.scream1 = val;
+                                HookSetInt("screamLevel", 1);
+                                break;
+                            case "Abyss Shriek":
+                                RandomizerMod.instance.Settings.scream2 = val;
+                                HookSetInt("screamLevel", 2);
+                                break;
+                        }
                     }
 
                     //FSM variable is probably tracked separately, need to make sure it's accurate
@@ -463,8 +513,29 @@ namespace RandomizerMod
                 return;
             }
 
-            pd.SetBoolInternal(name, val);
+            SetBoolInternal(name, val);
+
+            
         }
+
+        private static void SetBoolInternal(string name, bool value)
+        {
+            PlayerData.instance.SetBoolInternal(name, value);
+
+            //If other mods want to be compatible with Randomizer logic, but don't want to implement randomizer logic, that can find out what's set this way.
+            if (_SetPlayerBoolHook != null)
+            {
+                try
+                {
+                    _SetPlayerBoolHook(name, value);
+                }
+                catch (Exception ex)
+                {
+                    RandomizerMod.instance.LogError(ex);
+                }
+            }
+        }
+
 
         //Adds data to the randomizer dictionaries
         public static void AddEntry(XmlNode node)
@@ -641,26 +712,7 @@ namespace RandomizerMod
                 }
                 Randomize(new System.Random(random.Next()));
             }
-            else
-            {
-                //Write the json for the item tracker if the randomization succeeded
-                using (StreamWriter writer = new StreamWriter(Application.persistentDataPath + @"\rnd.js"))
-                {
-                    writer.WriteLine("{");
-                    writer.WriteLine("\t\"seed\" : \"" + RandomizerMod.instance.Settings.seed + "\",");
-                    writer.WriteLine("\t\"mode\" : \"" + (RandomizerMod.instance.Settings.hardMode ? (PlayerData.instance.permadeathMode > 0 ? "hardpermadeath" : "hard") : "easy") + "\",");
-                    int permCount = 0;
-                    foreach (KeyValuePair<string, string> perm in RandomizerMod.instance.Settings.StringValues)
-                    {
-                        string name1 = entries[perm.Key].entries[0].name + (entries[perm.Key].entries[0].value != null ? entries[perm.Key].entries[0].value : "");
-                        string name2 = entries[perm.Value].entries[0].name + (entries[perm.Value].entries[0].value != null ? entries[perm.Value].entries[0].value : "");
-
-                        if (++permCount != RandomizerMod.instance.Settings.StringValues.Count) writer.WriteLine("\t\"" + name1 + "\" : \"" + name2 + "\",");
-                        else writer.WriteLine("\t\"" + name1 + "\" : \"" + name2 + "\"");
-                    }
-                    writer.WriteLine("}");
-                }
-            }
+            
         }
 
         //Call randomization without starting the game
@@ -695,18 +747,7 @@ namespace RandomizerMod
 
             RandomizerMod.instance.Settings.Reset();
 
-            if (File.Exists(Application.persistentDataPath + @"\rnd.js"))
-            {
-                try
-                {
-                    File.Delete(Application.persistentDataPath + @"\rnd.js");
-                }
-                catch (Exception e)
-                {
-                    RandomizerMod.instance.LogError("Could not delete rnd.js:\n" + e.ToString());
-                }
-            }
-
+            
             if (NewGameSettings.randomizer)
             {
                 if (NewGameSettings.seed == -1)
@@ -812,5 +853,48 @@ namespace RandomizerMod
             }
             return false;
         }
+
+        /// <summary>
+        /// Called when anything in the game tries to set a bool in player data after the randomizer has alterned what was set.
+        /// </summary>
+        /// <remarks>PlayerData.SetBool</remarks>
+        /// <see cref="SetBoolProxy"/>
+        public static event SetBoolProxy SetPlayerBoolHook
+        {
+            add
+            {
+                RandomizerMod.instance.LogDebug($"[{value.Method.DeclaringType?.Name}] - Adding Randomizier.SetPlayerBoolHook");
+                _SetPlayerBoolHook += value;
+
+            }
+            remove
+            {
+                RandomizerMod.instance.LogDebug($"[{value.Method.DeclaringType?.Name}] - Removing Randomizier.SetPlayerBoolHook");
+                _SetPlayerBoolHook -= value;
+            }
+        }
+
+        private static event SetBoolProxy _SetPlayerBoolHook;
+
+        /// <summary>
+        /// Called when anything in the game tries to set an int in player data, after the randomizer has changed its value.
+        /// </summary>
+        /// <remarks>PlayerData.SetInt</remarks>
+        public static event SetIntProxy SetPlayerIntHook
+        {
+            add
+            {
+                RandomizerMod.instance.LogDebug($"[{value.Method.DeclaringType?.Name}] - Adding.Randomizier SetPlayerIntHook");
+                _SetPlayerIntHook += value;
+
+            }
+            remove
+            {
+                RandomizerMod.instance.LogDebug($"[{value.Method.DeclaringType?.Name}] - Removing.Randomizier SetPlayerIntHook");
+                _SetPlayerIntHook -= value;
+            }
+        }
+
+        private static event SetIntProxy _SetPlayerIntHook;
     }
 }

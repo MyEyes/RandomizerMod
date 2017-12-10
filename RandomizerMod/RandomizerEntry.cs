@@ -38,6 +38,7 @@ namespace RandomizerMod
             }
             
             string logic = string.Copy(reqString).Replace("HARD", RandomizerMod.instance.Settings.hardMode ? "true" : "false").Replace("KEYITEMS", Randomizer.keyItems);
+            logic = logic.Replace("CLASSIC", PlayerData.instance.permadeathMode > 0 ? "true" : "false");
 
             string logic2 = string.Copy(logic);
             List<int> quoteIndices = logic.AllIndexesOf("\"");
