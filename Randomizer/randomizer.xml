@@ -1,4 +1,4 @@
-<randomizer version="1.3.0">
+<randomizer version="1.3.1">
 	<keyitems>
 		<item>"Mothwing Cloak"</item>
 		<item>"Shade Cloak"</item>
@@ -327,7 +327,7 @@
 		<vars>
 			<bool>gotCharm_12</bool>
 		</vars>
-		<requirements>"Mothwing Cloak" | "Shade Cloak" | ("Mantis Claw + "Crystal Heart")</requirements>
+		<requirements>"Mothwing Cloak" | "Shade Cloak" | ("Mantis Claw" + "Crystal Heart")</requirements>
 		<locales>
 			<locale>UI.CHARM_NAME_12</locale>
 		</locales>
